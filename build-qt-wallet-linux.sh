@@ -56,8 +56,11 @@ dpkg-deb --build mwc-qt-wallet-1.0-5
 
 echo "Building tar.gz"
 mkdir tmp
-cp ../mwc-qt-wallet/mwc-qt-wallet tmp
+cp ../mwc-qt-wallet/mwc-qt-wallet tmp/mwc-qt-wallet.bin
 cp ../mwc713/target/release/mwc713 tmp
+cp ../resources/mwc-qt-wallet.tarver.sh tmp/mwc-qt-wallet
+cp ../resources/mwc-qt-wallet_lr.tarver.sh tmp/mwc-qt-wallet_lr
+
 cd tmp
 tar zcvf ../mwc-qt-wallet-1.0-5.tgz *
 
