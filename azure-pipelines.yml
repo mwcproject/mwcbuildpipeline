@@ -12,6 +12,14 @@ schedules:
   always: true
 
 jobs:
+- job: macos
+  pool:
+    vmImage: macos-10.14
+  steps:
+    - script: './setup_macos.sh'
+    - script: './build-qt-wallet-macos.sh'
+    - script: './deploy_macos.sh'
+  displayName: 'MacOSX'
 - job: windows32
   pool:
     vmImage: windows-latest
