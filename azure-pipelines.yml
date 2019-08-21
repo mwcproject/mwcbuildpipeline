@@ -12,6 +12,14 @@ schedules:
   always: true
 
 jobs:
+- job: linux
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+    - script: './setup_linux.sh'
+    - script: './build-qt-wallet-linux.sh'
+    - script: './deploy_linux.sh'
+  displayName: 'Linux64'
 - job: macos
   pool:
     vmImage: macos-10.14

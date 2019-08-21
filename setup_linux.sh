@@ -11,7 +11,8 @@ curl https://sh.rustup.rs -sSf | bash -s -- -y
 
 sudo ln -s ~/.cargo/bin/cargo /usr/bin/cargo
 
+git clone https://github.com/mwcproject/mwcbuilder-linux-helpers
 
-cat QT-segment* > ./QT.min.tar.bz2
-bzip2 -dc QT.min.tar.bz2 | tar xvf -
-rm -rf QT.min.tar.bz2
+cat mwcbuilder-linux-helpers/QT-segment* | bzip2 -dc | tar xvf -
+
+rm -rf mwcbuilder-linux-helpers
