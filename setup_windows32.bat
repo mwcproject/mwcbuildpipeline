@@ -6,6 +6,8 @@ cat mwcbuilder-win32-helpers/qt5-part2/* | bzip2 -dc | tar xvf -
 cat mwcbuilder-win32-helpers/qt5/* | bzip2 -dc | tar xvf -
 bzip2 -dc mwcbuilder-win32-helpers/libs32.tar.bz2 | tar xvf -
 
+cp mwcbuilder-win32-helpers/pscp.exe .
+
 rm -rf mwcbuilder-win32-helpers
 
 rustup install stable-i686-pc-windows-msvc
