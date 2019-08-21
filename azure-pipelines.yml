@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include:
+      - master
+
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
+  always: true
+
+jobs:
+- job: windows32
+  pool:
+    vmImage: windows-latest
+  steps:
+    - script: 'setup_windows32.bat'
+    - script: 'build-qt-wallet-windows32.bat'
+    - script: 'deploy_windows32.bat'
+  displayName: 'Windows32'

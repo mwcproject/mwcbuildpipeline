@@ -1,0 +1,9 @@
+Package: MWC-QT-WALLET
+Version: 1.0-5
+Section: base
+Priority: optional
+Architecture: amd64
+Depends:
+Maintainer: Christopher Gilliard (christopher.gilliard@gmail.com)
+Description: MWC-QT-WALLET
+ Graphical User Interface Wallet for the MWC Cryptocurrency.
