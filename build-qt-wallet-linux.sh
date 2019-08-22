@@ -38,14 +38,15 @@ if [ ! -f "$FILE" ]; then
 fi
 
 cd ../
-mkdir -p target/mwc-qt-wallet-1.0-5/usr/local/bin/
-mkdir -p target/mwc-qt-wallet-1.0-5/usr/local/mwc-qt-wallet/bin
+DPKG_NAME=mwc-qt-wallet-1.0-5.beta.$1
+echo "Building $DPKG_NAME"
+mkdir -p target/$DPKG_NAME/usr/local/bin/
+mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc-qt-wallet/mwc-qt-wallet target/mwc-qt-wallet-1.0-5/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwc713 target/mwc-qt-wallet-1.0-5/usr/local/mwc-qt-wallet/bin
 
 # Make debain package
 cd target
-DPKG_NAME = mwc-qt-wallet-1.0-5.beta.$1
 mkdir -p $DPKG_NAME/DEBIAN
 cp ../resources/control $DPKG_NAME/DEBIAN
 cp ../resources/mwc-qt-wallet.sh $DPKG_NAME/usr/local/bin/mwc-qt-wallet
