@@ -6,7 +6,6 @@ rmdir /s /q mwc713
 del /s /q mwc-qt-wallet
 rmdir /s /q mwc-qt-wallet
 
-bzip2 -dc libs.tar.bz2 | tar xvf -
 set LIBCLANG_PATH=%cd%\lib
 set OPENSSL_LIB_DIR=%cd%\lib\openssl@1.1/lib/
 set OPENSSL_INCLUDE_DIR=%cd%\lib\openssl@1.1/include/
