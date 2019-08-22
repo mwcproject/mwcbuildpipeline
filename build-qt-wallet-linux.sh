@@ -17,7 +17,6 @@ fi
 
 cd ..
 
-
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
