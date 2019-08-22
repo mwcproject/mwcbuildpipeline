@@ -37,7 +37,8 @@ if [ ! -f "$FILE" ]; then
 fi
 
 cd ../
-export DPKG_NAME=mwc-qt-wallet-1.0-5.beta.$1
+export DPKG_VERSION=1.0-5.beta.$1
+export DPKG_NAME=mwc-qt-wallet-$DPKG_VERSION
 echo "Building $DPKG_NAME"
 mkdir -p target/$DPKG_NAME/usr/local/bin/
 mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
@@ -53,7 +54,7 @@ cp ../resources/mwc-qt-wallet_lr.sh $DPKG_NAME/usr/local/bin/mwc-qt-wallet_lr
 cp -rp ../resources/share $DPKG_NAME/usr
 
 # Update build number
-perl -pi -e 's/VERSION_VALUE/$ENV{DPKG_NAME}/g' $DPKG_NAME/DEBIAN/control
+perl -pi -e 's/VERSION_VALUE/$ENV{DPKG_VERSION}/g' $DPKG_NAME/DEBIAN/control
 
 echo "Building debain package at target/$DPKG_NAME.deb"
 dpkg-deb --build $DPKG_NAME
