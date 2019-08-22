@@ -26,7 +26,7 @@ jobs:
   steps:
     - script: './setup_macos.sh'
     - script: './build-qt-wallet-macos.sh'
-    - script: './deploy_macos.sh'
+    - script: './deploy_macos.sh $(Build.BuildNumber)'
   displayName: 'MacOSX'
 - job: windows
   pool:
