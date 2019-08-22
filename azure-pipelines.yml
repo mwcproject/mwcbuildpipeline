@@ -28,6 +28,14 @@ jobs:
     - script: './build-qt-wallet-macos.sh'
     - script: './deploy_macos.sh'
   displayName: 'MacOSX'
+- job: windows
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+    - script: 'setup_windows.bat'
+    - script: 'build-qt-wallet-windows.bat'
+    - script: 'deploy_windows.bat'
+  displayName: 'Windows64'
 - job: windows32
   pool:
     vmImage: windows-latest
