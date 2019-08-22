@@ -45,14 +45,18 @@ cp mwc713/target/release/mwc713 target/mwc-qt-wallet-1.0-5/usr/local/mwc-qt-wall
 
 # Make debain package
 cd target
-mkdir -p mwc-qt-wallet-1.0-5/DEBIAN
-cp ../resources/control mwc-qt-wallet-1.0-5/DEBIAN
-cp ../resources/mwc-qt-wallet.sh mwc-qt-wallet-1.0-5/usr/local/bin/mwc-qt-wallet
-cp ../resources/mwc-qt-wallet_lr.sh mwc-qt-wallet-1.0-5/usr/local/bin/mwc-qt-wallet_lr
-cp -rp ../resources/share mwc-qt-wallet-1.0-5/usr
+DPKG_NAME = mwc-qt-wallet-1.0-5.beta.$1
+mkdir -p $DPKG_NAME/DEBIAN
+cp ../resources/control $DPKG_NAME/DEBIAN
+cp ../resources/mwc-qt-wallet.sh $DPKG_NAME/usr/local/bin/mwc-qt-wallet
+cp ../resources/mwc-qt-wallet_lr.sh $DPKG_NAME/usr/local/bin/mwc-qt-wallet_lr
+cp -rp ../resources/share $DPKG_NAME/usr
 
-echo "Building debain package at target/mwc-qt-wallet-1.0-5.deb"
-dpkg-deb --build mwc-qt-wallet-1.0-5
+# Update build number
+perl -pi -e 's/VERSION_VALUE/$DPKG_NAME/g' $DPKG_NAME/DEBIAN/control
+
+echo "Building debain package at target/$DPKG_NAME.deb"
+dpkg-deb --build $DPKG_NAME
 
 echo "Building tar.gz"
 mkdir tmp

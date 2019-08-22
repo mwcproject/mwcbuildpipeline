@@ -16,9 +16,9 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   steps:
-    - script: './setup_linux.sh $(Build.BuildNumber)'
-    - script: './build-qt-wallet-linux.sh'
-    - script: './deploy_linux.sh'
+    - script: './setup_linux.sh'
+    - script: './build-qt-wallet-linux.sh ${Build.BuildNumber)'
+    - script: './deploy_linux.sh ${Build.BuildNumber)'
   displayName: 'Linux64'
 - job: macos
   pool:

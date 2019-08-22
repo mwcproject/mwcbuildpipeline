@@ -1,5 +1,5 @@
 Package: MWC-QT-WALLET
-Version: 1.0-5
+Version: VERSION_VALUE
 Section: base
 Priority: optional
 Architecture: amd64
