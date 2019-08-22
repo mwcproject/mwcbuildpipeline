@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Clean everything. This is a release build so we can wait
+# Clean everything.
 rm -rf mwc713 mwc-qt-wallet target/*
 mkdir -p target
 
