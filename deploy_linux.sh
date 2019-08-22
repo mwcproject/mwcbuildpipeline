@@ -8,3 +8,4 @@ echo "ftp.mwc.mw ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHA
 DATE=`date +"%m-%d-%y"`
 ./sendfile.expect target/*.deb $DPKG_NAME-linux64-$DATE.deb;
 ./sendfile.expect target/*.tgz $DPKG_NAME-linux64-$DATE.tgz;
+
