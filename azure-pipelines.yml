@@ -34,7 +34,7 @@ jobs:
   steps:
     - script: 'setup_windows.bat'
     - script: 'build-qt-wallet-windows.bat'
-    - script: 'deploy_windows.bat'
+    - script: 'deploy_windows.bat $(Build.BuildNumber)'
   displayName: 'Windows64'
 - job: windows32
   pool:
@@ -42,5 +42,5 @@ jobs:
   steps:
     - script: 'setup_windows32.bat'
     - script: 'build-qt-wallet-windows32.bat'
-    - script: 'deploy_windows32.bat'
+    - script: 'deploy_windows32.bat $(Build.BuildNumber)'
   displayName: 'Windows32'
