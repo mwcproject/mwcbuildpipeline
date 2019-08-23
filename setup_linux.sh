@@ -18,3 +18,4 @@ sudo ln -s ~/.cargo/bin/cargo /usr/bin/cargo
 git clone https://github.com/mwcproject/mwcbuilder-linux-helpers
 cat mwcbuilder-linux-helpers/QT-segment* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-linux-helpers
+
