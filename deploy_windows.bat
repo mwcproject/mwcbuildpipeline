@@ -1,3 +1,4 @@
+Echo "param passed in %1"
 md5sum target\\nsis\\mwc-qt-wallet-1.0.5-win64-setup.exe
 mkdir %systemdrive%%homepath%\.ssh
 echo ftp.mwc.mw ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFCzEhIbZcESW50l2Mh9dFIeObKrDBNwZm+FPZzL3tp7U8xkcH0U7rx87cMDUKUfJnO8soJ3yqxf1RXOrFkXKQM= >> %systemdrive%%homepath%\.ssh\known_hosts
