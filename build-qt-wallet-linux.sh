@@ -68,7 +68,7 @@ cp ../resources/mwc-qt-wallet_lr.tarver.sh tmp/mwc-qt-wallet_lr
 
 cd tmp
 tar cvf ../mwc-qt-wallet-1.0-5.tar *
-gzip -dc ../mwc-qt-wallet-1.0-5.tar
+gzip ../mwc-qt-wallet-1.0-5.tar
 
 echo "Build Complete";
 
