@@ -60,14 +60,14 @@ echo "Building debain package at target/$DPKG_NAME.deb"
 dpkg-deb --build $DPKG_NAME
 
 echo "Building tar.gz"
-mkdir tmp
-cp ../mwc-qt-wallet/mwc-qt-wallet tmp/mwc-qt-wallet.bin
-cp ../mwc713/target/release/mwc713 tmp
-cp ../resources/mwc-qt-wallet.tarver.sh tmp/mwc-qt-wallet
-cp ../resources/mwc-qt-wallet_lr.tarver.sh tmp/mwc-qt-wallet_lr
+mkdir -p tmp/mwc-qt-wallet-1.0
+cp ../mwc-qt-wallet/mwc-qt-wallet tmp/mwc-qt-wallet-1.0/mwc-qt-wallet.bin
+cp ../mwc713/target/release/mwc713 tmp/mwc-qt-wallet-1.0
+cp ../resources/mwc-qt-wallet.tarver.sh tmp/mwc-qt-wallet-1.0/mwc-qt-wallet
+cp ../resources/mwc-qt-wallet_lr.tarver.sh tmp/mwc-qt-wallet-1.0/mwc-qt-wallet_lr
 
 cd tmp
-tar cvf ../mwc-qt-wallet-1.0-5.tar *
+tar cvf ../mwc-qt-wallet-1.0-5.tar mwc-qt-wallet-1.0
 gzip ../mwc-qt-wallet-1.0-5.tar
 
 echo "Build Complete";
