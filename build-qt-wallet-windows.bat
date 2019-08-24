@@ -36,7 +36,14 @@ xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x64
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
 Qt\5.13.0\mingw73_64\bin\windeployqt target\nsis\payload\x64\mwc-qt-wallet.exe
 
+echo "printing directories"
 dir target\nsis\payload\x64
+dir target\nsis\payload\x64\bearer
+dir target\nsis\payload\x64\iconengines
+dir target\nsis\payload\x64\imageformats
+dir target\nsis\payload\x64\platforms
+dir target\nsis\payload\x64\styles
+dir target\nsis\payload\x64\translations
 
 cd target/nsis
 makensis x64.nsi
