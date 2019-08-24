@@ -52,22 +52,22 @@ Section "mwc713" SecMWC713
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\mwc713.exe"
 
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\bearer\"
     File "payload\${ARCH_SHORT}\bearer\"
 
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\iconengines\"
     File "payload\${ARCH_SHORT}\iconengines\"
 
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\imageformats\"
     File "payload\${ARCH_SHORT}\imageformats\"
 
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\platforms\"
     File "payload\${ARCH_SHORT}\platforms\"
 
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\styles\"
     File "payload\${ARCH_SHORT}\styles\"
 
-  SetOutPath "$INSTDIR"
+  SetOutPath "$INSTDIR\translations\"
     File "payload\${ARCH_SHORT}\translations\"
 
   SetOutPath "$INSTDIR"
