@@ -131,10 +131,7 @@ Section "Uninstall"
 
   Delete "$DESKTOP\${APP_NAME}.lnk"
 
-  Delete "$INSTDIR\mwc713.exe"
-  Delete "$INSTDIR\mwc-qt-wallet.exe"
-  Delete "$INSTDIR\uninstall.exe"
-  RMDir  "$INSTDIR"
+  RMDir  /r "$INSTDIR"
 
   DeleteRegValue HKCU "${REG_DIR}" "StartMenu"
   DeleteRegKey /ifempty HKCU "${REG_DIR}"
