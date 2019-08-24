@@ -11,3 +11,16 @@ index 81ad329..2ed8f19 100644
      QCoreApplication::setApplicationVersion("v0.1");
  
      QCommandLineParser parser;
+diff --git a/wallet/mwc713.cpp b/wallet/mwc713.cpp
+index 44e2a21..b9cc1ff 100644
+--- a/wallet/mwc713.cpp
++++ b/wallet/mwc713.cpp
+@@ -1111,7 +1111,7 @@ WalletConfig MWC713::readWalletConfig(QString source) const {
+     QString keyBasePath = mwc713config.getString("keybase_binary");
+     QString mwcmqDomain = mwc713config.getString("mwcmq_domain");
+ 
+-    if (dataPath.isEmpty() || keyBasePath.isEmpty() || mwcmqDomain.isEmpty()) {
++    if (dataPath.isEmpty() || mwcmqDomain.isEmpty()) {
+         control::MessageBox::message(nullptr, "Read failure", "Not able to find all expected mwc713 configuration values at " + source );
+         return WalletConfig();
+     }
