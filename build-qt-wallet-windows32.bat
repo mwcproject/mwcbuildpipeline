@@ -27,6 +27,8 @@ make
 cd ..
 
 mkdir target\nsis
+mkdir target\nsis\payload
+mkdir target\nsis\payload\x86
 xcopy nsis target\nsis /e /s /t
 xcopy nsis target\nsis
 xcopy nsis\resources target\nsis\resources
@@ -35,6 +37,9 @@ xcopy nsis\include\lang target\nsis\include\lang
 
 xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x86
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x86
+Qt\5.13.0\mingw73_32\bin\windeployqt target\nsis\payload\x86\mwc-qt-wallet.exe
+
+ls target\nsis\payload\x86
 
 cd target/nsis
 makensis x86.nsi
