@@ -52,6 +52,51 @@ Section "mwc713" SecMWC713
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\mwc713.exe"
 
+  SetOutPath "$INSTDIR"
+    File /nonfatal /a /r "payload\${ARCH_SHORT}\bearer\"
+
+  SetOutPath "$INSTDIR"
+    File /nonfatal /a /r "payload\${ARCH_SHORT}\iconengines\"
+
+  SetOutPath "$INSTDIR"
+    File /nonfatal /a /r "payload\${ARCH_SHORT}\imageformats\"
+
+  SetOutPath "$INSTDIR"
+    File /nonfatal /a /r "payload\${ARCH_SHORT}\platforms\"
+
+  SetOutPath "$INSTDIR"
+    File /nonfatal /a /r "payload\${ARCH_SHORT}\styles\"
+
+  SetOutPath "$INSTDIR"
+    File /nonfatal /a /r "payload\${ARCH_SHORT}\translations\"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\D3Dcompiler_47.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libEGL.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libGLESV2.dll"
+
+  SetOutPath "$INSTDIR"      
+    File "payload\${ARCH_SHORT}\opengl32sw.dll"
+
+  SetOutPath "$INSTDIR"      
+    File "payload\${ARCH_SHORT}\Qt5Core.dll"
+
+  SetOutPath "$INSTDIR"      
+    File "payload\${ARCH_SHORT}\Qt5Gui.dll"
+
+  SetOutPath "$INSTDIR"      
+    File "payload\${ARCH_SHORT}\Qt5Network.dll"
+
+  SetOutPath "$INSTDIR"      
+    File "payload\${ARCH_SHORT}\Qt5Svg.dll"
+
+  SetOutPath "$INSTDIR"      
+    File "payload\${ARCH_SHORT}\Qt5Widgets.dll"
+
   ; create Start Menu shortcut
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
