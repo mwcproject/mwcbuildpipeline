@@ -109,6 +109,12 @@ Section "mwc713" SecMWC713
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\vcruntime140.dll"
 
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libcrypto-1_1-x64.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libssl-1_1-x64.dll"
+
   ; create Start Menu shortcut
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
