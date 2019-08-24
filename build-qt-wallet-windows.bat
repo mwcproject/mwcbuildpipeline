@@ -22,7 +22,7 @@ cd ..
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
 cp ..\nsis\resources\logo.ico .
-..\Qt\5.13.0\mingw73_64\bin\qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS += logo.ico
+..\Qt\5.13.0\mingw73_64\bin\qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
 make
 cd ..
 
