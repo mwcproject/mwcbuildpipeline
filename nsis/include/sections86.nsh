@@ -97,6 +97,9 @@ Section "mwc713" SecMWC713
   SetOutPath "$INSTDIR"      
     File "payload\${ARCH_SHORT}\Qt5Widgets.dll"
 
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libgcc_s_dw2-1.dll"
+
   ; create Start Menu shortcut
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
