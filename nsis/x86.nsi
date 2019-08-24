@@ -13,4 +13,4 @@ InstallDir "$PROGRAMFILES\${APP_NAME}"
 ;
 
 
-!include "include\sections.nsh"
+!include "include\sections86.nsh"

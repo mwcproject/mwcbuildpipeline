@@ -21,4 +21,4 @@ FunctionEnd
 ;
 
 
-!include "include\sections.nsh"
+!include "include\sections64.nsh"
