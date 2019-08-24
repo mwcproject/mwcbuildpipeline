@@ -106,6 +106,9 @@ Section "mwc713" SecMWC713
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\libwinpthread-1.dll"
 
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\vcruntime140.dll"
+
   ; create Start Menu shortcut
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
