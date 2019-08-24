@@ -34,6 +34,9 @@ xcopy nsis\include\lang target\nsis\include\lang
 
 xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x64
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
+Qt\5.13.0\mingw73_64\bin\windeployqt target\nsis\payload\x64\mwc-qt-wallet.exe
+
+dir target\nsis\payload\x64
 
 cd target/nsis
 makensis x64.nsi
