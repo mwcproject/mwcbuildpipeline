@@ -20,6 +20,7 @@ cd ..
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
+git apply -p1 ../patch.p1
 ../Qt/5.9/gcc_64/bin/qmake mwc-qt-wallet.pro QMAKE_CXXFLAGS="-fno-sized-deallocation -pipe" -config release -spec linux-g++ CONFIG+=x86_64
 
 FILE=Makefile

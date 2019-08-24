@@ -16,6 +16,7 @@ cd ..
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
+git apply -p1 ../patch.p1
 qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 make
 
