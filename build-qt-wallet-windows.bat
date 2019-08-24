@@ -26,11 +26,14 @@ make
 cd ..
 
 mkdir target\nsis
+mkdir target\nsis\payload
+mdkdir target\nsis\payload\x64
 xcopy nsis target\nsis /e /s /t
 xcopy nsis target\nsis
 xcopy nsis\resources target\nsis\resources
 xcopy nsis\include target\nsis\include
 xcopy nsis\include\lang target\nsis\include\lang
+xcopy nsis\payload\x64\* target\nsis\payload\x64
 
 xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x64
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
