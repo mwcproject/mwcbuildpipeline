@@ -25,7 +25,7 @@ jobs:
     vmImage: macos-10.14
   steps:
     - script: './setup_macos.sh'
-    - script: './build-qt-wallet-macos.sh'
+    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
     - script: './deploy_macos.sh $(Build.BuildNumber)'
   displayName: 'MacOSX'
 - job: windows
@@ -33,7 +33,7 @@ jobs:
     vmImage: vs2017-win2016
   steps:
     - script: 'setup_windows.bat'
-    - script: 'build-qt-wallet-windows.bat'
+    - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
     - script: 'deploy_windows.bat $(Build.BuildNumber)'
   displayName: 'Windows64'
 - job: windows32
@@ -41,6 +41,6 @@ jobs:
     vmImage: windows-latest
   steps:
     - script: 'setup_windows32.bat'
-    - script: 'build-qt-wallet-windows32.bat'
+    - script: 'build-qt-wallet-windows32.bat $(Build.BuildNumber)'
     - script: 'deploy_windows32.bat $(Build.BuildNumber)'
   displayName: 'Windows32'

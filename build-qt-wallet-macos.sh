@@ -16,6 +16,7 @@ cd ..
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
+echo "#define BUILD_VERSION  \"1.0-5.beta.$1\"" > build_version.h
 qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 make
 
@@ -23,7 +24,7 @@ make
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 macdeployqt mwc-qt-wallet.app -appstore-compliant
 
-if [ -z "$1" ]
+if [ -z "$2" ]
 then
    # We can't sign so just build dmg
    hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet;
@@ -42,7 +43,7 @@ else
    echo "Notarizing this will take a while..."
 
    rm -rf /tmp/notarize_out.log;
-   xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u mimblewimblecoin2@protonmail.com -p $1
+   xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u mimblewimblecoin2@protonmail.com -p $2
    echo "Sleeping for 2 minutes to let apple process things."
    sleep 120;
    xcrun stapler staple -q -v ../target/mwc-qt-wallet.dmg

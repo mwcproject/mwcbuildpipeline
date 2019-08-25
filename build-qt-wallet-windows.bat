@@ -22,6 +22,7 @@ cd ..
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
 cp ..\nsis\resources\logo.ico .
+echo "#define BUILD_VERSION  \"1.0-5.beta.%$1\"" > build_version.h
 ..\Qt\5.13.0\mingw73_64\bin\qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
 make
 cd ..
