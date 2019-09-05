@@ -29,7 +29,7 @@ if [ ! -f "$FILE" ]; then
     exit 1;
 fi
 
-make
+make -j 8
 
 FILE=mwc-qt-wallet
 if [ ! -f "$FILE" ]; then
