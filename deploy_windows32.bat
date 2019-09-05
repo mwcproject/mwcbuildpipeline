@@ -15,4 +15,4 @@ for /f "skip=1 tokens=1-6 delims= " %%a in ('wmic path Win32_LocalTime Get Day^,
 
 set NAME=mwc-qt-wallet-1.0-5.beta.%1-win32-setup.exe
 copy target\nsis\mwc-qt-wallet-1.0.5-win32-setup.exe target\nsis\%NAME%
-echo y | pscp -pw uploader target\nsis\%NAME% uploader@ftp.mwc.mw:/home/uploader/
+echo y | pscp -i uploader.pem target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/
