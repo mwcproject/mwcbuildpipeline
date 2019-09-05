@@ -1,6 +1,6 @@
 #!/bin/sh
 
-
+chmod 400 ./uploader.pem
 DPKG_NAME=mwc-qt-wallet_1.0-5.beta.$1
 echo "md5sum = `md5sum target/*.deb`";
 mkdir -p ~/.ssh
