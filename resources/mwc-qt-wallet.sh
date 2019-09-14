@@ -1,5 +1,3 @@
 #!/bin/sh
 
-export QT_SCALE_FACTOR=1.6
-
-/usr/local/mwc-qt-wallet/bin/mwc-qt-wallet
+/usr/local/mwc-qt-wallet/bin/mwc-qt-wallet --ui_scale 1.6
