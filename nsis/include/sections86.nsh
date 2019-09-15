@@ -36,13 +36,6 @@ Section "MWC GUI" SecMain
   WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
                      "VersionMinor" ${VER_MINOR}
 
-  ; install MSVC redist?
-  ;ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\${ARCH_SHORT}" \
-  ;                   "Installed"
-  ;StrCmp $1 1 skip_vcredist
-  ;ExecWait 'payload\${ARCH_SHORT}\vc_redist.${ARCH_SHORT}.exe'
-
-  ;skip_vcredist:
 SectionEnd
 
 
@@ -120,6 +113,16 @@ Section "mwc713" SecMWC713
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
     CreateShortcut  "$SMPROGRAMS\$StartMenuFolder\MWC713.lnk" "$INSTDIR\mwc713.exe" "--config $PROFILE\mwc-qt-wallet\wallet713v2.toml"
   !insertmacro MUI_STARTMENU_WRITE_END
+
+
+; install MSVC redist, needed for mwc713
+  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\${ARCH_SHORT}" \
+                     "Installed"
+  StrCmp $1 1 skip_vcredist
+  ExecWait 'payload\${ARCH_SHORT}\vc_redist.${ARCH_SHORT}.exe /quiet'
+
+  skip_vcredist:
+    
 SectionEnd
 
 
