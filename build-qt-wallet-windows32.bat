@@ -27,7 +27,8 @@ cd mwc-qt-wallet
 cp ..\nsis\resources\logo.ico .
 echo #define BUILD_VERSION "1.0-5.beta.%1" > build_version.h
 %QT_TOOLS_BIN%\qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
-mingw32-make.exe -j8
+rem  For local build try to use:  mingw32-make.exe -j8
+make -j 8
 cd ..
 
 mkdir target\nsis
