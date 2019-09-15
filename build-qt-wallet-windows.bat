@@ -46,7 +46,7 @@ xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
 
 dir target\nsis\payload\x64
 echo "Starting %QT_TOOLS_BIN%\windeployqt target\nsis\payload\x64\mwc-qt-wallet.exe"
-%QT_TOOLS_BIN%\windeployqtxx target\nsis\payload\x64\mwc-qt-wallet.exe
+%QT_TOOLS_BIN%\windeployqt.exe target\nsis\payload\x64\mwc-qt-wallet.exe
 
 cd target/nsis
 makensis x64.nsi
