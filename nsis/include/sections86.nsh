@@ -118,7 +118,7 @@ Section "mwc713" SecMWC713
   ; create Start Menu shortcut
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-    CreateShortcut  "$SMPROGRAMS\$StartMenuFolder\MWC713.lnk" "$INSTDIR\mwc713.exe"
+    CreateShortcut  "$SMPROGRAMS\$StartMenuFolder\MWC713.lnk" "$INSTDIR\mwc713.exe" "--config $PROFILE\mwc-qt-wallet\wallet713v2.toml"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
