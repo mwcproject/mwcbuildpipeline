@@ -38,6 +38,21 @@ Section "MWC GUI" SecMain
 
 SectionEnd
 
+Section "Prerequisites" SecPrerequisites
+  SectionIn RO 
+
+  SetOutPath $INSTDIR\Prerequisites
+
+  ; install MSVC redist, needed for mwc713
+  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\${ARCH_SHORT}" \
+                     "Installed"
+  StrCmp $1 1 skip_vcredist
+  
+  File "payload\${ARCH_SHORT}\vc_redist.${ARCH_SHORT}.exe"
+  ExecWait '$INSTDIR\Prerequisites\vc_redist.${ARCH_SHORT}.exe /quiet'
+
+  skip_vcredist:
+SectionEnd
 
 Section "mwc713" SecMWC713
   SectionIn RO ; TODO: make optional
@@ -113,16 +128,6 @@ Section "mwc713" SecMWC713
     CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
     CreateShortcut  "$SMPROGRAMS\$StartMenuFolder\MWC713.lnk" "$INSTDIR\mwc713.exe" "--config $PROFILE\mwc-qt-wallet\wallet713v2.toml"
   !insertmacro MUI_STARTMENU_WRITE_END
-
-
-; install MSVC redist, needed for mwc713
-  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\${ARCH_SHORT}" \
-                     "Installed"
-  StrCmp $1 1 skip_vcredist
-  ExecWait 'payload\${ARCH_SHORT}\vc_redist.${ARCH_SHORT}.exe /quiet'
-
-  skip_vcredist:
-    
 SectionEnd
 
 
@@ -146,4 +151,5 @@ SectionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecMain} $(DESC_SecMain)
   !insertmacro MUI_DESCRIPTION_TEXT ${SecMWC713} $(DESC_SecMWC713)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecPrerequisites} $(DESC_SecPrerequisites)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
