@@ -25,8 +25,10 @@ TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
+    echo "#define BUILD_VERSION  \"`cat $TAG_FOR_BUILD_FILE`\"" > build_version.h
+else
+    echo "#define BUILD_VERSION  \"1.0-6.beta.$1\"" > build_version.h
 fi
-echo "#define BUILD_VERSION  \"1.0-5.beta.$1\"" > build_version.h
 qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 make
 

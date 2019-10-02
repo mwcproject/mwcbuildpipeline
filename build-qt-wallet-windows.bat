@@ -31,8 +31,11 @@ set TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
 IF EXIST "$TAG_FOR_BUILD_FILE" (
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
+    echo #define BUILD_VERSION "`cat $TAG_FOR_BUILD_FILE`" > build_version.h
 )
-cargo build --release
+else (
+    echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
+)
 cd ..
 xcopy ..\nsis\resources\logo.ico .
 echo #define BUILD_VERSION "1.0-5.beta.%1" > build_version.h
