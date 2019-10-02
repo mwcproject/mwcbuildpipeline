@@ -15,7 +15,7 @@ mkdir target
 
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
-set TAG_FOR_BUILD_FILE=../mwc713.version
+set TAG_FOR_BUILD_FILE=%cd%\..\mwc713.version
 IF EXIST "$TAG_FOR_BUILD_FILE" (
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
@@ -27,7 +27,7 @@ set PATH=%cd%\Qt\Tools\mingw73_64\bin;%cd%\Qt\5.13.0\mingw73_64\bin;%PATH%
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
-set TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
+set TAG_FOR_BUILD_FILE=%cd%\..\mwc-qt-wallet.version
 IF EXIST "$TAG_FOR_BUILD_FILE" (
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
@@ -38,7 +38,6 @@ else (
 )
 cd ..
 xcopy ..\nsis\resources\logo.ico .
-echo #define BUILD_VERSION "1.0-5.beta.%1" > build_version.h
 qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
 make -j 8
