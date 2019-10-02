@@ -35,7 +35,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout %QT_WALLET_VERSION%`;
     echo #define BUILD_VERSION "%QT_WALLET_VERSION%" > build_version.h
 )
-else (
+ELSE (
     echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
 )
 cd ..
