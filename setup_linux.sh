@@ -7,7 +7,7 @@ sudo apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-6
 # Add deps
 sudo apt update
 sudo apt-get install expect
-sudo apt install clang-6.0 git curl make build-essential libgl1-mesa-dev openssl libssl1.0-dev mesa-utils -y
+sudo apt install clang-6.0 git curl make build-essential libgl1-mesa-dev openssl libssl-dev -y
 
 # Update rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
