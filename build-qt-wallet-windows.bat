@@ -17,8 +17,9 @@ git clone https://github.com/mwcproject/mwc713
 cd mwc713
 set TAG_FOR_BUILD_FILE=..\mwc713.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
-    git fetch && git fetch --tags;
-    git checkout `cat %TAG_FOR_BUILD_FILE%`;
+    set /p VERSION=<..\mwc713.version
+    git fetch --all
+    git checkout %VERSION%
 )
 cargo build --release
 cd ..
@@ -30,7 +31,7 @@ cd mwc-qt-wallet
 set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p VERSION=<..\mwc-qt-wallet.version
-    git fetch && git fetch --tags;
+    git fetch --all
     git checkout %VERSION%`;
     echo #define BUILD_VERSION "%VERSION%" > build_version.h
 )
