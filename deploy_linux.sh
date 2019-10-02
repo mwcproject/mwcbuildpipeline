@@ -1,7 +1,14 @@
 #!/bin/sh
 
 chmod 400 ./uploader.pem
-DPKG_NAME=mwc-qt-wallet_1.0-5.beta.$1
+
+TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+VERSION=`cat $TAG_FOR_BUILD_FILE`
+DPKG_NAME=mwc-qt-wallet_$VERSION
+else
+DPKG_NAME=mwc-qt-wallet_1.0-6.beta.$1
+fi
 echo "md5sum = `md5sum target/*.deb`";
 mkdir -p ~/.ssh
 DATE=`date +"%m-%d-%y"`
