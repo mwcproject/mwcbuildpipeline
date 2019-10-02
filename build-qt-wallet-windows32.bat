@@ -32,10 +32,10 @@ git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
 set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
-    set /p VERSION=<..\mwc-qt-wallet.version
+    set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
     git fetch --all
-    git checkout %VERSION%`;
-    echo #define BUILD_VERSION "%VERSION%" > build_version.h
+    git checkout %QT_WALLET_VERSION%`;
+    echo #define BUILD_VERSION "%QT_WALLET_VERSION%" > build_version.h
 )
 else (
     echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
