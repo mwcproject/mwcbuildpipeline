@@ -16,7 +16,7 @@ for /f "skip=1 tokens=1-6 delims= " %%a in ('wmic path Win32_LocalTime Get Day^,
 set TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
 set /p VERSION=<mwc-qt-wallet.version
-set NAME="mwc-qt-wallet-%VERSION%-win32-setup.exe"
+set NAME=mwc-qt-wallet-%VERSION-win32-setup.exe
 ) ELSE (
 set NAME=mwc-qt-wallet-1.0-6.beta.%1-win32-setup.exe
 )
