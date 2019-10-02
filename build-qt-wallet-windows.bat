@@ -32,7 +32,7 @@ set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
     git fetch --all
-    git checkout %QT_WALLET_VERSION%`;
+    git checkout %QT_WALLET_VERSION%
     echo #define BUILD_VERSION "%QT_WALLET_VERSION%" > build_version.h
 )
 ELSE (
