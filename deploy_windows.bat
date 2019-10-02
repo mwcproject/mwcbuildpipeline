@@ -15,11 +15,12 @@ for /f "skip=1 tokens=1-6 delims= " %%a in ('wmic path Win32_LocalTime Get Day^,
 
 set TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
-set /p QT_WALLET_VERSION=<mwc-qt-wallet.version
-set NAME=mwc-qt-wallet-%QT_WALLET_VERSION%-win64-setup.exe
+set /p VERSION=<mwc-qt-wallet.version
+set NAME="mwc-qt-wallet-%VERSION%-win64-setup.exe"
 ) ELSE (
 set NAME=mwc-qt-wallet-1.0-6.beta.%1-win64-setup.exe
 )
+echo "Using %NAME%"
 ls -l target\\nsis
 copy target\nsis\mwc-qt-wallet-1.0.6-win64-setup.exe target\nsis\%NAME%
 scp -i uploader.pem -o 'StrictHostKeyChecking no' target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%NAME%
