@@ -9,6 +9,11 @@ mkdir -p target
 # First build mwc713 statically
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
+TAG_FOR_BUILD_FILE=../mwc713.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+fi
 ./build_static.sh 
 cd ..
 
@@ -16,6 +21,11 @@ cd ..
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
+TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+fi
 echo "#define BUILD_VERSION  \"1.0-5.beta.$1\"" > build_version.h
 qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 make
