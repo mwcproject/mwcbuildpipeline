@@ -1,10 +1,9 @@
+setlocal enableextensions enabledelayedexpansion
+
 echo "Param passed in is %1"
 md5sum target\\nsis\\mwc-qt-wallet-1.0.6-win32-setup.exe
 mkdir %systemdrive%%homepath%\.ssh
 echo ftp.mwc.mw ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFCzEhIbZcESW50l2Mh9dFIeObKrDBNwZm+FPZzL3tp7U8xkcH0U7rx87cMDUKUfJnO8soJ3yqxf1RXOrFkXKQM= >> %systemdrive%%homepath%\.ssh\known_hosts
-
-
-SETLOCAL EnableDelayedExpansion
 
 for /f "skip=1 tokens=1-6 delims= " %%a in ('wmic path Win32_LocalTime Get Day^,Hour^,Minute^,Month^,Second^,Year /Format:table') do (
     IF NOT "%%~f"=="" (
@@ -16,10 +15,11 @@ for /f "skip=1 tokens=1-6 delims= " %%a in ('wmic path Win32_LocalTime Get Day^,
 set TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
 set /p VERSION=<mwc-qt-wallet.version
-set NAME=mwc-qt-wallet-%VERSION-win32-setup.exe
+set NAME=mwc-qt-wallet-!VERSION!-win32-setup.exe
 ) ELSE (
 set NAME=mwc-qt-wallet-1.0-6.beta.%1-win32-setup.exe
 )
 echo "Using %NAME%"
 copy target\nsis\mwc-qt-wallet-1.0.6-win32-setup.exe target\nsis\%NAME%
 scp -i uploader.pem -o 'StrictHostKeyChecking no' target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%NAME%
+endlocal

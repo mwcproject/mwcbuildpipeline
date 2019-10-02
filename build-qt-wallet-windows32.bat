@@ -1,3 +1,5 @@
+setlocal enableextensions enabledelayedexpansion
+
 del /s /q target
 rmdir /s /q target
 del /s /q mwc713
@@ -19,7 +21,7 @@ set TAG_FOR_BUILD_FILE=..\mwc713.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p VERSION=<..\mwc713.version
     git fetch --all
-    git checkout %VERSION%
+    git checkout !VERSION!
 )
 cargo +stable-i686-pc-windows-msvc build --release
 cd ..
@@ -31,9 +33,10 @@ cd mwc-qt-wallet
 set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
+    echo "Using !QT_WALLET_VERSION!"
     git fetch --all
-    git checkout %QT_WALLET_VERSION%
-    echo #define BUILD_VERSION "%QT_WALLET_VERSION%" > build_version.h
+    git checkout !QT_WALLET_VERSION!
+    echo #define BUILD_VERSION "!QT_WALLET_VERSION!" > build_version.h
 ) ELSE (
     echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
 )
@@ -61,4 +64,4 @@ ls target\nsis\payload\x86
 
 cd target/nsis
 makensis x86.nsi
-
+endlocal
