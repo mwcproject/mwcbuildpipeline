@@ -18,6 +18,7 @@ cd mwc713
 set TAG_FOR_BUILD_FILE=..\mwc713.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p VERSION=<..\mwc713.version
+    echo "%VERSION%"
     git fetch --all
     git checkout %VERSION%
 )
@@ -31,6 +32,7 @@ cd mwc-qt-wallet
 set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
+    echo "Using %QT_WALLET_VERSION%"
     git fetch --all
     git checkout %QT_WALLET_VERSION%
     echo #define BUILD_VERSION "%QT_WALLET_VERSION%" > build_version.h
