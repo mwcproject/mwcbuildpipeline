@@ -14,7 +14,7 @@ schedules:
 jobs:
 - job: linux
   pool:
-    vmImage: ubuntu-latest
+    vmImage: ubuntu-16.04
   steps:
     - script: './setup_linux.sh'
     - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
