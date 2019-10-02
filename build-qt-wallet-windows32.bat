@@ -21,8 +21,6 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout %VERSION%
 )
-cargo build --release
-cd ..
 cargo +stable-i686-pc-windows-msvc build --release
 cd ..
 
