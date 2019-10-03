@@ -96,11 +96,11 @@ cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 cd tmp
 tar cvf ../mwc-qt-wallet-$VERSION.tar mwc-qt-wallet-$VERSION
 gzip ../mwc-qt-wallet-$VERSION.tar
+cp ../mwc-qt-wallet-$VERSION.tar.gz ~
 cd ../..
 
 # build RPM
 cp rpmbuild.tar ~
-cp mwc-qt-wallet-$VERSION.tar.gz ~
 cd ~
 rm -rf rpmbuild
 tar xvf rpmbuild.tar
