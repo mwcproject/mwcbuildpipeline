@@ -11,10 +11,9 @@ DPKG_NAME=mwc-qt-wallet_1.0-6.beta.$1
 fi
 echo "md5sum = `md5sum target/*.deb`";
 mkdir -p ~/.ssh
-DATE=`date +"%m-%d-%y"`
-cp target/*.deb $DPKG_NAME-linux64-$DATE.deb
-cp target/*.tar.gz "$DPKG_NAME"_linux64-$DATE.tar.gz
-scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $DPKG_NAME-linux64-$DATE.deb uploader\@3.228.53.68:/home/uploader/
-scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME"_linux64-$DATE.tar.gz uploader\@3.228.53.68:/home/uploader/
+cp target/*.deb $DPKG_NAME-linux64.deb
+cp target/*.tar.gz "$DPKG_NAME"_linux64.tar.gz
+scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $DPKG_NAME-linux64.deb uploader\@3.228.53.68:/home/uploader/
+scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME"_linux64.tar.gz uploader\@3.228.53.68:/home/uploader/
 scp -i ./uploader.pem -o 'StrictHostKeyChecking no' ~/rpmbuild/RPMS/x86_64/*.rpm uploader\@3.228.53.68:/home/uploader/
 
