@@ -42,6 +42,8 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
     set PATCH_NUMBER="6.beta.%1"
 )
+
+echo "Using %PATCH_NUMBER%"
 xcopy ..\nsis\resources\logo.ico .
 qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
