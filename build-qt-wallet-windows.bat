@@ -33,13 +33,18 @@ cd mwc-qt-wallet
 set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
+    set PATCH_NUMBER="5"
     echo "Using !QT_WALLET_VERSION!"
     git fetch --all
     git checkout !QT_WALLET_VERSION!
     echo #define BUILD_VERSION "!QT_WALLET_VERSION!" > build_version.h
 ) ELSE (
     echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
+    set PATCH_NUMBER ="6.beta.%1";
 )
+
+echo "Using patch number = %PATCH_NUMBER%"
+
 xcopy ..\nsis\resources\logo.ico .
 qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
@@ -58,6 +63,8 @@ xcopy nsis\payload\x64\* target\nsis\payload\x64
 
 xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x64
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
+
+powershell -Command "(gc target\nsis\include\config.nsh) -replace 'REPLACE_VERSION_PATCH', '%PATCH_NUMBER%' | Out-File -encoding ASCII target\nsis\include\config.nsh"
 
 windeployqt target\nsis\payload\x64\mwc-qt-wallet.exe
 
