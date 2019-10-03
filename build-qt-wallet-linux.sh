@@ -1,9 +1,13 @@
 #!/bin/sh
 
 VERSION=1.0-6.beta.$1
+VERSION_NAME=1.0
+RELEASE_NAME=6.beta.$1
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 VERSION=`cat $TAG_FOR_BUILD_FILE`;
+VERSION_NAME=1.0
+RELEASE_NAME=5
 fi
 
 # Clean everything.
@@ -92,6 +96,29 @@ cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 cd tmp
 tar cvf ../mwc-qt-wallet-$VERSION.tar mwc-qt-wallet-$VERSION
 gzip ../mwc-qt-wallet-$VERSION.tar
+cd ../..
+
+# build RPM
+cp rpmbuild.tar ~
+cp mwc-qt-wallet-$VERSION.tar.gz ~
+cd ~
+rm -rf rpmbuild
+tar xvf rpmbuild.tar
+cp mwc-qt-wallet-$VERSION.tar.gz rpmbuild/SOURCES/mwc-qt-wallet-1.0.tar.gz
+cd rpmbuild/SOURCES
+gzip -dc *.gz | tar xvf -
+rm *.gz
+mv * mwc-qt-wallet-1.0
+tar cvf mwc-qt-wallet-1.0.tar mwc-qt-wallet-1.0
+gzip mwc-qt-wallet-1.0.tar
+cd ../..
+cp rpmbuild/SPECS/mwc-qt-wallet.spec.template rpmbuild/SPECS/mwc-qt-wallet.spec
+
+echo "relname=$RELEASE_NAME"
+export RELEASE_NAME VERSION_NAME
+perl -pi -e 's/RELEASE_NAME/$ENV{RELEASE_NAME}/g' rpmbuild/SPECS/mwc-qt-wallet.spec
+perl -pi -e 's/VERSION_NAME/$ENV{VERSION_NAME}/g' rpmbuild/SPECS/mwc-qt-wallet.spec
+rpmbuild -bb rpmbuild/SPECS/mwc-qt-wallet.spec
 
 echo "Build Complete";
 
