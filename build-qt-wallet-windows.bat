@@ -40,7 +40,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     echo #define BUILD_VERSION "!QT_WALLET_VERSION!" > build_version.h
 ) ELSE (
     echo #define BUILD_VERSION "1.0-6.beta.%1" > build_version.h
-    set PATCH_NUMBER ="6.beta.%1";
+    set PATCH_NUMBER="6.beta.%1"
 )
 
 echo "Using patch number = %PATCH_NUMBER%"
