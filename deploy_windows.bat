@@ -21,6 +21,5 @@ set NAME=mwc-qt-wallet-1.0-6.beta.%1-win64-setup.exe
 )
 echo "Using %NAME%"
 ls -l target\\nsis
-copy target\nsis\mwc-qt-wallet*-setup.exe target\nsis\%NAME%
 scp -i uploader.pem -o 'StrictHostKeyChecking no' target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%NAME%
 endlocal
