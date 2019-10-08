@@ -5,14 +5,34 @@ VERSION_NAME=1.0
 RELEASE_NAME=6.beta.$1
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
-VERSION=`cat $TAG_FOR_BUILD_FILE`;
-VERSION_NAME=1.0
-RELEASE_NAME=5
+    VERSION=`cat $TAG_FOR_BUILD_FILE`;
+    VERSION_NAME=1.0
+    RELEASE_NAME=5
 fi
 
 # Clean everything.
-rm -rf mwc713 mwc-qt-wallet target/*
+rm -rf mwc713 mwc-node mwc-qt-wallet target/*
 mkdir -p target
+
+# Build mwc-node
+git clone https://github.com/mwcproject/mwc-node
+cd mwc-node
+
+TAG_FOR_BUILD_FILE=../mwc-node.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+fi
+
+./build_static.sh
+
+FILE=target/release/mwc
+if [ ! -f "$FILE" ]; then
+    echo "ERROR: $FILE does not exist";
+    exit 1;
+fi
+
+cd ..
 
 # First build mwc713 statically
 git clone https://github.com/mwcproject/mwc713
@@ -70,6 +90,7 @@ mkdir -p target/$DPKG_NAME/usr/local/bin/
 mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwc713 target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
+cp mwc-node/target/release/mwc  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 
 # Make debain package
 cd target
@@ -90,6 +111,7 @@ QT_WALLET_DIRECTORY=tmp/mwc-qt-wallet-$VERSION
 mkdir -p tmp/mwc-qt-wallet-$VERSION
 cp ../mwc-qt-wallet/mwc-qt-wallet $QT_WALLET_DIRECTORY/mwc-qt-wallet.bin
 cp ../mwc713/target/release/mwc713 $QT_WALLET_DIRECTORY
+cp ../mwc-node/target/release/mwc $QT_WALLET_DIRECTORY
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
 cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 

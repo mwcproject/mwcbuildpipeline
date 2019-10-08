@@ -3,8 +3,26 @@
 . ~/.cargo/env
 
 # Clean everything. This is a release build so we can wait
-rm -rf mwc713 mwc-qt-wallet target/*
+rm -rf mwc713 mwc-node mwc-qt-wallet target/*
 mkdir -p target
+
+# Build mwc-node
+git clone https://github.com/mwcproject/mwc-node
+cd mwc-node
+TAG_FOR_BUILD_FILE=../mwc-node.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+fi
+./build_static.sh
+
+FILE=target/release/mwc-node
+if [ ! -f "$FILE" ]; then
+    echo "ERROR: $FILE does not exist";
+    exit 1;
+fi
+
+cd ..
 
 # First build mwc713 statically
 git clone https://github.com/mwcproject/mwc713
@@ -15,6 +33,13 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 ./build_static.sh 
+
+FILE=target/release/mwc713
+if [ ! -f "$FILE" ]; then
+    echo "ERROR: $FILE does not exist";
+    exit 1;
+fi
+
 cd ..
 
 
@@ -33,6 +58,7 @@ qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 make
 
 # Finally prep dmg
+cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 macdeployqt mwc-qt-wallet.app -appstore-compliant
 

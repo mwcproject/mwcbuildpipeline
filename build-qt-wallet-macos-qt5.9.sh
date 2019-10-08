@@ -1,15 +1,20 @@
 #!/bin/sh
 
 # Clean everything. This is a release build so we can wait
-rm -rf mwc713 mwc-qt-wallet target/*
+rm -rf mwc713 mwc-node mwc-qt-wallet target/*
 mkdir -p target
+
+# Build mwc-node
+git clone https://github.com/mwcproject/mwc-node
+cd mwc-node
+./build_static.sh 
+cd ..
 
 # First build mwc713 statically
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
 ./build_static.sh 
 cd ..
-
 
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
@@ -20,6 +25,7 @@ cd mwc-qt-wallet
 make
 
 # Finally prep dmg
+cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 ~/Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant
 
