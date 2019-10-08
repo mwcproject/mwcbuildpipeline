@@ -16,7 +16,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 fi
 ./build_static.sh
 
-FILE=target/release/mwc-node
+FILE=target/release/mwc
 if [ ! -f "$FILE" ]; then
     echo "ERROR: $FILE does not exist";
     exit 1;
