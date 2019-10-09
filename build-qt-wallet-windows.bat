@@ -20,7 +20,6 @@ git clone https://github.com/mwcproject/mwc-node
 cd mwc-node
 
 git apply .ci/win.patch
-choco install -y llvm
 
 set TAG_FOR_BUILD_FILE=..\mwc-node.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (

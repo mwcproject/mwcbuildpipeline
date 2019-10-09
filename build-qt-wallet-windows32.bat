@@ -21,7 +21,6 @@ git clone https://github.com/mwcproject/mwc-node
 cd mwc-node
 
 git apply .ci/win.patch
-choco install -y llvm
 
 set TAG_FOR_BUILD_FILE=..\mwc-node.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
@@ -29,7 +28,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-cargo +stable-i686-pc-windows-msvc build --release
+cargo +1.37.0-i686-pc-windows-msvc build --release
 cd ..
 
 
@@ -41,7 +40,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-cargo +stable-i686-pc-windows-msvc build --release
+cargo +1.37.0-i686-pc-windows-msvc build --release
 cd ..
 
 set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.0\mingw73_32\bin;%PATH%
