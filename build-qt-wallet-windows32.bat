@@ -31,7 +31,6 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 cargo +1.37.0-i686-pc-windows-msvc build --release
 cd ..
 
-
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
 set TAG_FOR_BUILD_FILE=..\mwc713.version
