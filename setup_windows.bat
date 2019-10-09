@@ -7,3 +7,4 @@ cp mwcbuilder-win64-helpers/pscp.exe .
 
 rm -rf mwcbuilder-win64-helpers
 
+rustup override set 1.37.0
