@@ -9,8 +9,13 @@ sudo apt update
 sudo apt-get install expect
 sudo apt install clang-6.0 git curl make build-essential libgl1-mesa-dev openssl libssl-dev -y
 
+sudo apt-get update -yqq
+sudo apt-get install -yqq --no-install-recommends libncursesw5-dev
+
+
 # Update rust
 curl https://sh.rustup.rs -sSf | bash -s -- -y
+~/.cargo/bin/rustup override set 1.37.0
 
 sudo ln -s ~/.cargo/bin/cargo /usr/bin/cargo
 

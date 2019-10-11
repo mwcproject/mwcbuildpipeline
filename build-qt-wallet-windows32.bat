@@ -2,6 +2,8 @@ setlocal enableextensions enabledelayedexpansion
 
 del /s /q target
 rmdir /s /q target
+del /s /q mwc-node
+rmdir /s /q mwc-node
 del /s /q mwc713
 rmdir /s /q mwc713
 del /s /q mwc-qt-wallet
@@ -15,6 +17,20 @@ set OPENSSL_STATIC="yes"
 
 mkdir target
 
+git clone https://github.com/mwcproject/mwc-node
+cd mwc-node
+
+git apply .ci/win.patch
+
+set TAG_FOR_BUILD_FILE=..\mwc-node.version
+IF EXIST "%TAG_FOR_BUILD_FILE%" (
+    set /p VERSION=<..\mwc-node.version
+    git fetch --all
+    git checkout !VERSION!
+)
+cargo +1.37.0-i686-pc-windows-msvc build --release
+cd ..
+
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
 set TAG_FOR_BUILD_FILE=..\mwc713.version
@@ -23,7 +39,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-cargo +stable-i686-pc-windows-msvc build --release
+cargo +1.37.0-i686-pc-windows-msvc build --release
 cd ..
 
 set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.0\mingw73_32\bin;%PATH%
@@ -61,6 +77,7 @@ xcopy nsis\include\lang target\nsis\include\lang
 xcopy nsis\payload\x86\* target\nsis\payload\x86
 
 xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x86
+xcopy mwc-node\target\release\mwc.exe target\nsis\payload\x86
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x86
 
 powershell -Command "(gc target\nsis\include\config.nsh) -replace 'REPLACE_VERSION_PATCH', '%PATCH_NUMBER%' | Out-File -encoding ASCII target\nsis\include\config.nsh"

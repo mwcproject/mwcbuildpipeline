@@ -10,4 +10,9 @@ cp mwcbuilder-win32-helpers/pscp.exe .
 
 rm -rf mwcbuilder-win32-helpers
 
-rustup install stable-i686-pc-windows-msvc
+choco install -y llvm
+
+rustup install 1.37.0-i686-pc-windows-msvc
+
+rem rustup install stable-i686-pc-windows-msvc
+rem rustup override set 1.37.0-i686-pc-windows-msvc
