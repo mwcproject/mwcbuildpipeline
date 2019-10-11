@@ -1,5 +1,12 @@
 #!/bin/sh
 
+if [ $# -eq 0 ]
+then
+    echo "not signing"
+else
+    echo "building with signing and notary";
+fi
+
 # Clean everything. This is a release build so we can wait
 rm -rf mwc713 mwc-qt-wallet target/*
 mkdir -p target
@@ -7,6 +14,11 @@ mkdir -p target
 # First build mwc713 statically
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
+TAG_FOR_BUILD_FILE=../mwc713.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+fi
 ./build_static.sh 
 cd ..
 
@@ -15,6 +27,14 @@ cd ..
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cp fix_macos_makefile.sh mwc-qt-wallet
 cd mwc-qt-wallet
+TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+    echo "#define BUILD_VERSION  \"`cat $TAG_FOR_BUILD_FILE`\"" > build_version.h
+else
+    echo "#define BUILD_VERSION  \"1.0-6.beta.$1\"" > build_version.h
+fi
 ~/Qt/5.9/clang_64/bin/qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 ./fix_macos_makefile.sh
 make
@@ -23,7 +43,7 @@ make
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 ~/Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant
 
-if [ -z "$1" ]
+if [ $# -eq 0 ]
 then
    # We can't sign so just build dmg
    hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet
