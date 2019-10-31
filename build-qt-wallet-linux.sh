@@ -7,7 +7,7 @@ TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     VERSION=`cat $TAG_FOR_BUILD_FILE`;
     VERSION_NAME=1.0
-    RELEASE_NAME=5
+    RELEASE_NAME=6
 fi
 
 # Clean everything.
