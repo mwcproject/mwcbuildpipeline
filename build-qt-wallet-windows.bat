@@ -50,7 +50,7 @@ cd mwc-qt-wallet
 set TAG_FOR_BUILD_FILE=..\mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
-    set PATCH_NUMBER="5"
+    set PATCH_NUMBER="6"
     echo "Using !QT_WALLET_VERSION!"
     git fetch --all
     git checkout !QT_WALLET_VERSION!
