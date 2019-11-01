@@ -1,13 +1,13 @@
 #!/bin/sh
 
-VERSION=1.0-6.beta.$1
+VERSION=1.0-7.beta.$1
 VERSION_NAME=1.0
-RELEASE_NAME=6.beta.$1
+RELEASE_NAME=7.beta.$1
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     VERSION=`cat $TAG_FOR_BUILD_FILE`;
     VERSION_NAME=1.0
-    RELEASE_NAME=6
+    RELEASE_NAME=7
 fi
 
 # Clean everything.
