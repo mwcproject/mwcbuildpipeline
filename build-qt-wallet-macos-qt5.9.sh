@@ -14,7 +14,19 @@ mkdir -p target
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
 cd mwc-node
-./build_static.sh 
+TAG_FOR_BUILD_FILE=../mwc-node.version
+if [ -f "$TAG_FOR_BUILD_FILE" ]; then
+    git fetch && git fetch --tags;
+    git checkout `cat $TAG_FOR_BUILD_FILE`;
+fi
+./build_static.sh
+
+FILE=target/release/mwc
+if [ ! -f "$FILE" ]; then
+    echo "ERROR: $FILE does not exist";
+    exit 1;
+fi
+
 cd ..
 
 # First build mwc713 statically
