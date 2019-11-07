@@ -9,4 +9,4 @@ rm -rf mwcbuilder-win64-helpers
 
 choco install -y llvm
 
-rustup override set 1.37.0
+rem rustup override set 1.37.0

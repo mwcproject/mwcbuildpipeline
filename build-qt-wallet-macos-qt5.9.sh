@@ -44,6 +44,7 @@ cd ..
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cp fix_macos_makefile.sh mwc-qt-wallet
 cd mwc-qt-wallet
+# git checkout  2019_09_cold_wallet
 TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
