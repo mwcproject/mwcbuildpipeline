@@ -55,7 +55,7 @@ else
 fi
 ~/Qt/5.9/clang_64/bin/qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 ./fix_macos_makefile.sh
-make
+make -j 16
 
 # Finally prep dmg
 cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
