@@ -19,14 +19,14 @@ mkdir target
 git clone https://github.com/mwcproject/mwc-node
 cd mwc-node
 
-git apply .ci/win.patch
-
 set TAG_FOR_BUILD_FILE=..\mwc-node.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p VERSION=<..\mwc-node.version
     git fetch --all
     git checkout !VERSION!
 )
+git apply .ci/win.patch
+
 cargo build --release
 cd ..
 
