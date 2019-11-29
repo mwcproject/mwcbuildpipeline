@@ -42,7 +42,6 @@ fi
 
 cd ..
 
-
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
@@ -54,13 +53,13 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 else
     echo "#define BUILD_VERSION  \"1.0-9.beta.$1\"" > build_version.h
 fi
-qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
-make
+../Qt/5.9/clang_64/bin/qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
+make -j 8
 
 # Finally prep dmg
 cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
-macdeployqt mwc-qt-wallet.app -appstore-compliant
+../Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 
 if [ -z "$2" ]
 then
