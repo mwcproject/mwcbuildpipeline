@@ -30,7 +30,7 @@ jobs:
   displayName: 'MacOSX'
 - job: windows
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-latest
   steps:
     - script: 'setup_windows.bat'
     - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
