@@ -29,14 +29,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 
-# To test if cpu type is there, will revert back
-# ./build_static.sh
-cargo clean
-export OPENSSL_LIB_DIR=/usr/local/opt/openssl@1.1/lib/;
-export OPENSSL_INCLUDE_DIR=/usr/local/opt/openssl@1.1/include;
-export OPENSSL_STATIC=yes
-
-cargo build --release -v
+./build_static.sh
 
 FILE=target/release/mwc
 if [ ! -f "$FILE" ]; then
