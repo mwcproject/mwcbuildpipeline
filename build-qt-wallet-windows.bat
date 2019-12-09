@@ -27,7 +27,8 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 )
 git apply .ci/win.patch
 
-cargo build --release
+rem cargo build --release
+cargo rustc --release -v -- -C target-cpu=core2
 cd ..
 
 
@@ -40,7 +41,9 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-cargo build --release
+rem cargo build --release
+cargo rustc --release -v -- -C target-cpu=core2
+
 cd ..
 
 set PATH=%cd%\Qt\Tools\mingw73_64\bin;%cd%\Qt\5.13.0\mingw73_64\bin;%PATH%

@@ -14,6 +14,11 @@ fi
 rm -rf mwc713 mwc-node mwc-qt-wallet target/*
 mkdir -p target
 
+# Let's build with minimal instaructs set, build will be compartible with all CPUs
+# We can compromize performace for qt wallet.
+# Intel Core 2 CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3 and SSSE3 instruction set support.
+export RUSTFLAGS="-C target-cpu=core2"
+
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
 cd mwc-node
@@ -24,7 +29,14 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 
-./build_static.sh
+# To test if cpu type is there, will revert back
+# ./build_static.sh
+cargo clean
+export OPENSSL_LIB_DIR=/usr/local/opt/openssl@1.1/lib/;
+export OPENSSL_INCLUDE_DIR=/usr/local/opt/openssl@1.1/include;
+export OPENSSL_STATIC=yes
+
+cargo build --release -v
 
 FILE=target/release/mwc
 if [ ! -f "$FILE" ]; then
