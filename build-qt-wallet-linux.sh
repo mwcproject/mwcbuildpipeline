@@ -14,10 +14,6 @@ fi
 rm -rf mwc713 mwc-node mwc-qt-wallet target/*
 mkdir -p target
 
-# Let's build with minimal instaructs set, build will be compartible with all CPUs
-# We can compromize performace for qt wallet
-export RUSTFLAGS="-Ctarget-cpu=x86-64"
-
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
 cd mwc-node

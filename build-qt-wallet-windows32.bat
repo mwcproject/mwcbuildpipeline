@@ -17,10 +17,6 @@ set OPENSSL_STATIC="yes"
 
 mkdir target
 
-# Let's build with minimal instaructs set, build will be compartible with all CPUs
-# We can compromize performace for qt wallet
-set RUSTFLAGS="-Ctarget-cpu=i686"
-
 git clone https://github.com/mwcproject/mwc-node
 cd mwc-node
 
