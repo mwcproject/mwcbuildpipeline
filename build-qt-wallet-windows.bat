@@ -27,8 +27,8 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 )
 git apply .ci/win.patch
 
-set RUSTFLAGS=-Ctarget-cpu=coooore2
-cargo build --release -v
+set RUSTFLAGS=-Ctarget-cpu=core2
+cargo build --release
 cd ..
 
 
