@@ -28,7 +28,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 git apply .ci/win.patch
 
 rem cargo build --release
-cargo rustc --release -v -- -Ctarget-cpu=core2
+cargo rustc --release -v -- -Ctarget-cpu=coraaaaaaaaaaaaaaaae2
 cd ..
 
 
