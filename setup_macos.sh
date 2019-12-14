@@ -16,3 +16,7 @@ grep -rl kbay . | grep prl | xargs sed -i '' 's/-F\/Users\/kbay\/Qt\/5.9.8\/clan
 # 1. Remove the sed command
 # 2. Try to build
 # 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
+
+# If is what make fix expect to see
+mv Qt/5.9.8  Qt/5.9
+

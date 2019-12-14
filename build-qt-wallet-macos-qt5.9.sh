@@ -41,6 +41,11 @@ fi
 cd ..
 
 # Second build mwc-qt-wallet
+
+# prepare for QT fix
+export QT_INSTALL_PATH="$HOME/Qt"
+echo "QT_INSTALL_PATH=$QT_INSTALL_PATH"
+
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cp fix_macos_makefile.sh mwc-qt-wallet
 cd mwc-qt-wallet
