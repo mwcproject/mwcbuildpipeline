@@ -20,7 +20,9 @@ mkdir -p target
 #
 # Get the full list at:
 #   rustc -C target-cpu=help
-export RUSTFLAGS="-C target-cpu=x86-64"
+export RUSTFLAGS="-C target-cpu=core2"
+export CPPFLAGS="-march=core2 -mcpu=core2"
+export CLAGS="-march=core2 -mcpu=core2"
 
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
