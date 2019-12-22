@@ -22,7 +22,7 @@ mkdir -p target
 #   rustc -C target-cpu=help
 export RUSTFLAGS="-C target-cpu=core2"
 export CPPFLAGS="-march=core2 -mcpu=core2"
-export CLAGS="-march=core2 -mcpu=core2"
+export CFLAGS="-march=core2 -mcpu=core2"
 
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
