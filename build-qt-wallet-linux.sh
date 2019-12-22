@@ -19,7 +19,7 @@ mkdir -p target
 # athlon64 is the minimal CPU for x86_64 bits
 #
 # Get the full list at:
-# rustc -C target-cpu=help
+#   rustc -C target-cpu=help
 export RUSTFLAGS="-C target-cpu=athlon64"
 
 # Build mwc-node
