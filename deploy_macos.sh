@@ -7,7 +7,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 VERSION=`cat $TAG_FOR_BUILD_FILE`
 FILE_PREFIX=mwc-qt-wallet_$VERSION
 else
-FILE_PREFIX=mwc-qt-wallet_1.0-11.beta.$1
+FILE_PREFIX=mwc-qt-wallet_1.0-12.beta.$1
 fi
 
 cp target/*.dmg $FILE_PREFIX-macosx.dmg;

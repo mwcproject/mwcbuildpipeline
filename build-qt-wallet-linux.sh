@@ -1,13 +1,13 @@
 #!/bin/sh
 
-VERSION=1.0-11.beta.$1
+VERSION=1.0-12.beta.$1
 VERSION_NAME=1.0
-RELEASE_NAME=11.beta.$1
+RELEASE_NAME=12.beta.$1
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     VERSION=`cat $TAG_FOR_BUILD_FILE`;
     VERSION_NAME=1.0
-    RELEASE_NAME=11
+    RELEASE_NAME=12
 fi
 
 # Clean everything.
@@ -16,8 +16,11 @@ mkdir -p target
 
 # Let's build with minimal instaructs set, build will be compartible with all CPUs
 # We can compromize performace for qt wallet.
-# Intel Core 2 CPU with 64-bit extensions, MMX, SSE, SSE2, SSE3 and SSSE3 instruction set support.
-export RUSTFLAGS="-C target-cpu=core2"
+# athlon64 is the minimal CPU for x86_64 bits
+#
+# Get the full list at:
+# rustc -C target-cpu=help
+export RUSTFLAGS="-C target-cpu=athlon64"
 
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
