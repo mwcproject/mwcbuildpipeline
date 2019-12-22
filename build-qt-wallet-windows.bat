@@ -27,7 +27,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 )
 git apply .ci/win.patch
 
-set RUSTFLAGS=-Ctarget-cpu=athlon64
+set RUSTFLAGS=-Ctarget-cpu=x86-64
 cargo build --release
 cd ..
 
