@@ -20,6 +20,10 @@ mkdir -p target
 #
 # Get the full list at:
 #   rustc -C target-cpu=help
+#
+# CFlags are appilcable to C code builds. Rust normally using cc::Build and it use cc compiler that backed by gcc
+# cc compiler accept CFLAGS.
+# > man cc    - for details
 export RUSTFLAGS="-C target-cpu=core2"
 export CPPFLAGS="-march=core2 -mcpu=core2"
 export CFLAGS="-march=core2 -mcpu=core2"
