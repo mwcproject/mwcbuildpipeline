@@ -1,7 +1,7 @@
 setlocal enableextensions enabledelayedexpansion
 
 echo "Param passed in is %1"
-md5sum target\nsis\mwc-qt-wallet*-setup.exe
+md5sum target\\nsis\\mwc-qt-wallet*-setup.exe
 mkdir %systemdrive%%homepath%\.ssh
 echo ftp.mwc.mw ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFCzEhIbZcESW50l2Mh9dFIeObKrDBNwZm+FPZzL3tp7U8xkcH0U7rx87cMDUKUfJnO8soJ3yqxf1RXOrFkXKQM= >> %systemdrive%%homepath%\.ssh\known_hosts
 
