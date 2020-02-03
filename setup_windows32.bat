@@ -11,8 +11,9 @@ cp mwcbuilder-win32-helpers/pscp.exe .
 rm -rf mwcbuilder-win32-helpers
 
 choco install -y llvm
+choco install rust
 
-rustup install 1.37.0-i686-pc-windows-msvc
+rem rustup install 1.37.0-i686-pc-windows-msvc
 
 rem rustup install stable-i686-pc-windows-msvc
 rem rustup override set 1.37.0-i686-pc-windows-msvc
