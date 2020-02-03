@@ -28,7 +28,8 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 git apply .ci/win.patch
-cargo +1.37.0-i686-pc-windows-msvc build --release
+rem cargo +1.37.0-i686-pc-windows-msvc build --release
+cargo +stable-i686-pc-windows-msvc build --release
 cd ..
 
 git clone https://github.com/mwcproject/mwc713
@@ -39,7 +40,8 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-cargo +1.37.0-i686-pc-windows-msvc build --release
+rem cargo +1.37.0-i686-pc-windows-msvc build --release
+cargo +stable-i686-pc-windows-msvc build --release
 cd ..
 
 set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.0\mingw73_32\bin;%PATH%
