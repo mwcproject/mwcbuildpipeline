@@ -24,3 +24,5 @@ git clone https://github.com/mwcproject/mwcbuilder-linux-helpers
 cat mwcbuilder-linux-helpers/QT-segment* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-linux-helpers
 
+sudo apt-get purge -yqq clang-8 clang-9 clangd-8 clangd-9 libclang-common-8-dev libclang-common-9-dev libclang1-8 libclang-cpp9
+sudo apt-get purge -yqq llvm-8 llvm-8-dev llvm-8-runtime llvm-9 llvm-9-dev llvm-9-runtime llvm-9-tools liblldb-8 liblldb-9 libllvm8 libllvm9
