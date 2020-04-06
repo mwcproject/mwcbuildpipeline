@@ -17,7 +17,7 @@ set /p VERSION=<mwc-qt-wallet.version
 echo "version = !VERSION!"
 set NAME=mwc-qt-wallet-!VERSION!-win64-setup.exe
 ) ELSE (
-set NAME=mwc-qt-wallet-1.0.14.beta.%1-win64-setup.exe
+set NAME=mwc-qt-wallet-1.0.15.beta.%1-win64-setup.exe
 )
 echo "Using %NAME%"
 ls -l target\\nsis
