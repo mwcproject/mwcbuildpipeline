@@ -9,6 +9,9 @@ sudo apt update
 sudo apt-get install expect
 sudo apt install clang-6.0 git curl make build-essential libgl1-mesa-dev openssl libssl-dev -y
 
+# install libgl
+sudo apt-get install libgl1
+
 sudo apt-get update -yqq
 sudo apt-get install -yqq --no-install-recommends libncursesw5-dev
 
