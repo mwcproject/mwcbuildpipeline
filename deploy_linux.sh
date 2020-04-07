@@ -7,7 +7,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 VERSION=`cat $TAG_FOR_BUILD_FILE`
 DPKG_NAME=mwc-qt-wallet_$VERSION
 else
-DPKG_NAME=mwc-qt-wallet_1.0-15.beta.$1
+DPKG_NAME=mwc-qt-wallet_1.0-16.beta.$1
 fi
 echo "md5sum = `md5sum target/*.deb`";
 mkdir -p ~/.ssh
