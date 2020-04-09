@@ -24,9 +24,10 @@ mkdir -p target
 # CFlags are appilcable to C code builds. Rust normally using cc::Build and it use cc compiler that backed by gcc
 # cc compiler accept CFLAGS.
 # > man cc    - for details
-export RUSTFLAGS="-C target-cpu=core2"
-export CPPFLAGS="-march=core2 -mcpu=core2"
-export CFLAGS="-march=core2 -mcpu=core2"
+echo "Building for CPU: $CPU_CORE"
+export RUSTFLAGS="-C target-cpu=$CPU_CORE"
+export CPPFLAGS="-march=$CPU_CORE -mcpu=$CPU_CORE"
+export CFLAGS="-march=$CPU_CORE -mcpu=$CPU_CORE"
 
 # Build mwc-node
 git clone https://github.com/mwcproject/mwc-node
