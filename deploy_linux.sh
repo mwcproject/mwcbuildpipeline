@@ -12,10 +12,10 @@ fi
 echo "md5sum = `md5sum target/*.deb`";
 mkdir -p ~/.ssh
 cp target/*.deb $DPKG_NAME-linux64-$CPU_PACKAGE_NAME.deb
-cp target/*.tar.gz "$DPKG_NAME"_linux64_$CPU_PACKAGE_NAME.tar.gz
-cp ~/rpmbuild/RPMS/*.rpm "$DPKG_NAME"_linux64_$CPU_PACKAGE_NAME.rpm
+cp target/*.tar.gz $DPKG_NAME_linux64_$CPU_PACKAGE_NAME.tar.gz
+cp ~/rpmbuild/RPMS/x86_64/*.rpm $DPKG_NAME_linux64_$CPU_PACKAGE_NAME.rpm
 
 scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $DPKG_NAME-linux64_$CPU_PACKAGE_NAME.deb uploader\@3.228.53.68:/home/uploader/
 scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $DPKG_NAME_linux64_$CPU_PACKAGE_NAME.tar.gz uploader\@3.228.53.68:/home/uploader/
-scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME"_linux64_$CPU_PACKAGE_NAME.rpm uploader\@3.228.53.68:/home/uploader/
+scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $DPKG_NAME_linux64_$CPU_PACKAGE_NAME.rpm uploader\@3.228.53.68:/home/uploader/
 
