@@ -1,0 +1,30 @@
+trigger:
+  branches:
+    include:
+      - master
+
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Daily midnight custom CPU build
+    branches:
+      include:
+        - master
+    always: true
+
+jobs:
+  - job: linux
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - script: './setup_linux.sh'
+      - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
+      - script: './deploy_linux.sh $(Build.BuildNumber)'
+    displayName: 'Linux64'
+  - job: windows
+    pool:
+      vmImage: windows-latest
+    steps:
+      - script: 'setup_windows.bat'
+      - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
+      - script: 'deploy_windows.bat $(Build.BuildNumber)'
+    displayName: 'Windows64'
