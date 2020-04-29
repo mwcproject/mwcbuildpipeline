@@ -79,6 +79,7 @@ xcopy nsis\include\lang target\nsis\include\lang
 xcopy nsis\payload\x86\* target\nsis\payload\x86
 
 xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x86
+xcopy mwc713\target\release\mwczip.exe target\nsis\payload\x86
 xcopy mwc-node\target\release\mwc.exe target\nsis\payload\x86
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x86
 

@@ -61,6 +61,9 @@ Section "mwc713" SecMWC713
     File "payload\${ARCH_SHORT}\mwc713.exe"
 
   SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\mwczip.exe"
+
+  SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\mwc.exe"
 
   SetOutPath "$INSTDIR\bearer\"
