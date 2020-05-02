@@ -67,6 +67,12 @@ if [ ! -f "$FILE" ]; then
     exit 1;
 fi
 
+FILE=target/release/mwczip
+if [ ! -f "$FILE" ]; then
+    echo "ERROR: $FILE does not exist";
+    exit 1;
+fi
+
 cd ..
 
 # Second build mwc-qt-wallet
@@ -105,6 +111,7 @@ mkdir -p target/$DPKG_NAME/usr/local/bin/
 mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwc713 target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
+cp mwc713/target/release/mwczip target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc-node/target/release/mwc  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 
 # Make debain package
@@ -126,6 +133,7 @@ QT_WALLET_DIRECTORY=tmp/mwc-qt-wallet-$VERSION
 mkdir -p tmp/mwc-qt-wallet-$VERSION
 cp ../mwc-qt-wallet/mwc-qt-wallet $QT_WALLET_DIRECTORY/mwc-qt-wallet.bin
 cp ../mwc713/target/release/mwc713 $QT_WALLET_DIRECTORY
+cp ../mwc713/target/release/mwczip $QT_WALLET_DIRECTORY
 cp ../mwc-node/target/release/mwc $QT_WALLET_DIRECTORY
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
 cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr

@@ -40,6 +40,12 @@ if [ ! -f "$FILE" ]; then
     exit 1;
 fi
 
+FILE=target/release/mwczip
+if [ ! -f "$FILE" ]; then
+    echo "ERROR: $FILE does not exist";
+    exit 1;
+fi
+
 cd ..
 
 # prepare for QT fix
@@ -65,6 +71,7 @@ make -j8
 # Finally prep dmg
 cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
+cp ../mwc713/target/release/mwczip mwc-qt-wallet.app/Contents/MacOS/mwczip
 ../Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 
 if [ -z "$2" ]
