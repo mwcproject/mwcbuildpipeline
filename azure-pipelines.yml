@@ -13,6 +13,7 @@ schedules:
 
 jobs:
 - job: linux
+  timeoutInMinutes: 120
   pool:
     vmImage: ubuntu-18.04
   steps:
@@ -21,6 +22,7 @@ jobs:
     - script: './deploy_linux.sh $(Build.BuildNumber)'
   displayName: 'Linux64'
 - job: macos
+  timeoutInMinutes: 120
   pool:
     vmImage: macos-10.14
   steps:
@@ -29,6 +31,7 @@ jobs:
     - script: './deploy_macos.sh $(Build.BuildNumber)'
   displayName: 'MacOSX'
 - job: windows
+  timeoutInMinutes: 120
   pool:
     vmImage: windows-latest
   steps:
