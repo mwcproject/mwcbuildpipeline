@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export MACOSX_DEPLOYMENT_TARGET=10.8
+
 . ~/.cargo/env
 
 # Clean everything. This is a release build so we can wait

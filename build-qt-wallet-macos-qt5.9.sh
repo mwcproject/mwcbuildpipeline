@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export MACOSX_DEPLOYMENT_TARGET=10.8
+
 if [ $# -eq 0 ]
 then
     echo "not signing"
