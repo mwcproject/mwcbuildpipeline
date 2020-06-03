@@ -1,7 +1,7 @@
 #!/bin/sh
 
+NUMBER_GLOBAL=`cat ./version.txt`
 export MACOSX_DEPLOYMENT_TARGET=10.8
-
 . ~/.cargo/env
 
 # Clean everything. This is a release build so we can wait
@@ -64,7 +64,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
     echo "#define BUILD_VERSION  \"`cat $TAG_FOR_BUILD_FILE`\"" > build_version.h
 else
-    echo "#define BUILD_VERSION  \"1.0-20.beta.$1\"" > build_version.h
+    echo "#define BUILD_VERSION  \"1.0-$NUMBER_GLOBAL.beta.$1\"" > build_version.h
 fi
 ../Qt/5.9/clang_64/bin/qmake mwc-qt-wallet.pro -spec macx-clang CONFIG+=x86_64
 ./fix_macos_makefile.sh

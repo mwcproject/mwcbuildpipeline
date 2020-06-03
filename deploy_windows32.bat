@@ -1,5 +1,7 @@
 setlocal enableextensions enabledelayedexpansion
 
+set /p NUMBER_GLOBAL=<..\version.txt
+
 echo "Param passed in is %1"
 md5sum target\\nsis\\mwc-qt-wallet*-setup.exe
 mkdir %systemdrive%%homepath%\.ssh
@@ -17,7 +19,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 set /p VERSION=<mwc-qt-wallet.version
 set NAME=mwc-qt-wallet-!VERSION!-win32-setup.exe
 ) ELSE (
-set NAME=mwc-qt-wallet-1.0.20.beta.%1-win32-setup.exe
+set NAME=mwc-qt-wallet-1.0.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
 )
 echo "Using %NAME%"
 ls -l target\\nsis
