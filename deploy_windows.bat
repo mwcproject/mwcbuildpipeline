@@ -18,8 +18,8 @@ echo "version = !VERSION!"
 set NAME=mwc-qt-wallet-!VERSION!-win64-setup.exe
 set NAME_UPLOAD=mwc-qt-wallet-!VERSION!-win64-setup-%CPU_PACKAGE_NAME%.exe
 ) ELSE (
-set NAME=mwc-qt-wallet-1.0.19.beta.%1-win64-setup.exe
-set NAME_UPLOAD=mwc-qt-wallet-1.0.19.beta.%1-win64-setup-%CPU_PACKAGE_NAME%.exe
+set NAME=mwc-qt-wallet-1.0.20.beta.%1-win64-setup.exe
+set NAME_UPLOAD=mwc-qt-wallet-1.0.20.beta.%1-win64-setup-%CPU_PACKAGE_NAME%.exe
 )
 echo "Using %NAME% and %NAME_UPLOAD%"
 ls -l target\\nsis

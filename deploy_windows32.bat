@@ -17,7 +17,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 set /p VERSION=<mwc-qt-wallet.version
 set NAME=mwc-qt-wallet-!VERSION!-win32-setup.exe
 ) ELSE (
-set NAME=mwc-qt-wallet-1.0.19.beta.%1-win32-setup.exe
+set NAME=mwc-qt-wallet-1.0.20.beta.%1-win32-setup.exe
 )
 echo "Using %NAME%"
 ls -l target\\nsis
