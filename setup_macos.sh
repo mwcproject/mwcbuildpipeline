@@ -10,6 +10,8 @@ echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
 git clone https://github.com/mwcproject/mwcbuilder-macos-helpers
 cat mwcbuilder-macos-helpers/qt_59_* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-linux-helpers
+
+echo $UPLOADCREDS
 brew uninstall llvm
 
 # Need to fix what installer did. Installer hardecoded paths to libs by some reasons and it is breaks the build
