@@ -1,6 +1,6 @@
 setlocal enableextensions enabledelayedexpansion
 
-set /p NUMBER_GLOBAL=<..\version.txt
+set /p NUMBER_GLOBAL=<version.txt
 
 echo "Param passed in is %1"
 md5sum target\\nsis\\mwc-qt-wallet*-setup.exe
