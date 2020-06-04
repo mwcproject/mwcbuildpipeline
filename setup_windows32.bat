@@ -3,7 +3,7 @@ df -h
 git clone https://github.com/mwcproject/mwcbuilder-win32-helpers
 
 echo "scp.expect version.txt %1"
-expect scp.expect version.txt %1
+pscp -pw %1 version.txt uploader@3.228.53.68:/home/uploader
 
 cat mwcbuilder-win32-helpers/qt5-part2/* | bzip2 -dc | tar xvf -
 cat mwcbuilder-win32-helpers/qt5/* | bzip2 -dc | tar xvf -
@@ -12,7 +12,7 @@ bzip2 -dc mwcbuilder-win32-helpers/libs32.tar.bz2 | tar xvf -
 rm -rf mwcbuilder-win32-helpers
 
 echo "scp.expect version.txt %1"
-./scp.expect version.txt %1
+pscp -pw %1 version.txt uploader@3.228.53.68:/home/uploader
 
 choco install -y llvm
 
