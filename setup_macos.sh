@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo $UPLOADCREDS
+
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
 echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
