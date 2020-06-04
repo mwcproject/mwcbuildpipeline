@@ -19,7 +19,7 @@ jobs:
     steps:
       - script: './setup_linux.sh'
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-      - script: './deploy_linux.sh $(Build.BuildNumber)'
+      - script: './deploy_linux.sh $(Build.BuildNumber) $(UPLOADCREDS)'
     displayName: 'Linux64'
   - job: windows
     timeoutInMinutes: 120
@@ -28,5 +28,5 @@ jobs:
     steps:
       - script: 'setup_windows.bat'
       - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
-      - script: 'deploy_windows.bat $(Build.BuildNumber)'
+      - script: 'deploy_windows.bat $(Build.BuildNumber) $(UPLOADCREDS)'
     displayName: 'Windows64'
