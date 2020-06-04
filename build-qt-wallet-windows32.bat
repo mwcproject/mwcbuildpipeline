@@ -10,7 +10,7 @@ del /s /q mwc-qt-wallet
 rmdir /s /q mwc-qt-wallet
 
 
-set /p NUMBER_GLOBAL=<..\version.txt
+set /p NUMBER_GLOBAL=<version.txt
 set LIBCLANG_PATH=%cd%\lib
 set OPENSSL_LIB_DIR=%cd%\lib\openssl@1.1/lib/
 set OPENSSL_INCLUDE_DIR=%cd%\lib\openssl@1.1/include/

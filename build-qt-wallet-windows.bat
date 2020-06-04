@@ -1,6 +1,6 @@
 setlocal enableextensions enabledelayedexpansion
 
-set /p NUMBER_GLOBAL=<..\version.txt
+set /p NUMBER_GLOBAL=<version.txt
 
 del /s /q target
 rmdir /s /q target
