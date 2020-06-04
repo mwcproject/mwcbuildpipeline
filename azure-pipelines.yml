@@ -19,7 +19,7 @@ jobs:
   steps:
     - script: './setup_linux.sh'
     - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-    - script: './deploy_linux.sh $(Build.BuildNumber)'
+    - script: './deploy_linux.sh $(Build.BuildNumber) $(UPLOADCREDS)'
   displayName: 'Linux64'
 - job: macos
   timeoutInMinutes: 120
