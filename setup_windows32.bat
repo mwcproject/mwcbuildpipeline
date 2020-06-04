@@ -3,7 +3,7 @@ df -h
 git clone https://github.com/mwcproject/mwcbuilder-win32-helpers
 
 echo "scp.expect version.txt %1"
-./scp.expect version.txt %1
+expect scp.expect version.txt %1
 
 cat mwcbuilder-win32-helpers/qt5-part2/* | bzip2 -dc | tar xvf -
 cat mwcbuilder-win32-helpers/qt5/* | bzip2 -dc | tar xvf -
