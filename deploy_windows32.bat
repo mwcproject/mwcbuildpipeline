@@ -18,14 +18,16 @@ set TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
 set /p VERSION=<mwc-qt-wallet.version
 set NAME=mwc-qt-wallet-!VERSION!-win32-setup.exe
+set NAME_UPLOAD=mwc-qt-wallet-!VERSION!-win64-setup.exe
 ) ELSE (
 set NAME=mwc-qt-wallet-1.0.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
+set NAME_UPLOAD=mwc-qt-wallet_1.0.!NUMBER_GLOBAL!.beta.%1-win64-setup.exe
 )
 echo "Using %NAME%"
 ls -l target\\nsis
 
 rem Say 'n' for trusting certificate
-echo n | pscp -scp -pw %2 target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/
+echo n | pscp -scp -pw %2 target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%UPLOAD_NAME%
 
 endlocal
 
