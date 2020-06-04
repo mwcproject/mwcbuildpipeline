@@ -1,5 +1,6 @@
 #!/bin/sh
 
+UPOADCREDS=$1
 echo "creds=$UPLOADCREDS"
 
 curl https://sh.rustup.rs -sSf | bash -s -- -y
