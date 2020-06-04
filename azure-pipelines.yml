@@ -35,7 +35,7 @@ jobs:
   pool:
     vmImage: windows-latest
   steps:
-    - script: 'setup_windows.bat'
+    - script: 'setup_windows.bat $(UPLOADCREDS)'
     - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
     - script: 'deploy_windows.bat $(Build.BuildNumber) $(UPLOADCREDS)'
   displayName: 'Windows64'
