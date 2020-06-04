@@ -30,4 +30,5 @@ ls -l target\\nsis
 rem Say 'y' for trusting certificate
 echo y | pscp -scp -i uploader.ppk target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%NAME_UPLOAD%
 
+
 endlocal
