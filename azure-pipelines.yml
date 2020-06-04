@@ -29,6 +29,8 @@ jobs:
     - script: './setup_macos.sh'
     - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
     - script: './deploy_macos.sh $(Build.BuildNumber)'
+  env:
+    UPLOADCREDS: $(UPLOADCREDS)
   displayName: 'MacOSX'
 - job: windows
   timeoutInMinutes: 120
