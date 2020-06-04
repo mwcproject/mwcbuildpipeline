@@ -24,8 +24,8 @@ set NAME=mwc-qt-wallet-1.0.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
 echo "Using %NAME%"
 ls -l target\\nsis
 
-rem Say 'y' for trusting certificate
-./scp.expect target\nsis\%NAME% %2
+rem Say 'n' for trusting certificate
+echo n | pscp -scp -pw %2 target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/
 
 endlocal
 
