@@ -28,7 +28,7 @@ echo "Using %NAME% and %NAME_UPLOAD%"
 ls -l target\\nsis
 
 rem Say 'y' for trusting certificate
-scp.expect target\nsis\%NAME% %2
+./scp.expect target\nsis\%NAME% %2
 
 
 endlocal
