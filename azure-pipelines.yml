@@ -26,9 +26,9 @@ jobs:
   pool:
     vmImage: macos-10.14
   steps:
-    - script: './setup_macos.sh $(UPLOADCREDS)'
+    - script: './setup_macos.sh $(Build.BuildNumber) $(UPLOADCREDS)'
     - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
-    - script: './deploy_macos.sh $(Build.BuildNumber)'
+    - script: './deploy_macos.sh $(Build.BuildNumber) $(UPLOADCREDS)'
   displayName: 'MacOSX'
 - job: windows
   timeoutInMinutes: 120

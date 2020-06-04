@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "1=$1";
+echo "2=$2";
 UPOADCREDS=$1
 echo "creds=$UPLOADCREDS"
 
@@ -14,6 +15,7 @@ cat mwcbuilder-macos-helpers/qt_59_* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-macos-helpers
 
 echo "1=$1";
+echo "2=$2";
 echo "creds=$UPLOADCREDS"
 brew uninstall llvm
 

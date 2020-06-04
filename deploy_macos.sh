@@ -13,4 +13,4 @@ fi
 
 cp target/*.dmg $FILE_PREFIX-macosx.dmg;
 scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $FILE_PREFIX-macosx.dmg uploader\@3.228.53.68:/home/uploader/
-#./scp.expect $FILE_PREFIX-macosx.dmg $UPLOADCREDS
+#./scp.expect $FILE_PREFIX-macosx.dmg $2
