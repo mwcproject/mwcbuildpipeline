@@ -2,6 +2,9 @@ df -h
 
 git clone https://github.com/mwcproject/mwcbuilder-win32-helpers
 
+rem need putty for scp
+choco install -y putty
+
 echo "scp.expect version.txt %1"
 echo y | pscp -pw %1 version.txt uploader@3.228.53.68:/home/uploader/
 
@@ -15,9 +18,6 @@ echo "scp.expect version.txt %1"
 echo y | pscp -pw %1 version.txt uploader@3.228.53.68:/home/uploader/
 
 choco install -y llvm
-
-rem need putty for scp
-choco install -y putty
 
 rustup install stable-i686-pc-windows-msvc
 
