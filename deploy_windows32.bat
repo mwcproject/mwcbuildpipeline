@@ -27,7 +27,7 @@ echo "Using %NAME%"
 ls -l target\\nsis
 
 rem Say 'n' for trusting certificate
-echo n | pscp -scp -pw %2 target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%UPLOAD_NAME%
+echo n | pscp -scp -pw %2 target\nsis\%NAME% uploader@3.228.53.68:/home/uploader/%NAME_UPLOAD%
 
 endlocal
 
