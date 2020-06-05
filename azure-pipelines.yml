@@ -40,6 +40,7 @@ jobs:
     - script: 'deploy_windows.bat $(Build.BuildNumber) $(UPLOADCREDS)'
   displayName: 'Windows64'
 - job: windows32
+  timeoutInMinutes: 120
   pool:
     vmImage: windows-latest
   steps:
