@@ -83,7 +83,7 @@ xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x86
 xcopy mwc713\target\release\mwczip.exe target\nsis\payload\x86
 xcopy mwc-node\target\release\mwc.exe target\nsis\payload\x86
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x86
-xcopy resources\tor.exe.win32 target\nsis\payload\x86
+xcopy resources\tor.exe.win32 target\nsis\payload\x86\tor.exe
 
 
 powershell -Command "(gc target\nsis\include\config.nsh) -replace 'REPLACE_VERSION_PATCH', '%PATCH_NUMBER%' | Out-File -encoding ASCII target\nsis\include\config.nsh"
