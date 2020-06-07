@@ -66,6 +66,9 @@ Section "mwc713" SecMWC713
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\mwc.exe"
 
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\tor.exe"
+
   SetOutPath "$INSTDIR\bearer\"
     File "payload\${ARCH_SHORT}\bearer\"
 
@@ -86,6 +89,24 @@ Section "mwc713" SecMWC713
 
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\D3Dcompiler_47.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libevent-2-1-7.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libevent_core-2-1-7.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libevent_extra-2-1-7.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libgcc_s_sjlj-1.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\libssp-0.dll"
+
+  SetOutPath "$INSTDIR"
+    File "payload\${ARCH_SHORT}\zlib1.dll"
 
   SetOutPath "$INSTDIR"
     File "payload\${ARCH_SHORT}\libEGL.dll"
