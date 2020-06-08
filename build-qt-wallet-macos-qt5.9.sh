@@ -71,6 +71,7 @@ cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 cp ../mwc713/target/release/mwczip mwc-qt-wallet.app/Contents/MacOS/mwczip
 cp ../resources/tor.macosx mwc-qt-wallet.app/Contents/MacOS/tor
+cp ../resources/dylibs/* mwc-qt-wallet.app/Contents/PlugIns/platforms
 ~/Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant
 
 if [ $# -eq 0 ]
