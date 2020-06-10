@@ -73,7 +73,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 echo "Using patch number = %PATCH_NUMBER%"
 
 xcopy ..\nsis\resources\logo.ico .
-qmake -spec win32-g++ mwc-qt-wallet.pro win32:RC_ICONS+=logo.ico
+qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
 make -j 8
 cd ..
