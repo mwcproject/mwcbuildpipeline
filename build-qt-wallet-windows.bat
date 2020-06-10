@@ -60,7 +60,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     set /p QT_WALLET_VERSION=<..\mwc-qt-wallet.version
     @echo off
     (for /f "tokens=2,* delims=." %%a in (..\mwc-qt-wallet.version) do echo %%b) > output.txt    
-    set PATCH_NUMBER=<output.txt
+    set /p PATCH_NUMBER=<output.txt
     echo "Using !QT_WALLET_VERSION! patchnumber= %PATCH_NUMBER%"
     git fetch --all
     git checkout !QT_WALLET_VERSION!
