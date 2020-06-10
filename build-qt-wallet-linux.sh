@@ -89,7 +89,7 @@ else
     echo "#define BUILD_VERSION  \"$VERSION\"" > build_version.h
 fi
 
-../Qt/5.9/gcc_64/bin/qmake mwc-qt-wallet.pro QMAKE_CXXFLAGS="-fno-sized-deallocation -pipe -L/usr/lib/x86_64-linux-gnu" -config release -spec linux-g++ CONFIG+=x86_64
+../Qt/5.9/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CXXFLAGS="-fno-sized-deallocation -pipe -L/usr/lib/x86_64-linux-gnu" -config release -spec linux-g++ CONFIG+=x86_64
 
 FILE=Makefile
 if [ ! -f "$FILE" ]; then
