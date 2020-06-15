@@ -1,5 +1,7 @@
 #!/bin/sh
 
+ls ~/Library/Keychains/
+
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
 echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
@@ -26,5 +28,6 @@ gzip -dc certs.tar.gz | tar xvf -
 sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_installer.cer
 sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_application.cer
 
-
+cp certs/mimblewimble* ~/Library/Keychains
+ls ~/Library/Keychains
 
