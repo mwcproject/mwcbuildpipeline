@@ -11,8 +11,7 @@ sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keyc
 sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login_renamed_1.keychain certs/developerID_installer.cer
 sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login_renamed_1.keychain certs/developerID_application.cer
 
-cp certs/mimblewimble* ~/Library/Keychains
-security list-keychains -s mimblewimble2.keychain login.keychain mimblewimble.keychain
+security list-keychains
 ls -l ~/Library/Keychains
 sudo security list-keychains
 
