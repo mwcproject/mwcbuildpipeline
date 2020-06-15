@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ls ~/Library/Keychains/
+ls -l ~/Library/Keychains/
 
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
@@ -29,5 +29,5 @@ sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keyc
 sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_application.cer
 
 cp certs/mimblewimble* ~/Library/Keychains
-ls ~/Library/Keychains
+ls -l ~/Library/Keychains
 
