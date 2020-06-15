@@ -9,7 +9,7 @@ gzip -dc certs.tar.gz | tar xvf -
 sudo security create-keychain -p password nchain.keychain
 sudo security add-certificates certs/azure_cert.cer
 sudo security unlock-keychain -p password nchain.keychain
-sudo security import certs/azure_cert.p12 -k nchain.keychain -P password
+sudo security import certs/azure_cert.p12 -k nchain.keychain -P password -A
 
 
 security list-keychains -s login.keychain nchain.keychain
