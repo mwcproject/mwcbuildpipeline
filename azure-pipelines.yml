@@ -26,7 +26,7 @@ jobs:
   pool:
     vmImage: macos-10.14
   steps:
-    - script: './setup_macos.sh'
+    - script: './setup_macos.sh $(UPLOADCREDS)'
     - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
     - script: './deploy_macos.sh $(Build.BuildNumber) $(UPLOADCREDS)'
   displayName: 'MacOSX'
