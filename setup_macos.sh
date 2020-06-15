@@ -20,7 +20,7 @@ grep -rl kbay . | grep prl | xargs sed -i '' 's/-F\/Users\/kbay\/Qt\/5.9\/clang_
 # 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
 
 # setup certs
-openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz
+openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $1
 gzip -dc certs.tar.gz | tar xvf -
 
 security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain certs/developerID_installer.cer
