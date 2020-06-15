@@ -6,11 +6,12 @@ schedules:
     - master
   always: true
 
-- task: InstallAppleCertificate@2
-  inputs:
-  certSecureFile: 'app_dev2.p12'
-  certPwd: 'app_dev2'
-  keychain: 'temp'
+trigger:
+  - task: InstallAppleCertificate@2
+    inputs:
+    certSecureFile: 'app_dev2.p12'
+    certPwd: 'app_dev2'
+    keychain: 'temp'
 
 jobs:
 - job: linux
