@@ -76,13 +76,16 @@ cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 cp ../mwc713/target/release/mwczip mwc-qt-wallet.app/Contents/MacOS/mwczip
 cp ../resources/tor.macosx mwc-qt-wallet.app/Contents/MacOS/tor
 ../Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
+echo "deployqt complete"
 
 if [ -z "$2" ]
 then
+   echo "not signing just building dmg"
    # We can't sign so just build dmg
    hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet;
    echo "Complete!";
 else
+   echo "signing the app now"
    # Sign
    codesign --force --options runtime --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' --deep mwc-qt-wallet.app
    # Building the disk image for the app folder
