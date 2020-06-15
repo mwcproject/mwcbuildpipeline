@@ -6,12 +6,13 @@ ls -l ~/Library/Keychains
 openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $1
 gzip -dc certs.tar.gz | tar xvf -
 
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_installer.cer
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_application.cer
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login_renamed_1.keychain certs/developerID_installer.cer
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login_renamed_1.keychain certs/developerID_application.cer
+sudo security create-keychain -p password nchain.keychain
+sudo security add-certificates certs/azure_cert.cer
+sudo security unlock-keychain -p password nchain.keychain
+sudo security import certs/azure_cert.p12 -k nchain.keychain -P $1
 
-security list-keychains
+
+security list-keychains -s login.keychain nchain.keychain
 ls -l ~/Library/Keychains
 sudo security list-keychains
 
