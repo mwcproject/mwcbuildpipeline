@@ -23,8 +23,8 @@ grep -rl kbay . | grep prl | xargs sed -i '' 's/-F\/Users\/kbay\/Qt\/5.9\/clang_
 openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $1
 gzip -dc certs.tar.gz | tar xvf -
 
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/mimblewimble2.keychain certs/developerID_installer.cer
-sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/mimblewimble2.keychain certs/developerID_application.cer
+sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_installer.cer
+sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain certs/developerID_application.cer
 
 
 
