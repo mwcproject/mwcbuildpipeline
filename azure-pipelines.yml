@@ -6,6 +6,12 @@ schedules:
     - master
   always: true
 
+- task: InstallAppleCertificate@2
+  inputs:
+  certSecureFile: 'app_dev2.p12'
+  certPwd: 'app_dev2'
+  keychain: 'temp'
+
 jobs:
 - job: linux
   timeoutInMinutes: 120
@@ -20,12 +26,6 @@ jobs:
   timeoutInMinutes: 120
   pool:
     vmImage: macos-10.14
-
-  - task: InstallAppleCertificate@2
-    inputs:
-    certSecureFile: 'app_dev2.p12'
-    certPwd: 'app_dev2'
-    keychain: 'temp'
   steps:
     - script: './setup_macos.sh $(UPLOADCREDS)'
     - script: './build-qt-wallet-macos.sh $(Build.BuildNumber) $(APPLE_ONE_TIME_ID)'
