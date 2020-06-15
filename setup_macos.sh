@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # setup certs
+sudo security list-keychains
 ls -l ~/Library/Keychains
 openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $1
 gzip -dc certs.tar.gz | tar xvf -
@@ -12,6 +13,7 @@ sudo security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login_rena
 
 cp certs/mimblewimble* ~/Library/Keychains
 ls -l ~/Library/Keychains
+sudo security list-keychains
 
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
