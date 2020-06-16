@@ -89,8 +89,8 @@ else
    # setup certs
    sudo security list-keychains
    ls -l ~/Library/Keychains
-   openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $3
-   gzip -dc ../certs.tar.gz | tar xvf -
+   openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
+   gzip -dc certs.tar.gz | tar xvf -
 
    sudo security create-keychain -p password nchain.keychain
    sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
