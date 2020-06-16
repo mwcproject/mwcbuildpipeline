@@ -85,6 +85,23 @@ then
    hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet;
    echo "Complete!";
 else
+   echo "Setting up certs"
+   # setup certs
+   sudo security list-keychains
+   ls -l ~/Library/Keychains
+   openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $1
+   gzip -dc certs.tar.gz | tar xvf -
+
+   sudo security create-keychain -p password nchain.keychain
+   sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
+   sudo security unlock-keychain -p password nchain.keychain
+   sudo security import certs/azure_cert.p12 -k nchain.keychain -P password -A
+
+
+   security list-keychains -s login.keychain nchain.keychain
+   ls -l ~/Library/Keychains
+   sudo security list-keychain
+
    echo "signing the app now"
    # Sign
    codesign --force --options runtime --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' --deep mwc-qt-wallet.app

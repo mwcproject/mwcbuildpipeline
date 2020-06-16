@@ -1,21 +1,5 @@
 #!/bin/sh
 
-# setup certs
-sudo security list-keychains
-ls -l ~/Library/Keychains
-openssl enc -d -aes-256-cbc -in certs.tar.gz.enc -out certs.tar.gz -k $1
-gzip -dc certs.tar.gz | tar xvf -
-
-sudo security create-keychain -p password nchain.keychain
-sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
-sudo security unlock-keychain -p password nchain.keychain
-sudo security import certs/azure_cert.p12 -k nchain.keychain -P password -A
-
-
-security list-keychains -s login.keychain nchain.keychain
-ls -l ~/Library/Keychains
-sudo security list-keychains
-
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
 echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
