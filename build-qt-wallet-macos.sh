@@ -106,7 +106,7 @@ else
    security list-keychains -s login.keychain nchain.keychain
    ls -l ~/Library/Keychains
    sudo security list-keychain
-   sudo security set-key-partition-list -S apple-tool:,apple: -s -k password nchain.keychain
+   sudo security set-key-partition-list -S apple-tool:,apple: -s -k password nchain.keychain >/dev/null 2>&1
 
    echo "signing the app now"
    # Sign
