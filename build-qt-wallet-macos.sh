@@ -75,6 +75,11 @@ cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 cp ../mwc713/target/release/mwczip mwc-qt-wallet.app/Contents/MacOS/mwczip
 cp ../resources/tor.macosx mwc-qt-wallet.app/Contents/MacOS/tor
+mkdir -p mwc-qt-wallet.app/Contents/Frameworks/xz
+cp ../resources/liblzma.5.dylib mwc-qt-wallet.app/Contents/Frameworks/xz
+# fix tor lib
+install_name_tool -change /usr/local/opt/xz/lib/liblzma.5.dylib "@rpath/../Frameworks/xz/liblzma.5.dylib" ./mwc-qt-wallet.app/Contents/MacOS/tor
+
 ../Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
