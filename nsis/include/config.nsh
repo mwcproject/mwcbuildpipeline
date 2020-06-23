@@ -50,6 +50,8 @@ FunctionEnd
 !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "Create Desktop Shortcut"
 !define MUI_FINISHPAGE_SHOWREADME_FUNCTION CreateDesktopShortcut
+!define MUI_FINISHPAGE_RUN "$INSTDIR\mwc-qt-wallet.exe"
+!define MUI_FINISHPAGE_RUN_TEXT "Run MWC Qt Wallet now"
 !insertmacro MUI_PAGE_FINISH
 
 
