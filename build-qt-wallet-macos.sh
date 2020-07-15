@@ -66,7 +66,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 else
     echo "#define BUILD_VERSION  \"1.0-$NUMBER_GLOBAL.beta.$1\"" > build_version.h
 fi
-../Qt/5.9/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
+../Qt/5.9.9/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
 ./fix_macos_makefile.sh
 make -j8
 
@@ -80,7 +80,7 @@ cp ../resources/liblzma.5.dylib mwc-qt-wallet.app/Contents/Frameworks/xz
 # fix tor lib
 install_name_tool -change /usr/local/opt/xz/lib/liblzma.5.dylib "@executable_path/../Frameworks/xz/liblzma.5.dylib" ./mwc-qt-wallet.app/Contents/MacOS/tor
 
-../Qt/5.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
+../Qt/5.9.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
 if [ -z "$2" ]
