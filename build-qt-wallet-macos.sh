@@ -1,7 +1,7 @@
 #!/bin/sh
 
 NUMBER_GLOBAL=`cat ./version.txt`
-export MACOSX_DEPLOYMENT_TARGET=10.8
+export MACOSX_DEPLOYMENT_TARGET=10.9
 . ~/.cargo/env
 
 # Clean everything. This is a release build so we can wait
