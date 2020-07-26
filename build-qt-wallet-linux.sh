@@ -41,7 +41,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 
-./build_static.sh
+./build_static_linux.sh
 
 FILE=target/release/mwc
 if [ ! -f "$FILE" ]; then
@@ -61,7 +61,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 
-./build_static.sh
+./build_static_linux.sh
 
 FILE=target/release/mwc713
 if [ ! -f "$FILE" ]; then
