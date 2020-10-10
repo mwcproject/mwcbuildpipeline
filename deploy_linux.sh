@@ -18,9 +18,9 @@ cp ~/rpmbuild/RPMS/x86_64/*.rpm "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.rpm"
 
 ls -al
 
-#scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.deb" uploader\@3.228.53.68:/home/uploader/
-#scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.tar.gz" uploader\@3.228.53.68:/home/uploader/
-#scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.rpm" uploader\@3.228.53.68:/home/uploader/
+#scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.deb" uploader\@ftp.mwc.mw:/home/uploader/
+#scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.tar.gz" uploader\@ftp.mwc.mw:/home/uploader/
+#scp -i ./uploader.pem -o 'StrictHostKeyChecking no' "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.rpm" uploader\@ftp.mwc.mw:/home/uploader/
 
 ./scp.expect "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.deb" $2
 ./scp.expect "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.tar.gz" $2
