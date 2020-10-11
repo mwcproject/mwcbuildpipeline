@@ -110,19 +110,22 @@ else
 
    echo "signing the app now"
    # Sign
-   codesign --force --options runtime --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' --deep mwc-qt-wallet.app
+   #codesign --force --options runtime --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' --deep mwc-qt-wallet.app
+   codesign --force --options runtime --sign 'Developer ID Application: James Byrer (76DUL32Z4P)' --deep mwc-qt-wallet.app
    # Building the disk image for the app folder
    hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet
 
    echo "Your diskimage is created. Now we need to sign it..."
    # signing resulting package
-   codesign --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' ../target/mwc-qt-wallet.dmg
+   #codesign --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' ../target/mwc-qt-wallet.dmg
+   codesign --sign 'Developer ID Application: James Byrer (76DUL32Z4P)' ../target/mwc-qt-wallet.dmg
 
    # now notarize the app
    echo "Notarizing this will take a while..."
 
    rm -rf /tmp/notarize_out.log;
-   xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u mimblewimblecoin2@protonmail.com -p $2
+   #xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u mimblewimblecoin2@protonmail.com -p $2
+   xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u jbyrer@gmail.com -p $2
    echo "Sleeping for 2 minutes to let apple process things."
    sleep 120;
    xcrun stapler staple -q -v ../target/mwc-qt-wallet.dmg
