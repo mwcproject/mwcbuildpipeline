@@ -94,6 +94,7 @@ else
    # setup certs
    sudo security list-keychains
    ls -l ~/Library/Keychains
+   openssl version
    openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
    gzip -dc certs.tar.gz | tar xvf -
 
