@@ -95,7 +95,7 @@ else
    sudo security list-keychains
    ls -l ~/Library/Keychains
    echo 'export PATH="/usr/local/opt/libressl/bin:$PATH"' >> /Users/runner/.bash_profile 
-  
+   source /Users/runner/.bash_profile
    openssl version
    #openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
    openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $3
