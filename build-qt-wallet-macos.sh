@@ -95,7 +95,8 @@ else
    sudo security list-keychains
    ls -l ~/Library/Keychains
    openssl version
-   openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
+   #openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
+   openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $3
    gzip -dc certs.tar.gz | tar xvf -
 
    sudo security create-keychain -p password nchain.keychain
