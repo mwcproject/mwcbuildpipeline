@@ -96,7 +96,7 @@ else
    ls -l ~/Library/Keychains
    openssl version
    #openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
-   openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $3
+   openssl enc -d -aes-256-cbc -in ./certsJB.tar.gz.enc -out certs.tar.gz -k $3
    echo "About to unpack certs"
    pwd
    ls -alt
