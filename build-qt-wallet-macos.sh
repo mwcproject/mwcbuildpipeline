@@ -98,13 +98,14 @@ else
    source /Users/runner/.bash_profile
    openssl version
    #openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
-   openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $3
+   #openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $3
+   unzip -P $3 certs.zip
    echo "About to unpack certs"
    pwd
    ls -alt
    ls -alt certs
    #gzip -dc certs.tar.gz | tar xvf -
-   tar -xvf certs.tar.gz
+   #tar -xvf certs.tar.gz
    echo "finished untar?"
    sudo security create-keychain -p password nchain.keychain
    sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
