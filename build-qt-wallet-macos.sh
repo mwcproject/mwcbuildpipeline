@@ -130,6 +130,9 @@ else
    #codesign --sign 'Developer ID Application: Christopher Gilliard (D6WGXN9XBM)' ../target/mwc-qt-wallet.dmg
    codesign --sign 'Developer ID Application: James Byrer (76DUL32Z4P)' ../target/mwc-qt-wallet.dmg
 
+   echo "NOTARIZING IS DISABLED!!! Please fix me"
+   exit
+
    # now notarize the app
    echo "Notarizing this will take a while..."
 
