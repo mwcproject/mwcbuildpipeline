@@ -98,7 +98,7 @@ else
    source /Users/runner/.bash_profile
    openssl version
    #openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
-   openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $4
+   #openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $4
    unzip -P $4 ../certs.zip
    echo "About to unpack certs"
    pwd
@@ -110,8 +110,8 @@ else
    sudo security create-keychain -p password nchain.keychain
    sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
    sudo security unlock-keychain -p password nchain.keychain
-   sudo security import certs/azure_cert.p12 -k nchain.keychain -P password -T /usr/bin/codesign
-
+   #sudo security import certs/azure_cert.p12 -k nchain.keychain -P password -T /usr/bin/codesign
+   sudo security import certs/azure_cert.cer -k nchain.keychain -P password -T /usr/bin/codesign
 
    security list-keychains -s login.keychain nchain.keychain
    ls -l ~/Library/Keychains
