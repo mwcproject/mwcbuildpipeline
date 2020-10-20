@@ -94,24 +94,17 @@ else
    # setup certs
    sudo security list-keychains
    ls -l ~/Library/Keychains
-   echo 'export PATH="/usr/local/opt/libressl/bin:$PATH"' >> /Users/runner/.bash_profile 
-   source /Users/runner/.bash_profile
-   openssl version
+   #echo 'export PATH="/usr/local/opt/libressl/bin:$PATH"' >> /Users/runner/.bash_profile 
+   #source /Users/runner/.bash_profile
+   #openssl version
    #openssl enc -d -aes-256-cbc -in ../certs.tar.gz.enc -out certs.tar.gz -k $3
    #openssl enc -d -aes-256-cbc -in ../certsJB.tar.gz.enc -out certs.tar.gz -k $4
-   unzip -P $4 ../certs.zip
-   echo "About to unpack certs"
-   pwd
-   ls -alt
-   ls -alt certs
-   #gzip -dc certs.tar.gz | tar xvf -
-   #tar -xvf certs.tar.gz
-   echo "finished untar?"
+   
    sudo security create-keychain -p password nchain.keychain
    sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
    sudo security unlock-keychain -p password nchain.keychain
    sudo security import certs/azure_cert.p12 -k nchain.keychain -P $4 -T /usr/bin/codesign
-
+   echo "Finished creating keychain"
 
    security list-keychains -s login.keychain nchain.keychain
    ls -l ~/Library/Keychains
