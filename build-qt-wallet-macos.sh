@@ -110,7 +110,7 @@ else
    sudo security create-keychain -p password nchain.keychain
    sudo security add-certificates -k nchain.keychain certs/azure_cert.cer
    sudo security unlock-keychain -p password nchain.keychain
-   sudo security import certs/azure_cert.p12 -k nchain.keychain -P password -T /usr/bin/codesign
+   sudo security import certs/azure_cert.p12 -k nchain.keychain -P $4 -T /usr/bin/codesign
 
 
    security list-keychains -s login.keychain nchain.keychain
