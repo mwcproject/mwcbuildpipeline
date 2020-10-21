@@ -91,6 +91,8 @@ then
    echo "Complete!";
 else
    echo "Setting up certs"
+   unzip -P $4 ../certs.zip
+   ls -al ./certs
    # setup certs
    sudo security list-keychains
    ls -l ~/Library/Keychains
