@@ -134,7 +134,7 @@ else
 
    rm -rf /tmp/notarize_out.log;
    #xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u mimblewimblecoin2@protonmail.com -p $2
-   xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u jbyrer@gmail.com -p $2
+   xcrun altool --notarize-app -f ../target/mwc-qt-wallet.dmg --primary-bundle-id com.yourcompany.mwc-qt-wallet -u jbyrer@gmail.com -p $5
    echo "Sleeping for 2 minutes to let apple process things."
    sleep 120;
    xcrun stapler staple -q -v ../target/mwc-qt-wallet.dmg
