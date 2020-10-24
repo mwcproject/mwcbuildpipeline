@@ -23,7 +23,7 @@ sudo ln -s ~/.cargo/bin/cargo /usr/bin/cargo
 
 # Get helper files
 git clone https://github.com/mwcproject/mwcbuilder-linux-helpers
-cat mwcbuilder-linux-helpers/QT-segment* | bzip2 -dc | tar xvf -
+cat mwcbuilder-linux-helpers/linux_599_* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-linux-helpers
 
 #sudo apt-get purge -yqq clang-8 clang-9 clangd-8 clangd-9 libclang-common-8-dev libclang-common-9-dev libclang1-8 libclang-cpp9

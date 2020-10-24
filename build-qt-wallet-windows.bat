@@ -51,7 +51,7 @@ cargo build --release
 
 cd ..
 
-set PATH=%cd%\Qt\Tools\mingw73_64\bin;%cd%\Qt\5.13.0\mingw73_64\bin;%PATH%
+set PATH=%cd%\Qt\Tools\mingw73_64\bin;%cd%\Qt\5.13.2\mingw73_64\bin;%PATH%
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet

@@ -62,7 +62,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 else
     echo "#define BUILD_VERSION  \"1.0-$NUMBER_GLOBAL.beta-1\"" > build_version.h
 fi
-~/Qt/5.9/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
+~/Qt/5.9.9/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
 ./fix_macos_makefile.sh
 make -j 16
 

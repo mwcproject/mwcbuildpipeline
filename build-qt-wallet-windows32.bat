@@ -45,7 +45,7 @@ rem cargo +1.37.0-i686-pc-windows-msvc build --release
 cargo +stable-i686-pc-windows-msvc build --release
 cd ..
 
-set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.0\mingw73_32\bin;%PATH%
+set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.2\mingw73_32\bin;%PATH%
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
