@@ -13,7 +13,7 @@ brew uninstall llvm
 
 # Need to fix what installer did. Installer hardecoded paths to libs by some reasons and it is breaks the build
 echo "Patching QT paths. MacOS issue"
-grep -rl kbay . | grep prl | xargs sed -i '' 's/-F\/Users\/kbay\/Qt\/5.9\/clang_64\/lib//g'
+grep -rl bay . | grep prl | xargs sed -i '' 's/-F\/Users\/bay\/Qt\/5.9.9\/clang_64\/lib//g'
 # It is easy to check if you need that patch:
 # 1. Remove the sed command
 # 2. Try to build
