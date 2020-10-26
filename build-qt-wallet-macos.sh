@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo "Starting build-qt-wallet-macos.sh"
 NUMBER_GLOBAL=`cat ./version.txt`
 export MACOSX_DEPLOYMENT_TARGET=10.9
 . ~/.cargo/env
