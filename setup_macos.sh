@@ -15,10 +15,15 @@ brew uninstall llvm
 echo "Patching QT paths. MacOS issue"
 grep -rl bay . | grep prl | xargs sed -i '' 's/-F\/Users\/bay\/Qt\/5.9.9\/clang_64\/lib//g'
 echo "Patch for QT paths - DONE"
+grep -rl bay . | grep prl
+echo "Checking for QT paths, prl - DONE"
+grep -rl bay .
+echo "Checking for QT paths, all - DONE"
+
 # It is easy to check if you need that patch:
 # 1. Remove the sed command
 # 2. Try to build
 # 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
-brew update
+#brew update
 brew install libressl
 
