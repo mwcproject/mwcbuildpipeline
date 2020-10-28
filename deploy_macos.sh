@@ -14,3 +14,9 @@ fi
 cp target/*.dmg $FILE_PREFIX-macosx.dmg;
 #scp -i ./uploader.pem -o 'StrictHostKeyChecking no' $FILE_PREFIX-macosx.dmg uploader\@ftp.mwc.mw:/home/uploader/
 ./scp.expect $FILE_PREFIX-macosx.dmg $2
+
+echo "Retry 1 to upload in case if we was interrupted"
+./scp.expect $FILE_PREFIX-macosx.dmg $2
+
+echo "Retry 2 to upload in case if we was interrupted"
+./scp.expect $FILE_PREFIX-macosx.dmg $2
