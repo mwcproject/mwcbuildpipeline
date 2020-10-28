@@ -17,8 +17,6 @@ grep -rl bay . | grep prl | xargs sed -i '' 's/-F\/Users\/bay\/Qt\/5.9.9\/clang_
 echo "Patch for QT paths - DONE"
 grep -rl bay . | grep prl
 echo "Checking for QT paths, prl - DONE"
-grep -rl bay .
-echo "Checking for QT paths, all - DONE"
 
 # It is easy to check if you need that patch:
 # 1. Remove the sed command
