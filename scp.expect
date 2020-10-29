@@ -5,7 +5,8 @@ set pass [lindex $argv 1];
 
 # spawn scp -o StrictHostKeyChecking=no $file uploader@ftp.mwc.mw:/home/uploader
 # Switching to rsync because it can continue the session
-spawn rsync -e '"ssh -o StrictHostKeyChecking=no"' -av --progress --partial $file uploader@ftp.mwc.mw:/home/uploader
+spawn rsync -e ssh -av --progress --partial $file uploader@ftp.mwc.mw:/home/uploader
 expect {
 password: {send "$pass\r"; exp_continue}
+yes/no {send "yes\r"; exp_continue}
 }
