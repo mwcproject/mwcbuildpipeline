@@ -30,7 +30,6 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-git apply .ci/win.patch
 rem cargo +1.37.0-i686-pc-windows-msvc build --release
 cargo +stable-i686-pc-windows-msvc build --release
 cd ..

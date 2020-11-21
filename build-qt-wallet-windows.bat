@@ -29,12 +29,11 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-git apply .ci/win.patch
 
 echo "Building for CPU: %CPU_CORE%
 
-set CPPFLAGS=-march=%CPU_CORE% -mcpu=%CPU_CORE%
-set CFLAGS=-march=%CPU_CORE% -mcpu=%CPU_CORE%
+set CPPFLAGS=-arch=%MS_ARCH%
+set CFLAGS=-arch=%MS_ARCH%
 set RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%
 cargo build --release
 cd ..
