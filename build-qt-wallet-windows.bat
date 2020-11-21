@@ -16,8 +16,6 @@ set OPENSSL_LIB_DIR=%cd%\lib\openssl@1.1/lib/
 set OPENSSL_INCLUDE_DIR=%cd%\lib\openssl@1.1/include/
 set OPENSSL_STATIC="yes"
 
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-
 mkdir target
 
 git clone https://github.com/mwcproject/mwc-node
@@ -32,9 +30,18 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 
 echo "Building for CPU: %CPU_CORE%
 
-set CPPFLAGS=-arch=%MS_ARCH%
-set CFLAGS=-arch=%MS_ARCH%
+echo "Environment before vcvars: "
+SET
+
+set CPPFLAGS="/arch:%MS_ARCH%"
+set CFLAGS="/arch:%MS_ARCH%"
 set RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%
+
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+
+echo "Environment ready to build: "
+SET
+
 cargo build --release
 cd ..
 
