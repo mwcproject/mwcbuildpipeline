@@ -16,6 +16,8 @@ set OPENSSL_LIB_DIR=%cd%\lib\openssl@1.1/lib/
 set OPENSSL_INCLUDE_DIR=%cd%\lib\openssl@1.1/include/
 set OPENSSL_STATIC="yes"
 
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+
 mkdir target
 
 git clone https://github.com/mwcproject/mwc-node
