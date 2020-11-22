@@ -33,7 +33,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 rem cargo +1.37.0-i686-pc-windows-msvc build --release
-.ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
+call .ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
 cd ..
 
 git clone https://github.com/mwcproject/mwc713
@@ -45,7 +45,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 rem cargo +1.37.0-i686-pc-windows-msvc build --release
-.ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
+call .ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
 cd ..
 
 set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.2\mingw73_32\bin;%PATH%
