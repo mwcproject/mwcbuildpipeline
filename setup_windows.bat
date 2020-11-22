@@ -5,14 +5,10 @@ choco install -y putty
 git clone https://github.com/mwcproject/mwcbuilder-win64-helpers
 
 cat mwcbuilder-win64-helpers/win64_5132_* | bzip2 -dc | tar xvf -
-bzip2 -dc mwcbuilder-win64-helpers/libs.tar.bz2 | tar xvf -
 
 rm -rf mwcbuilder-win64-helpers
 
 choco install -y llvm
-choco install rust
+choco install -y openssl
+choco install -y rust-ms
 
-rem need putty for scp
-choco install -y putty
-
-rem rem rustup override set 1.37.0

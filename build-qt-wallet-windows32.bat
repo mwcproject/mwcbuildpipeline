@@ -9,14 +9,16 @@ rmdir /s /q mwc713
 del /s /q mwc-qt-wallet
 rmdir /s /q mwc-qt-wallet
 
-
 set /p NUMBER_GLOBAL=<version.txt
-set LIBCLANG_PATH=%cd%\lib
-set OPENSSL_LIB_DIR=%cd%\lib\openssl@1.1/lib/
-set OPENSSL_INCLUDE_DIR=%cd%\lib\openssl@1.1/include/
-set OPENSSL_STATIC="yes"
 
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+rem We want to trigger ssl static for all rust projects.
+set LIBCLANG_PATH=%cd%\LLVM_OpenSSL-Win32
+set OPENSSL_LIB_DIR=%cd%\LLVM_OpenSSL-Win32\lib\
+set OPENSSL_INCLUDE_DIR=%cd%\LLVM_OpenSSL-Win32\include\
+set OPENSSL_STATIC=yes
+
+rem Switching the defaulkt rust channel for all
+rustup default stable-i686-pc-windows-msvc
 
 mkdir target
 
@@ -31,7 +33,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 rem cargo +1.37.0-i686-pc-windows-msvc build --release
-cargo +stable-i686-pc-windows-msvc build --release
+.ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
 cd ..
 
 git clone https://github.com/mwcproject/mwc713
@@ -43,7 +45,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 rem cargo +1.37.0-i686-pc-windows-msvc build --release
-cargo +stable-i686-pc-windows-msvc build --release
+.ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
 cd ..
 
 set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.2\mingw73_32\bin;%PATH%

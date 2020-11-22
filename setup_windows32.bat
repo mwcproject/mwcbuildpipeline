@@ -6,13 +6,13 @@ choco install -y putty
 git clone https://github.com/mwcproject/mwcbuilder-win32-helpers
 
 cat mwcbuilder-win32-helpers/win32_5132_* | bzip2 -dc | tar xvf -
-bzip2 -dc mwcbuilder-win32-helpers/libs32.tar.bz2 | tar xvf -
+bzip2 -dc mwcbuilder-win32-helpers/llvm_openssl_win32.tar.bz2 | tar xvf -
 
 rm -rf mwcbuilder-win32-helpers
 
 choco install -y llvm
+rem Open SSL comes from the helper because choco doesn't install 32 bit packages for 64 bit OS.
 
+choco install rustup.install
 rustup install stable-i686-pc-windows-msvc
 
-rem rustup install 1.37.0-i686-pc-windows-msvc
-rem rustup override set 1.37.0-i686-pc-windows-msvc

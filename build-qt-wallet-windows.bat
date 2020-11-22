@@ -11,10 +11,13 @@ rmdir /s /q mwc713
 del /s /q mwc-qt-wallet
 rmdir /s /q mwc-qt-wallet
 
-set LIBCLANG_PATH=%cd%\lib
-set OPENSSL_LIB_DIR=%cd%\lib\openssl@1.1/lib/
-set OPENSSL_INCLUDE_DIR=%cd%\lib\openssl@1.1/include/
-set OPENSSL_STATIC="yes"
+set RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%
+
+REM Current MS compiler has SSL2 as minimum setting and it is default, not much what we can lower
+REM set CPPFLAGS=/arch:%MS_ARCH%
+rem set CFLAGS=/arch:%MS_ARCH%
+
+echo "Building for CPU (rust level only): %CPU_CORE%
 
 mkdir target
 
@@ -28,23 +31,9 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 
-echo "Building for CPU: %CPU_CORE%
+call build_static64.bat
 
-echo "Environment before vcvars: "
-SET
-
-set CPPFLAGS="/arch:%MS_ARCH%"
-set CFLAGS="/arch:%MS_ARCH%"
-set RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%
-
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-
-echo "Environment ready to build: "
-SET
-
-cargo build --release
 cd ..
-
 
 git clone https://github.com/mwcproject/mwc713
 cd mwc713
@@ -55,7 +44,8 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git fetch --all
     git checkout !VERSION!
 )
-cargo build --release
+
+call build_static64.bat
 
 cd ..
 
