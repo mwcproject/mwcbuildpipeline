@@ -3,7 +3,6 @@ setlocal enableextensions enabledelayedexpansion
 set /p NUMBER_GLOBAL=<version.txt
 
 echo "Param passed in is %1"
-md5sum target\\nsis\\mwc-qt-wallet*-setup.exe
 mkdir %systemdrive%%homepath%\.ssh
 echo ftp.mwc.mw ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFCzEhIbZcESW50l2Mh9dFIeObKrDBNwZm+FPZzL3tp7U8xkcH0U7rx87cMDUKUfJnO8soJ3yqxf1RXOrFkXKQM= >> %systemdrive%%homepath%\.ssh\known_hosts
 
@@ -24,6 +23,9 @@ set NAME=mwc-qt-wallet-1.0.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
 set NAME_UPLOAD=mwc-qt-wallet_1.0.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
 )
 echo "Using %NAME%"
+
+md5sum target\nsis\%NAME%
+
 ls -l target\\nsis
 
 rem Say 'n' for trusting certificate
