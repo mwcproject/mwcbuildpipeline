@@ -9,6 +9,8 @@ git clone https://github.com/mwcproject/mwcbuilder-macos-helpers
 cat mwcbuilder-macos-helpers/macos_599_* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-macos-helpers
 
+brew cleanup
+brew update
 brew uninstall llvm
 
 # Need to fix what installer did. Installer hardecoded paths to libs by some reasons and it is breaks the build
@@ -22,6 +24,5 @@ echo "Checking for QT paths, prl - DONE"
 # 1. Remove the sed command
 # 2. Try to build
 # 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
-brew update
 brew install libressl
 
