@@ -1,5 +1,10 @@
 #!/bin/sh
 
+brew cleanup
+brew update
+brew uninstall llvm
+brew install libressl
+
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
 echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
@@ -8,10 +13,6 @@ echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
 git clone https://github.com/mwcproject/mwcbuilder-macos-helpers
 cat mwcbuilder-macos-helpers/macos_599_* | bzip2 -dc | tar xvf -
 rm -rf mwcbuilder-macos-helpers
-
-brew cleanup
-brew update
-brew uninstall llvm
 
 # Need to fix what installer did. Installer hardecoded paths to libs by some reasons and it is breaks the build
 echo "Patching QT paths. MacOS issue"
@@ -24,5 +25,4 @@ echo "Checking for QT paths, prl - DONE"
 # 1. Remove the sed command
 # 2. Try to build
 # 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
-brew install libressl
 
