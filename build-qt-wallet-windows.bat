@@ -64,7 +64,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !QT_WALLET_VERSION!
     echo #define BUILD_VERSION "!QT_WALLET_VERSION!" > build_version.h
 ) ELSE (
-    echo #define BUILD_VERSION "1.0-!NUMBER_GLOBAL!.beta.%1" > build_version.h
+    echo #define BUILD_VERSION "1.1-!NUMBER_GLOBAL!.beta.%1" > build_version.h
     set PATCH_NUMBER="!NUMBER_GLOBAL!.beta.%1"
 )
 

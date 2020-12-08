@@ -1,14 +1,14 @@
 #!/bin/sh
 
 NUMBER_GLOBAL=`cat ./version.txt`
-VERSION=1.0-$NUMBER_GLOBAL.beta.$1
+VERSION=1.1-$NUMBER_GLOBAL.beta.$1
 echo $VERSION
-VERSION_NAME=1.0
+VERSION_NAME=1.1
 RELEASE_NAME=$NUMBER_GLOBAL.beta.$1
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     VERSION=`cat $TAG_FOR_BUILD_FILE`;
-    VERSION_NAME=1.0
+    VERSION_NAME=1.1
     RELEASE_NAME=$NUMBER_GLOBAL
 fi
 
@@ -153,13 +153,13 @@ cp rpmbuild.tar ~
 cd ~
 rm -rf rpmbuild
 tar xvf rpmbuild.tar
-cp mwc-qt-wallet-$VERSION.tar.gz rpmbuild/SOURCES/mwc-qt-wallet-1.0.tar.gz
+cp mwc-qt-wallet-$VERSION.tar.gz rpmbuild/SOURCES/mwc-qt-wallet-1.1.tar.gz
 cd rpmbuild/SOURCES
 gzip -dc *.gz | tar xvf -
 rm *.gz
-mv * mwc-qt-wallet-1.0
-tar cvf mwc-qt-wallet-1.0.tar mwc-qt-wallet-1.0
-gzip mwc-qt-wallet-1.0.tar
+mv * mwc-qt-wallet-1.1
+tar cvf mwc-qt-wallet-1.1.tar mwc-qt-wallet-1.1
+gzip mwc-qt-wallet-1.1.tar
 cd ../..
 cp rpmbuild/SPECS/mwc-qt-wallet.spec.template rpmbuild/SPECS/mwc-qt-wallet.spec
 

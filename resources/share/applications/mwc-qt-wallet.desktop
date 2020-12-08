@@ -1,5 +1,5 @@
 [Desktop Entry]
-Version=1.0
+Version=1.1
 Name=MWC QT Wallet
 Comment=MWC QT Wallet is the Desktop wallet for the MWC Cryptocurrency.
 Exec=/usr/local/bin/mwc-qt-wallet

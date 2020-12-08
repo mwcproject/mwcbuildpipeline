@@ -65,7 +65,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
     echo "#define BUILD_VERSION  \"`cat $TAG_FOR_BUILD_FILE`\"" > build_version.h
 else
-    echo "#define BUILD_VERSION  \"1.0-$NUMBER_GLOBAL.beta.$1\"" > build_version.h
+    echo "#define BUILD_VERSION  \"1.1-$NUMBER_GLOBAL.beta.$1\"" > build_version.h
 fi
 
 echo "Here is what we have at build_version.h"
