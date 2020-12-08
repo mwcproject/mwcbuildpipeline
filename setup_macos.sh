@@ -22,6 +22,6 @@ echo "Checking for QT paths, prl - DONE"
 # 1. Remove the sed command
 # 2. Try to build
 # 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
-#brew update
+brew update
 brew install libressl
 
