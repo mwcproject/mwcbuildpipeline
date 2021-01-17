@@ -10,9 +10,9 @@ DPKG_NAME=mwc-qt-wallet_$VERSION
 else
 DPKG_NAME=mwc-qt-wallet_1.1-$NUMBER_GLOBAL.beta.$1
 fi
-echo "md5sum = `md5sum target/*.deb`";
-echo "md5sum = `md5sum target/*.tar.gz`";
-echo "md5sum = `md5sum ~/rpmbuild/RPMS/x86_64/*.rpm`";
+echo "sha256sum = `sha256sum target/*.deb`";
+echo "sha256sum = `sha256sum target/*.tar.gz`";
+echo "sha256sum = `sha256sum ~/rpmbuild/RPMS/x86_64/*.rpm`";
 mkdir -p ~/.ssh
 cp target/*.deb "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.deb"
 cp target/*.tar.gz "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.tar.gz"

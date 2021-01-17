@@ -24,7 +24,7 @@ set NAME_UPLOAD=mwc-qt-wallet_1.1.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
 )
 echo "Using %NAME%"
 
-md5sum target\nsis\%NAME%
+sha256sum target\nsis\%NAME%
 
 ls -l target\\nsis
 

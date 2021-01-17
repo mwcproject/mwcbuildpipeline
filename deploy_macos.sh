@@ -2,7 +2,7 @@
 
 NUMBER_GLOBAL=`cat ./version.txt`
 chmod 400 ./uploader.pem
-echo "md5sum = `md5 target/*.dmg`";
+echo "sha256sum = `sha256sum target/*.dmg`";
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 VERSION=`cat $TAG_FOR_BUILD_FILE`
