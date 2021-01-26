@@ -1,6 +1,6 @@
 #!/bin/sh
 
-chmod 400 ./uploader.pem
+#chmod 400 ./uploader.pem
 
 NUMBER_GLOBAL=`cat ./version.txt`
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
