@@ -19,8 +19,8 @@ set /p VERSION=<mwc-qt-wallet.version
 set NAME=mwc-qt-wallet-!VERSION!-win32-setup.exe
 set NAME_UPLOAD=mwc-qt-wallet_!VERSION!-win32-setup.exe
 ) ELSE (
-set NAME=mwc-qt-wallet-1.1.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
-set NAME_UPLOAD=mwc-qt-wallet_1.1.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
+set NAME=mwc-qt-wallet-1.2.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
+set NAME_UPLOAD=mwc-qt-wallet_1.2.!NUMBER_GLOBAL!.beta.%1-win32-setup.exe
 )
 echo "Using %NAME%"
 
