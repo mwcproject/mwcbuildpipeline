@@ -79,7 +79,7 @@ make -j8
 cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
 cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
 cp ../mwc713/target/release/mwczip mwc-qt-wallet.app/Contents/MacOS/mwczip
-cp ../resources/tor.macosx mwc-qt-wallet.app/Contents/MacOS/tor
+cp ../resources/macOs/* mwc-qt-wallet.app/Contents/MacOS/
 mkdir -p mwc-qt-wallet.app/Contents/Frameworks/xz
 cp ../resources/liblzma.5.dylib mwc-qt-wallet.app/Contents/Frameworks/xz
 # fix tor lib

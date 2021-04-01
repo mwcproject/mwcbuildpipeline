@@ -115,7 +115,7 @@ cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwc713 target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwczip target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc-node/target/release/mwc  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-cp resources/tor.linux target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/tor
+cp resources/Linux/tor target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/tor
 
 # Make debain package
 cd target
@@ -138,7 +138,7 @@ cp ../mwc-qt-wallet/mwc-qt-wallet $QT_WALLET_DIRECTORY/mwc-qt-wallet.bin
 cp ../mwc713/target/release/mwc713 $QT_WALLET_DIRECTORY
 cp ../mwc713/target/release/mwczip $QT_WALLET_DIRECTORY
 cp ../mwc-node/target/release/mwc $QT_WALLET_DIRECTORY
-cp ../resources/tor.linux $QT_WALLET_DIRECTORY/tor
+cp ../resources/Linux/tor $QT_WALLET_DIRECTORY/tor
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
 cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 
