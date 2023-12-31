@@ -15,7 +15,7 @@ jobs:
   - job: linux
     timeoutInMinutes: 120
     pool:
-      vmImage: ubuntu-18.04
+      vmImage: ubuntu-20.04
     steps:
       - script: './setup_linux.sh'
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
