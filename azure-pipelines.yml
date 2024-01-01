@@ -10,7 +10,7 @@ jobs:
 - job: linux
   timeoutInMinutes: 120
   pool:
-    vmImage: ubuntu-20.04
+    vmImage: ubuntu-latest
   steps:
     - script: './setup_linux.sh'
     - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
@@ -19,7 +19,7 @@ jobs:
 - job: macos
   timeoutInMinutes: 120
   pool:
-    vmImage: macos-10.16
+    vmImage: macos-latest
   steps:
     - script: './setup_macos.sh $(UPLOADCREDS)'
     - script: './build-qt-wallet-macos.sh $(Build.BuildNumber) $(APPLE_ONE_TIME_ID) $(UPLOADCREDS) $(decrypt_pw) $(Apple_App_Specific_Pw)'
