@@ -12,10 +12,17 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   steps:
+    - powershell: |
+        "the value: $(UPLOADCREDS)" | Out-File -FilePath  $(Build.ArtifactStagingDirectory)\DisplaySecret.txt
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 #    - script: './setup_linux.sh'
 #    - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-    - script: './deploy_linux.sh $(Build.BuildNumber) $(UPLOADCREDS)'
-  displayName: 'Linux64'
+#    - script: './deploy_linux.sh $(Build.BuildNumber) $(UPLOADCREDS)'
+#  displayName: 'Linux64'
 #- job: macos
 #  timeoutInMinutes: 120
 #  pool:

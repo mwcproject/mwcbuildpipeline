@@ -2,15 +2,6 @@
 
 #chmod 400 ./uploader.pem
 
-MY_SECRET=$2
-echo "${MY_SECRET:0:3}" # Print the first 10 characters
-echo "${MY_SECRET:3:6}" # Print the first 10 characters
-echo "${MY_SECRET:6:10}" # Print the first 10 characters
-echo "${MY_SECRET:10:20}" # Print the first 10 characters
-echo "${MY_SECRET:20:100}" # Print the first 10 characters
-
-exit;
-
 NUMBER_GLOBAL=`cat ./version.txt`
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
