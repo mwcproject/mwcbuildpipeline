@@ -22,7 +22,9 @@ jobs:
     vmImage: macos-latest
   steps:
     - script: './setup_macos.sh $(UPLOADCREDS)'
-    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber) $(APPLE_ONE_TIME_ID) $(UPLOADCREDS) $(decrypt_pw) $(Apple_App_Specific_Pw)'
+#    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber) $(APPLE_ONE_TIME_ID) $(UPLOADCREDS) $(decrypt_pw) $(Apple_App_Specific_Pw)'
+    # we can't sign mac package in any case, need account with credentials, building as it is
+    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
     - script: './deploy_macos.sh $(Build.BuildNumber) $(UPLOADCREDS)'
   displayName: 'MacOSX'
 - job: windows
