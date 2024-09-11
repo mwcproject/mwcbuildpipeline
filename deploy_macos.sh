@@ -1,14 +1,14 @@
 #!/bin/sh
 
 NUMBER_GLOBAL=`cat ./version.txt`
-chmod 400 ./uploader.pem
+#chmod 400 ./uploader.pem
 echo "sha256sum = `sha256sum target/*.dmg`";
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 VERSION=`cat $TAG_FOR_BUILD_FILE`
-FILE_PREFIX=mwc-qt-wallet_$VERSION
+FILE_PREFIX=mwc-qt-wallet_"${VERSION//\//_}"
 else
-FILE_PREFIX=mwc-qt-wallet_1.1-$NUMBER_GLOBAL.beta.$1
+FILE_PREFIX=mwc-qt-wallet_1.1-"${NUMBER_GLOBAL//\//_}".beta.$1
 fi
 
 cp target/*.dmg $FILE_PREFIX-macosx.dmg;
