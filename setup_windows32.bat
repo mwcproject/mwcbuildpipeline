@@ -1,3 +1,5 @@
+@echo on
+
 df -h
 
 rem need putty for scp

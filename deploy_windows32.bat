@@ -1,4 +1,5 @@
 setlocal enableextensions enabledelayedexpansion
+@echo on
 
 set /p NUMBER_GLOBAL=<version.txt
 
