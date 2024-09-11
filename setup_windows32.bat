@@ -7,7 +7,7 @@ choco install -y putty
 choco install -y bzip2
 choco install -y gnuwin32-coreutils.install
 
-set PATH="C:\Program Files (86)\GnuWin32\bin";%PATH%
+set PATH="C:\Program Files (x86)\GnuWin32\bin";%PATH%
 
 git clone https://github.com/mwcproject/mwcbuilder-win32-helpers
 
