@@ -4,6 +4,8 @@ df -h
 
 rem need putty for scp
 choco install -y putty
+choco install -y bzip2
+choco install -y gnuwin32-coreutils.install
 
 git clone https://github.com/mwcproject/mwcbuilder-win32-helpers
 
