@@ -7,7 +7,7 @@ schedules:
   always: true
 
 jobs:
-  - job: linux-24
+  - job: linux_24
     timeoutInMinutes: 120
     pool:
       vmImage: ubuntu-24.04
@@ -16,7 +16,7 @@ jobs:
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
       - script: './deploy_linux.sh 6.6 $(Build.BuildNumber) $(UPLOADCREDS)'
     displayName: 'Ubuntu-24'
-  - job: linux-22
+  - job: linux_22
     timeoutInMinutes: 120
     pool:
       vmImage: ubuntu-22.04
@@ -25,7 +25,7 @@ jobs:
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
       - script: './deploy_linux.sh 5.15 $(Build.BuildNumber) $(UPLOADCREDS)'
     displayName: 'Ubuntu-22'
-  - job: linux-20
+  - job: linux_20
     timeoutInMinutes: 120
     pool:
       vmImage: ubuntu-20.04
@@ -34,7 +34,7 @@ jobs:
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
       - script: './deploy_linux.sh 5.4 $(Build.BuildNumber) $(UPLOADCREDS)'
     displayName: 'Ubuntu-20'
-  - job: linux-18
+  - job: linux_18
     timeoutInMinutes: 120
     pool:
       vmImage: ubuntu-18.04

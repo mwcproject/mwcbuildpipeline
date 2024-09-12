@@ -20,7 +20,7 @@ jobs:
       - script: './setup_linux.sh'
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
       - script: './deploy_linux.sh 5.15 $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Ubuntu-24'
+    displayName: 'Ubuntu_24'
   - job: windows
     timeoutInMinutes: 120
     pool:
