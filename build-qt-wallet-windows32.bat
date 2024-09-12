@@ -49,7 +49,7 @@ rem cargo +1.37.0-i686-pc-windows-msvc build --release
 call .ci/win32_cargo.bat build --target=i686-pc-windows-msvc --release
 cd ..
 
-set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.2\mingw73_32\bin;%PATH%
+set PATH=%cd%\Qt\Tools\mingw730_32\bin;%cd%\Qt\5.13.2\mingw73_32\bin;C:\Program Files (x86)\NSIS;%PATH%
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
@@ -72,7 +72,8 @@ echo "Using %PATCH_NUMBER%"
 xcopy ..\nsis\resources\logo.ico .
 qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
-make -j 8
+rem make -j 8
+mingw32-make.exe -j8
 cd ..
 
 mkdir target\nsis

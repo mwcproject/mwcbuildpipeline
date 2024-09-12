@@ -6,6 +6,7 @@ rem need putty for scp
 choco install -y putty
 choco install -y bzip2
 choco install -y gnuwin32-coreutils.install
+choco install -y nsis
 
 set PATH="C:\Program Files (x86)\GnuWin32\bin";%PATH%
 
