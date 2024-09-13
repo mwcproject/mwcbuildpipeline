@@ -14,13 +14,14 @@ schedules:
 jobs:
   - job: linux
     timeoutInMinutes: 120
+    # Using oldest ubuntu to build. It should run well on latest Versions.
     pool:
-      vmImage: ubuntu-22.04
+      vmImage: ubuntu-20.04
     steps:
       - script: './setup_linux.sh'
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-      - script: './deploy_linux.sh 5.15 $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Ubuntu_24'
+      - script: './deploy_linux.sh $(Build.BuildNumber) $(UPLOADCREDS)'
+    displayName: 'Linux64'
   - job: windows
     timeoutInMinutes: 120
     pool:

@@ -111,11 +111,17 @@ export DPKG_NAME=mwc-qt-wallet-$DPKG_VERSION
 echo "Building $DPKG_NAME"
 mkdir -p target/$DPKG_NAME/usr/local/bin/
 mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
+mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
+mkdir -p target/$DPKG_NAME/lib/x86_64-linux-gnu
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwc713 target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc713/target/release/mwczip target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp mwc-node/target/release/mwc  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-cp resources/Linux/tor target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/tor
+cp resources/Linux/tor target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
+cp Qt/5.9.9/gcc_64/plugins/platforms/libqxcb.so  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
+cp resources/Linux/libcrypto.so.3 target/$DPKG_NAME/lib/x86_64-linux-gnu/libcrypto.so.3
+cp resources/Linux/libevent-2.1.so.7 target/$DPKG_NAME/lib/x86_64-linux-gnu/libevent-2.1.so.7
+cp resources/Linux/libssl.so.3 target/$DPKG_NAME/lib/x86_64-linux-gnu/libssl.so.3
 
 # Make debain package
 cd target
@@ -139,6 +145,9 @@ cp ../mwc713/target/release/mwc713 $QT_WALLET_DIRECTORY
 cp ../mwc713/target/release/mwczip $QT_WALLET_DIRECTORY
 cp ../mwc-node/target/release/mwc $QT_WALLET_DIRECTORY
 cp ../resources/Linux/tor $QT_WALLET_DIRECTORY/tor
+cp ../resources/Linux/libcrypto.so.3 $QT_WALLET_DIRECTORY/libcrypto.so.3
+cp ../resources/Linux/libevent-2.1.so.7 $QT_WALLET_DIRECTORY/libevent-2.1.so.7
+cp ../resources/Linux/libssl.so.3 $QT_WALLET_DIRECTORY/libssl.so.3
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
 cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 

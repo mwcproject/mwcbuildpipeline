@@ -7,68 +7,42 @@ schedules:
   always: true
 
 jobs:
-  - job: linux_24
-    timeoutInMinutes: 120
-    pool:
-      vmImage: ubuntu-24.04
-    steps:
-      - script: './setup_linux.sh'
-      - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-      - script: './deploy_linux.sh 6.6 $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Ubuntu-24'
-  - job: linux_22
-    timeoutInMinutes: 120
-    pool:
-      vmImage: ubuntu-22.04
-    steps:
-      - script: './setup_linux.sh'
-      - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-      - script: './deploy_linux.sh 5.15 $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Ubuntu-22'
-  - job: linux_20
+  # Using oldest ubuntu to build. It should run well on latest Versions.
+  - job: linux
     timeoutInMinutes: 120
     pool:
       vmImage: ubuntu-20.04
     steps:
       - script: './setup_linux.sh'
       - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-      - script: './deploy_linux.sh 5.4 $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Ubuntu-20'
-  - job: linux_18
-    timeoutInMinutes: 120
-    pool:
-      vmImage: ubuntu-18.04
-    steps:
-      - script: './setup_linux.sh'
-      - script: './build-qt-wallet-linux.sh $(Build.BuildNumber)'
-      - script: './deploy_linux.sh 4.5 $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Ubuntu-18'
-#- job: macos
-#  timeoutInMinutes: 120
-#  pool:
-#    vmImage: macos-latest
-#  steps:
-#    - script: './setup_macos.sh $(UPLOADCREDS)'
-##    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber) $(APPLE_ONE_TIME_ID) $(UPLOADCREDS) $(decrypt_pw) $(Apple_App_Specific_Pw)'
-#    # we can't sign mac package in any case, need account with credentials, building as it is
-#    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
-#    - script: './deploy_macos.sh $(Build.BuildNumber) $(UPLOADCREDS)'
-#  displayName: 'MacOSX'
-#- job: windows
-#  timeoutInMinutes: 120
-#  pool:
-#    vmImage: windows-latest
-#  steps:
-#    - script: 'setup_windows.bat $(UPLOADCREDS)'
-#    - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
-#    - script: 'deploy_windows.bat $(Build.BuildNumber) $(UPLOADCREDS)'
-#  displayName: 'Windows64'
-#- job: windows32
-#  timeoutInMinutes: 120
-#  pool:
-#    vmImage: windows-latest
-#  steps:
-#    - script: 'setup_windows32.bat $(UPLOADCREDS)'
-#    - script: 'build-qt-wallet-windows32.bat $(Build.BuildNumber)'
-#    - script: 'deploy_windows32.bat $(Build.BuildNumber) $(UPLOADCREDS)'
-#  displayName: 'Windows32'
+      - script: './deploy_linux.sh $(Build.BuildNumber) $(UPLOADCREDS)'
+    displayName: 'Linux64'
+- job: macos
+  timeoutInMinutes: 120
+  pool:
+    vmImage: macos-latest
+  steps:
+    - script: './setup_macos.sh $(UPLOADCREDS)'
+#    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber) $(APPLE_ONE_TIME_ID) $(UPLOADCREDS) $(decrypt_pw) $(Apple_App_Specific_Pw)'
+    # we can't sign mac package in any case, need account with credentials, building as it is
+    - script: './build-qt-wallet-macos.sh $(Build.BuildNumber)'
+    - script: './deploy_macos.sh $(Build.BuildNumber) $(UPLOADCREDS)'
+  displayName: 'MacOSX'
+- job: windows
+  timeoutInMinutes: 120
+  pool:
+    vmImage: windows-latest
+  steps:
+    - script: 'setup_windows.bat $(UPLOADCREDS)'
+    - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
+    - script: 'deploy_windows.bat $(Build.BuildNumber) $(UPLOADCREDS)'
+  displayName: 'Windows64'
+- job: windows32
+  timeoutInMinutes: 120
+  pool:
+    vmImage: windows-latest
+  steps:
+    - script: 'setup_windows32.bat $(UPLOADCREDS)'
+    - script: 'build-qt-wallet-windows32.bat $(Build.BuildNumber)'
+    - script: 'deploy_windows32.bat $(Build.BuildNumber) $(UPLOADCREDS)'
+  displayName: 'Windows32'
