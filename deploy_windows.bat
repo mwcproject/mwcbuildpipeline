@@ -30,8 +30,7 @@ sha256sum target\nsis\%NAME%
 
 ls -l target\\nsis
 
-rem Say 'n' for trusting certificate
-echo n | pscp -scp -P 22 -pw %2 target\nsis\%NAME% uploader@ftp.mwc.mw:/home/uploader/%NAME_UPLOAD%
+pscp -scp -P 22 -pw %2 -batch -hostkey "ssh-ed25519 255 SHA256:FY3NMOUpHofoUyVyTynch3lICRSEOylPmMCJo7Y5Huo" target\nsis\%NAME% uploader@ftp.mwc.mw:/home/uploader/%NAME_UPLOAD%
 
 
 endlocal
