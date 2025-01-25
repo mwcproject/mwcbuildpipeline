@@ -5,7 +5,7 @@ This is the build pipeline for mwc-qt-wallet, but also builds mwc713 and mwc-nod
 ## Prepare Tor Binary
 
 For the MacOS we have to ship tor with all dependencies.
-Tor binary we get form the homebrew.
+Tor binary we get form the Tor Browser the latest version.
 
 Then we have to copy tor plus all dependent shared libraries into the same dir. Then fix the dependencies (code might vary).
 
