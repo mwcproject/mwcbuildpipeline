@@ -5,6 +5,7 @@ brew update
 brew uninstall llvm
 brew install libressl
 brew install coreutils
+brew install go
 
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0

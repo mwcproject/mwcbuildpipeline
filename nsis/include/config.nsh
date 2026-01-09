@@ -1,7 +1,7 @@
 !define APP_NAME   "MWC"
 !define REG_DIR    "Software\${APP_NAME}"
-!define VER_MAJOR  1
-!define VER_MINOR  2
+!define VER_MAJOR  2
+!define VER_MINOR  0
 !define VER_PATCH  REPLACE_VERSION_PATCH
 !define VER_PRE    "-INTERNAL"
 !define VER_DISP   "${VER_MAJOR}.${VER_MINOR}.${VER_PATCH}"

@@ -37,12 +37,3 @@ jobs:
       - script: 'build-qt-wallet-windows.bat $(Build.BuildNumber)'
       - script: 'deploy_windows.bat $(Build.BuildNumber) $(UPLOADCREDS)'
     displayName: 'Windows-x64'
-  - job: windows32
-    timeoutInMinutes: 120
-    pool:
-      vmImage: windows-latest
-    steps:
-      - script: 'setup_windows32.bat $(UPLOADCREDS)'
-      - script: 'build-qt-wallet-windows32.bat $(Build.BuildNumber)'
-      - script: 'deploy_windows32.bat $(Build.BuildNumber) $(UPLOADCREDS)'
-    displayName: 'Windows-x32'

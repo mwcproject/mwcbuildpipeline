@@ -17,4 +17,4 @@ rm -rf mwcbuilder-win64-helpers
 choco install -y llvm
 choco install -y openssl
 choco install -y rust-ms
-
+choco install -y golang

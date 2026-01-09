@@ -4,10 +4,10 @@ set /p NUMBER_GLOBAL=<version.txt
 
 del /s /q target
 rmdir /s /q target
-del /s /q mwc-node
-rmdir /s /q mwc-node
-del /s /q mwc713
-rmdir /s /q mwc713
+del /s /q mwc-wallet
+rmdir /s /q mwc-wallet
+del /s /q webtunnel
+rmdir /s /q webtunnel
 del /s /q mwc-qt-wallet
 rmdir /s /q mwc-qt-wallet
 
@@ -21,26 +21,45 @@ echo "Building for CPU (rust level only): %CPU_CORE%
 
 mkdir target
 
-git clone https://github.com/mwcproject/mwc-node
-cd mwc-node
+REM Building webtunnel client
+setlocal enabledelayedexpansion
 
-set TAG_FOR_BUILD_FILE=..\mwc-node.version
-IF EXIST "%TAG_FOR_BUILD_FILE%" (
-    set /p VERSION=<..\mwc-node.version
-    git fetch --all
-    git checkout !VERSION!
+set REPO_URL=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel
+set REPO_DIR=webtunnel
+set MAX_ATTEMPTS=5
+
+for /L %%A in (1,1,%MAX_ATTEMPTS%) do (
+    git clone %REPO_URL%
+    if exist "%REPO_DIR%\.git" (
+        goto clone_success
+    )
+
+    echo webtunnel clone failed (attempt %%A), retrying in 10s...
+    rmdir /S /Q %REPO_DIR% 2>nul
+    timeout /T 10 /NOBREAK >nul
 )
 
-call build_static64.bat
+if not exist "%REPO_DIR%\.git" (
+    echo webtunnel clone failed after retries
+    exit /b 1
+)
 
-cd ..
+:clone_success
+cd %REPO_DIR%\main\client || exit /b 1
 
-git clone https://github.com/mwcproject/mwc713
-cd mwc713
-set TAG_FOR_BUILD_FILE=..\mwc713.version
+go build || exit /b 1
+
+move client.exe ..\..\webtunnelclient.exe
+
+endlocal
+
+
+git clone https://github.com/mwcproject/mwc-wallet
+cd mwc-wallet
+
+set TAG_FOR_BUILD_FILE=..\mwc-core.version
 IF EXIST "%TAG_FOR_BUILD_FILE%" (
-    set /p VERSION=<..\mwc713.version
-    echo "version=!VERSION!"
+    set /p VERSION=<..\mwc-core.version
     git fetch --all
     git checkout !VERSION!
 )
@@ -65,7 +84,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !QT_WALLET_VERSION!
     echo #define BUILD_VERSION "!QT_WALLET_VERSION!" > build_version.h
 ) ELSE (
-    echo #define BUILD_VERSION "1.1-!NUMBER_GLOBAL!.beta.%1" > build_version.h
+    echo #define BUILD_VERSION "2.0-!NUMBER_GLOBAL!.beta.%1" > build_version.h
     set PATCH_NUMBER="!NUMBER_GLOBAL!.beta.%1"
 )
 
@@ -88,11 +107,8 @@ xcopy nsis\include target\nsis\include
 xcopy nsis\include\lang target\nsis\include\lang
 xcopy nsis\payload\x64\* target\nsis\payload\x64
 
-xcopy mwc713\target\release\mwc713.exe target\nsis\payload\x64
-xcopy mwc713\target\release\mwczip.exe target\nsis\payload\x64
-xcopy mwc-node\target\release\mwc.exe target\nsis\payload\x64
+xcopy webtunnel\webtunnelclient.exe target\nsis\payload\x64
 xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
-xcopy resources\64\tor.exe target\nsis\payload\x64
 
 powershell -Command "(gc target\nsis\include\config.nsh) -replace 'REPLACE_VERSION_PATCH', '%PATCH_NUMBER%' | Out-File -encoding ASCII target\nsis\include\config.nsh"
 

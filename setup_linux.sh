@@ -10,6 +10,7 @@ sudo apt-get purge --auto-remove clang-12 clang-format-12 llvm-12 llvm-12-dev ll
 sudo apt install clang-8 git curl make build-essential mesa-utils libgl1-mesa-dev openssl libssl-dev -y
 sudo apt-get install -yqq --no-install-recommends libncursesw5-dev libgl-dev
 sudo apt-get install -y expect
+sudo apt-get install -y golang
 
 # list what we have
 sudo apt list --installed

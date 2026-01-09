@@ -1,20 +1,41 @@
 #!/bin/sh
 
+set -x
+
 NUMBER_GLOBAL=`cat ./version.txt`
-VERSION=1.1-$NUMBER_GLOBAL.beta.$1
+VERSION=2.0-$NUMBER_GLOBAL.beta.$1
 echo $VERSION
-VERSION_NAME=1.1
+VERSION_NAME=2.0
 RELEASE_NAME=$NUMBER_GLOBAL.beta.$1
 TAG_FOR_BUILD_FILE=mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     VERSION=`cat $TAG_FOR_BUILD_FILE`;
-    VERSION_NAME=1.1
+    VERSION_NAME=2.0
     RELEASE_NAME=$NUMBER_GLOBAL
 fi
 
 # Clean everything.
-rm -rf mwc713 mwc-node mwc-qt-wallet target/*
+rm -rf mwc-wallet webtunnel mwc-qt-wallet target/*
 mkdir -p target
+
+# Building webtunnel client
+for attempt in 1 2 3 4 5; do
+  if git clone https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel; then
+     break
+  fi
+  echo "webtunnel clone failed (attempt $attempt), retrying in 10s..."
+  rm -rf webtunnel
+  sleep 10
+done
+if [ ! -d "webtunnel/.git" ]; then
+        echo "webtunnel clone failed after retries"
+    exit 1
+fi
+cd webtunnel/main/client
+go build
+mv client ../../webtunnelclient
+
+cd ../../..
 
 # Let's build with minimal instaructs set, build will be compartible with all CPUs
 # We can compromize performace for qt wallet.
@@ -31,11 +52,11 @@ export RUSTFLAGS="-C target-cpu=$CPU_CORE"
 export CPPFLAGS="-march=$CPU_CORE -mcpu=$CPU_CORE"
 export CFLAGS="-march=$CPU_CORE -mcpu=$CPU_CORE"
 
-# Build mwc-node
-git clone https://github.com/mwcproject/mwc-node
-cd mwc-node
+# Build mwc wallet & node static lib. Mwc-wallet lib build will cover both
+git clone https://github.com/mwcproject/mwc-wallet
+cd mwc-wallet
 
-TAG_FOR_BUILD_FILE=../mwc-node.version
+TAG_FOR_BUILD_FILE=../mwc-core.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
@@ -43,7 +64,7 @@ fi
 
 ./build_static_linux.sh
 
-FILE=target/release/mwc
+FILE=target/release/libmwc_wallet_lib.a
 if [ ! -f "$FILE" ]; then
     echo "ERROR: $FILE does not exist";
     exit 1;
@@ -51,33 +72,7 @@ fi
 
 cd ..
 
-# First build mwc713 statically
-git clone https://github.com/mwcproject/mwc713
-cd mwc713
-
-TAG_FOR_BUILD_FILE=../mwc713.version
-if [ -f "$TAG_FOR_BUILD_FILE" ]; then
-    git fetch && git fetch --tags;
-    git checkout `cat $TAG_FOR_BUILD_FILE`;
-fi
-
-./build_static_linux.sh
-
-FILE=target/release/mwc713
-if [ ! -f "$FILE" ]; then
-    echo "ERROR: $FILE does not exist";
-    exit 1;
-fi
-
-FILE=target/release/mwczip
-if [ ! -f "$FILE" ]; then
-    echo "ERROR: $FILE does not exist";
-    exit 1;
-fi
-
-cd ..
-
-# Second build mwc-qt-wallet
+# Build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
 TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
@@ -114,14 +109,9 @@ mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
 mkdir -p target/$DPKG_NAME/lib/x86_64-linux-gnu
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-cp mwc713/target/release/mwc713 target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-cp mwc713/target/release/mwczip target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-cp mwc-node/target/release/mwc  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-cp resources/Linux/tor target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
+cp webtunnel/webtunnelclient target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
+
 cp Qt/5.9.9/gcc_64/plugins/platforms/libqxcb.so  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
-cp resources/Linux/libcrypto.so.3 target/$DPKG_NAME/lib/x86_64-linux-gnu/libcrypto.so.3
-cp resources/Linux/libevent-2.1.so.7 target/$DPKG_NAME/lib/x86_64-linux-gnu/libevent-2.1.so.7
-cp resources/Linux/libssl.so.3 target/$DPKG_NAME/lib/x86_64-linux-gnu/libssl.so.3
 
 # Make debain package
 cd target
@@ -141,13 +131,7 @@ echo "Building tar.gz"
 QT_WALLET_DIRECTORY=tmp/mwc-qt-wallet-$VERSION
 mkdir -p tmp/mwc-qt-wallet-$VERSION
 cp ../mwc-qt-wallet/mwc-qt-wallet $QT_WALLET_DIRECTORY/mwc-qt-wallet.bin
-cp ../mwc713/target/release/mwc713 $QT_WALLET_DIRECTORY
-cp ../mwc713/target/release/mwczip $QT_WALLET_DIRECTORY
-cp ../mwc-node/target/release/mwc $QT_WALLET_DIRECTORY
-cp ../resources/Linux/tor $QT_WALLET_DIRECTORY/tor
-cp ../resources/Linux/libcrypto.so.3 $QT_WALLET_DIRECTORY/libcrypto.so.3
-cp ../resources/Linux/libevent-2.1.so.7 $QT_WALLET_DIRECTORY/libevent-2.1.so.7
-cp ../resources/Linux/libssl.so.3 $QT_WALLET_DIRECTORY/libssl.so.3
+cp ../webtunnel/webtunnelclient $QT_WALLET_DIRECTORY
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
 cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 

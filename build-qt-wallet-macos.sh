@@ -1,49 +1,47 @@
 #!/bin/sh
 
+set -x
+
 echo "Starting build-qt-wallet-macos.sh"
 NUMBER_GLOBAL=`cat ./version.txt`
 export MACOSX_DEPLOYMENT_TARGET=10.9
 . ~/.cargo/env
 
 # Clean everything. This is a release build so we can wait
-rm -rf mwc713 mwc-node mwc-qt-wallet target/*
+rm -rf mwc-wallet webtunnel mwc-qt-wallet target/*
 mkdir -p target
 
-# Build mwc-node
-git clone https://github.com/mwcproject/mwc-node
-cd mwc-node
-TAG_FOR_BUILD_FILE=../mwc-node.version
+# Building webtunnel client
+for attempt in 1 2 3 4 5; do
+  if git clone https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel; then
+     break
+  fi
+  echo "webtunnel clone failed (attempt $attempt), retrying in 10s..."
+  rm -rf webtunnel
+  sleep 10
+done
+if [ ! -d "webtunnel/.git" ]; then
+        echo "webtunnel clone failed after retries"
+    exit 1
+fi
+cd webtunnel/main/client
+go build
+mv client ../../webtunnelclient
+
+cd ../../..
+
+# Build mwc wallet & node static lib. Mwc-wallet lib build will cover both
+git clone https://github.com/mwcproject/mwc-wallet
+cd mwc-wallet
+
+TAG_FOR_BUILD_FILE=../mwc-core.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 ./build_static.sh
 
-FILE=target/release/mwc
-if [ ! -f "$FILE" ]; then
-    echo "ERROR: $FILE does not exist";
-    exit 1;
-fi
-
-cd ..
-
-# First build mwc713 statically
-git clone https://github.com/mwcproject/mwc713
-cd mwc713
-TAG_FOR_BUILD_FILE=../mwc713.version
-if [ -f "$TAG_FOR_BUILD_FILE" ]; then
-    git fetch && git fetch --tags;
-    git checkout `cat $TAG_FOR_BUILD_FILE`;
-fi
-./build_static.sh 
-
-FILE=target/release/mwc713
-if [ ! -f "$FILE" ]; then
-    echo "ERROR: $FILE does not exist";
-    exit 1;
-fi
-
-FILE=target/release/mwczip
+FILE=target/release/libmwc_wallet_lib.a
 if [ ! -f "$FILE" ]; then
     echo "ERROR: $FILE does not exist";
     exit 1;
@@ -76,15 +74,7 @@ cat build_version.h
 make -j8
 
 # Finally prep dmg
-cp ../mwc-node/target/release/mwc mwc-qt-wallet.app/Contents/MacOS/mwc
-cp ../mwc713/target/release/mwc713 mwc-qt-wallet.app/Contents/MacOS/mwc713
-cp ../mwc713/target/release/mwczip mwc-qt-wallet.app/Contents/MacOS/mwczip
-cp -a ../resources/macOs/* mwc-qt-wallet.app/Contents/MacOS/
-mkdir -p mwc-qt-wallet.app/Contents/Frameworks/xz
-cp ../resources/liblzma.5.dylib mwc-qt-wallet.app/Contents/Frameworks/xz
-# fix tor lib
-install_name_tool -change /usr/local/opt/xz/lib/liblzma.5.dylib "@executable_path/../Frameworks/xz/liblzma.5.dylib" ./mwc-qt-wallet.app/Contents/MacOS/tor
-
+cp ../webtunnel/webtunnelclient mwc-qt-wallet.app/Contents/MacOS/webtunnelclient
 ../Qt/5.9.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 

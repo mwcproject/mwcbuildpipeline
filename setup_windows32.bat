@@ -23,3 +23,4 @@ rem Open SSL comes from the helper because choco doesn't install 32 bit packages
 choco install rustup.install
 rustup install stable-i686-pc-windows-msvc
 
+choco install -y golang
