@@ -15,7 +15,7 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 fi
 
 # Clean everything.
-rm -rf mwc-wallet webtunnel mwc-qt-wallet target/*
+rm -rf mwc-wallet webtunnel mwc-qt-wallet target
 mkdir -p target
 
 # Building webtunnel client

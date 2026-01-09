@@ -8,7 +8,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.9
 . ~/.cargo/env
 
 # Clean everything. This is a release build so we can wait
-rm -rf mwc-wallet webtunnel mwc-qt-wallet target/*
+rm -rf mwc-wallet webtunnel mwc-qt-wallet target
 mkdir -p target
 
 # Building webtunnel client
@@ -62,8 +62,6 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
     echo "#define BUILD_VERSION  \"`cat $TAG_FOR_BUILD_FILE`\"" > build_version.h
-else
-    echo "#define BUILD_VERSION  \"1.1-$NUMBER_GLOBAL.beta.$1\"" > build_version.h
 fi
 
 echo "Here is what we have at build_version.h"
