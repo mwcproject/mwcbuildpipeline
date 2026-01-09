@@ -22,36 +22,10 @@ echo "Building for CPU (rust level only): %CPU_CORE%
 mkdir target
 
 REM Building webtunnel client
-setlocal enabledelayedexpansion
-
-set REPO_URL=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel
-set REPO_DIR=webtunnel
-set MAX_ATTEMPTS=5
-
-for /L %%A in (1,1,%MAX_ATTEMPTS%) do (
-    git clone %REPO_URL%
-    if exist "%REPO_DIR%\.git" (
-        goto clone_success
-    )
-
-    echo webtunnel clone failed (attempt %%A), retrying in 10s...
-    rmdir /S /Q %REPO_DIR% 2>nul
-    timeout /T 10 /NOBREAK >nul
-)
-
-if not exist "%REPO_DIR%\.git" (
-    echo webtunnel clone failed after retries
-    exit /b 1
-)
-
-:clone_success
-cd %REPO_DIR%\main\client || exit /b 1
-
+git clone https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel
+cd webtunnel\main\client || exit /b 1
 go build || exit /b 1
-
 move client.exe ..\..\webtunnelclient.exe
-
-endlocal
 
 
 git clone https://github.com/mwcproject/mwc-wallet
