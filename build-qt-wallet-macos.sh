@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -x
+set -e
 
 echo "Starting build-qt-wallet-macos.sh"
 NUMBER_GLOBAL=`cat ./version.txt`
@@ -74,13 +75,13 @@ fi
 echo "Here is what we have at build_version.h"
 cat build_version.h
 
-$QT_INSTALL_PATH/$QT_VERSION/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
+$QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
 # ./fix_macos_makefile.sh
 make -j8
 
 # Finally prep dmg
 cp ../webtunnel/webtunnelclient mwc-qt-wallet.app/Contents/MacOS/webtunnelclient
-$QT_INSTALL_PATH/$QT_VERSION/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
+$QT_INSTALL_PATH/$QT_VERSION/macos/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
 if [ -z "$2" ]

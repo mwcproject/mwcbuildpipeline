@@ -9,6 +9,8 @@ choco install -y nsis
 set PATH="C:\Program Files (x86)\GnuWin32\bin";%PATH%
 
 rem Install latest Qt 6.8.x using official packages (avoid git-cloned Qt)
+set PIPX_HOME=%cd%\pipx_home
+set PIPX_BIN_DIR=%cd%\pipx_bin
 py -3 -m pip install --user pipx
 for /f "usebackq delims=" %%V in (`powershell -NoProfile -Command "$tokens = (py -3 -m pipx run --spec aqtinstall aqt list-qt windows desktop) -split '\s+' | Where-Object {$_ -match '^6\.8\.'}; $latest = $tokens | Sort-Object {[version]$_} | Select-Object -Last 1; Write-Output $latest"`) do set QT_VERSION=%%V
 if "%QT_VERSION%"=="" (

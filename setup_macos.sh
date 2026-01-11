@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -x
+set -e
 
 brew cleanup
 brew update

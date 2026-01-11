@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -x
+set -e
 
 NUMBER_GLOBAL=`cat ./version.txt`
 VERSION=2.0-$NUMBER_GLOBAL.beta.$1
