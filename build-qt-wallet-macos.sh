@@ -39,6 +39,12 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
+# It is a target that match QT 6.8 macos version
+export MACOSX_DEPLOYMENT_TARGET=12.0
+export CFLAGS="-mmacosx-version-min=12.0"
+export CXXFLAGS="-mmacosx-version-min=12.0"
+export RUSTFLAGS="-C link-arg=-mmacosx-version-min=12.0"
+
 ./build_static.sh
 
 FILE=target/release/libmwc_wallet_lib.a

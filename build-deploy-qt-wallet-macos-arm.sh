@@ -36,7 +36,7 @@ mv client ../../webtunnelclient
 cd ../../..
 
 
-# Build mwc-node
+# Build mwc-wallet & node lib
 while true; do
   git clone https://github.com/mwcproject/mwc-wallet.git && break
 done
@@ -46,6 +46,13 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
+
+# It is a target that match QT 6.8 macos version
+export MACOSX_DEPLOYMENT_TARGET=12.0
+export CFLAGS="-mmacosx-version-min=12.0"
+export CXXFLAGS="-mmacosx-version-min=12.0"
+export RUSTFLAGS="-C link-arg=-mmacosx-version-min=12.0"
+
 ./build_static.sh
 
 FILE=target/release/libmwc_wallet_lib.a
@@ -71,12 +78,12 @@ fi
 echo "Here is what we have at build_version.h"
 cat build_version.h
 
-$QT_INSTALL_PATH/6.2.4/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=arm64
+$QT_INSTALL_PATH/6.8.3/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=arm64
 make -j10
 
 # Finally prep dmg
 cp ../webtunnel/webtunnelclient mwc-qt-wallet.app/Contents/MacOS/webtunnelclient
-$QT_INSTALL_PATH/6.2.4/macos/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
+$QT_INSTALL_PATH/6.8.3/macos/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
 echo "not signing just building dmg"
