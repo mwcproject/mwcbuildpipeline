@@ -10,6 +10,7 @@ brew install libressl
 brew install coreutils
 brew install go
 brew install pipx
+brew install xz
 pipx ensurepath
 
 curl https://sh.rustup.rs -sSf | bash -s -- -y

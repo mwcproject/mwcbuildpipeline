@@ -60,6 +60,11 @@ cd ..
 # prepare for QT fix
 export QT_INSTALL_PATH=${QT_INSTALL_PATH:-`pwd`/Qt}
 echo "QT_INSTALL_PATH=$QT_INSTALL_PATH"
+XZ_PREFIX=$(brew --prefix xz)
+if [ -z "$XZ_PREFIX" ]; then
+    echo "ERROR: Unable to resolve xz prefix"
+    exit 1
+fi
 
 # Second build mwc-qt-wallet
 git clone https://github.com/mwcproject/mwc-qt-wallet
@@ -75,7 +80,7 @@ fi
 echo "Here is what we have at build_version.h"
 cat build_version.h
 
-$QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
+$QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64 "INCLUDEPATH+=$XZ_PREFIX/include" "LIBS+=-L$XZ_PREFIX/lib -llzma"
 # ./fix_macos_makefile.sh
 make -j8
 
