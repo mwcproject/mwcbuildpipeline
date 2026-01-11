@@ -11,20 +11,13 @@ curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
 echo "##vso[task.setvariable variable=PATH;]$PATH:$HOME/.cargo/bin"
 
-# Get helper files
-git clone https://github.com/mwcproject/mwcbuilder-macos-helpers
-cat mwcbuilder-macos-helpers/macos_599_* | bzip2 -dc | tar xvf -
-rm -rf mwcbuilder-macos-helpers
-
-# Need to fix what installer did. Installer hardecoded paths to libs by some reasons and it is breaks the build
-echo "Patching QT paths. MacOS issue"
-grep -rl bay . | grep prl | xargs sed -i '' 's/-F\/Users\/bay\/Qt\/5.9.9\/clang_64\/lib//g'
-echo "Patch for QT paths - DONE"
-grep -rl bay . | grep prl
-echo "Checking for QT paths, prl - DONE"
-
-# It is easy to check if you need that patch:
-# 1. Remove the sed command
-# 2. Try to build
-# 3. Check logs if they have your local paths. If you see them - it is a problem for azure.
-
+# Install latest Qt 6.8.x using official packages (avoid git-cloned Qt)
+python3 -m pip install --user aqtinstall
+QT_VERSION=$(python3 -m aqt list-qt mac desktop | awk '/^6\\.8\\./ {print $1}' | sort -V | tail -n 1)
+if [ -z "$QT_VERSION" ]; then
+    echo "ERROR: Unable to resolve latest Qt 6.8.x version"
+    exit 1
+fi
+echo "Using QT_VERSION=$QT_VERSION"
+echo "##vso[task.setvariable variable=QT_VERSION]$QT_VERSION"
+python3 -m aqt install-qt mac desktop $QT_VERSION clang_64 -O Qt

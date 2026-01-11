@@ -11,6 +11,9 @@ rmdir /s /q webtunnel
 del /s /q mwc-qt-wallet
 rmdir /s /q mwc-qt-wallet
 
+if "%QT_VERSION%"=="" set QT_VERSION=6.8.3
+set QT_ROOT=%cd%\Qt
+
 set RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%
 
 REM Current MS compiler has SSL2 as minimum setting and it is default, not much what we can lower
@@ -42,7 +45,7 @@ call build_static64.bat
 
 cd ..
 
-set PATH=%cd%\Qt\Tools\mingw730_64\bin;%cd%\Qt\5.13.2\mingw73_64\bin;C:\Program Files (x86)\NSIS;%PATH%
+set PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%QT_ROOT%\%QT_VERSION%\mingw_64\bin;C:\Program Files (x86)\NSIS;%PATH%
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet

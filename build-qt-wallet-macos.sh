@@ -6,6 +6,7 @@ echo "Starting build-qt-wallet-macos.sh"
 NUMBER_GLOBAL=`cat ./version.txt`
 export MACOSX_DEPLOYMENT_TARGET=10.9
 . ~/.cargo/env
+export QT_VERSION=${QT_VERSION:-6.8.3}
 
 # Clean everything. This is a release build so we can wait
 rm -rf mwc-wallet webtunnel mwc-qt-wallet target
@@ -56,7 +57,7 @@ fi
 cd ..
 
 # prepare for QT fix
-export QT_INSTALL_PATH=`pwd`/Qt
+export QT_INSTALL_PATH=${QT_INSTALL_PATH:-`pwd`/Qt}
 echo "QT_INSTALL_PATH=$QT_INSTALL_PATH"
 
 # Second build mwc-qt-wallet
@@ -73,13 +74,13 @@ fi
 echo "Here is what we have at build_version.h"
 cat build_version.h
 
-../Qt/5.9.9/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
-./fix_macos_makefile.sh
+$QT_INSTALL_PATH/$QT_VERSION/clang_64/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64
+# ./fix_macos_makefile.sh
 make -j8
 
 # Finally prep dmg
 cp ../webtunnel/webtunnelclient mwc-qt-wallet.app/Contents/MacOS/webtunnelclient
-../Qt/5.9.9/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
+$QT_INSTALL_PATH/$QT_VERSION/clang_64/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
 if [ -z "$2" ]
@@ -144,4 +145,3 @@ else
    echo "You should see a message like this: source=Notarized Developer ID"
    echo "Note you must be on MacOSX10.14+"
 fi
-

@@ -14,6 +14,9 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     RELEASE_NAME=$NUMBER_GLOBAL
 fi
 
+QT_VERSION=${QT_VERSION:-6.8.3}
+QT_ROOT=${QT_INSTALL_PATH:-`pwd`/Qt}
+
 # Clean everything.
 rm -rf mwc-wallet webtunnel mwc-qt-wallet target
 mkdir -p target
@@ -84,7 +87,7 @@ else
     echo "#define BUILD_VERSION  \"$VERSION\"" > build_version.h
 fi
 
-../Qt/5.9.9/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CXXFLAGS="-fno-sized-deallocation -pipe -L/usr/lib/x86_64-linux-gnu" -config release -spec linux-g++ CONFIG+=x86_64
+$QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CXXFLAGS="-fno-sized-deallocation -pipe -L/usr/lib/x86_64-linux-gnu" -config release -spec linux-g++ CONFIG+=x86_64
 
 FILE=Makefile
 if [ ! -f "$FILE" ]; then
@@ -111,7 +114,7 @@ mkdir -p target/$DPKG_NAME/lib/x86_64-linux-gnu
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp webtunnel/webtunnelclient target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 
-cp Qt/5.9.9/gcc_64/plugins/platforms/libqxcb.so  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
+cp $QT_ROOT/$QT_VERSION/gcc_64/plugins/platforms/libqxcb.so  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
 
 # Make debain package
 cd target
@@ -163,4 +166,3 @@ perl -pi -e 's/VERSION_NAME/$ENV{VERSION_NAME}/g' rpmbuild/SPECS/mwc-qt-wallet.s
 rpmbuild -bb rpmbuild/SPECS/mwc-qt-wallet.spec
 
 echo "Build Complete";
-
