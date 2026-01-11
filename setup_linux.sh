@@ -34,7 +34,7 @@ if [ -z "$QT_VERSION" ]; then
 fi
 echo "Using QT_VERSION=$QT_VERSION"
 echo "##vso[task.setvariable variable=QT_VERSION]$QT_VERSION"
-python3 -m pipx run --spec aqtinstall aqt install-qt linux desktop $QT_VERSION gcc_64 -O Qt
+python3 -m pipx run --spec aqtinstall aqt install-qt linux desktop $QT_VERSION linux_gcc_64 -O Qt
 
 #sudo apt-get purge -yqq clang-8 clang-9 clangd-8 clangd-9 libclang-common-8-dev libclang-common-9-dev libclang1-8 libclang-cpp9
 #sudo apt-get purge -yqq llvm-8 llvm-8-dev llvm-8-runtime llvm-9 llvm-9-dev llvm-9-runtime llvm-9-tools liblldb-8 liblldb-9 libllvm8 libllvm9
