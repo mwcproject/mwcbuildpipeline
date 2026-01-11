@@ -30,6 +30,7 @@ cd webtunnel\main\client || exit /b 1
 go build || exit /b 1
 move client.exe ..\..\webtunnelclient.exe
 
+cd ..\..\..
 
 git clone https://github.com/mwcproject/mwc-wallet
 cd mwc-wallet
