@@ -26,15 +26,15 @@ curl https://sh.rustup.rs -sSf | bash -s -- -y
 sudo ln -s ~/.cargo/bin/cargo /usr/bin/cargo
 
 # Install latest Qt 6.8.x using official packages (avoid git-cloned Qt)
-python3 -m pip install --user aqtinstall
-QT_VERSION=$(python3 -m aqt list-qt linux desktop | awk '/^6\\.8\\./ {print $1}' | sort -V | tail -n 1)
+python3 -m pip install --user pipx
+QT_VERSION=$(python3 -m pipx run aqt list-qt linux desktop | awk '/^6\\.8\\./ {print $1}' | sort -V | tail -n 1)
 if [ -z "$QT_VERSION" ]; then
     echo "ERROR: Unable to resolve latest Qt 6.8.x version"
     exit 1
 fi
 echo "Using QT_VERSION=$QT_VERSION"
 echo "##vso[task.setvariable variable=QT_VERSION]$QT_VERSION"
-python3 -m aqt install-qt linux desktop $QT_VERSION gcc_64 -O Qt
+python3 -m pipx run aqt install-qt linux desktop $QT_VERSION gcc_64 -O Qt
 
 #sudo apt-get purge -yqq clang-8 clang-9 clangd-8 clangd-9 libclang-common-8-dev libclang-common-9-dev libclang1-8 libclang-cpp9
 #sudo apt-get purge -yqq llvm-8 llvm-8-dev llvm-8-runtime llvm-9 llvm-9-dev llvm-9-runtime llvm-9-tools liblldb-8 liblldb-9 libllvm8 libllvm9
