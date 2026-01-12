@@ -1,3 +1,7 @@
 #!/bin/sh
 
-/usr/local/mwc-qt-wallet/bin/mwc-qt-wallet --ui_scale 1.6
+APP_DIR=/usr/local/mwc-qt-wallet
+export LD_LIBRARY_PATH="$APP_DIR/lib:$LD_LIBRARY_PATH"
+export QT_PLUGIN_PATH="$APP_DIR/plugins"
+export QT_QPA_PLATFORM_PLUGIN_PATH="$APP_DIR/plugins/platforms"
+exec "$APP_DIR/bin/mwc-qt-wallet" --ui_scale 1.6

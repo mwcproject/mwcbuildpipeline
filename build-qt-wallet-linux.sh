@@ -17,6 +17,8 @@ fi
 
 QT_VERSION=${QT_VERSION:-6.8.3}
 QT_ROOT=${QT_INSTALL_PATH:-`pwd`/Qt}
+QT_LIB_DIR="$QT_ROOT/$QT_VERSION/gcc_64/lib"
+QT_PLUGIN_DIR="$QT_ROOT/$QT_VERSION/gcc_64/plugins"
 
 # Clean everything.
 rm -rf mwc-wallet webtunnel mwc-qt-wallet target
@@ -110,12 +112,20 @@ export DPKG_NAME=mwc-qt-wallet-$DPKG_VERSION
 echo "Building $DPKG_NAME"
 mkdir -p target/$DPKG_NAME/usr/local/bin/
 mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
-mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
+mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib
+mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins
 mkdir -p target/$DPKG_NAME/lib/x86_64-linux-gnu
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp webtunnel/webtunnelclient target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 
-cp $QT_ROOT/$QT_VERSION/gcc_64/plugins/platforms/libqxcb.so  target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin/platforms
+cp $QT_LIB_DIR/libQt6*.so* target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib
+cp $QT_LIB_DIR/libicu*.so* target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib 2>/dev/null || true
+for plugin_dir in platforms imageformats iconengines styles; do
+    if [ -d "$QT_PLUGIN_DIR/$plugin_dir" ]; then
+        mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins/$plugin_dir
+        cp $QT_PLUGIN_DIR/$plugin_dir/*.so target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins/$plugin_dir
+    fi
+done
 
 # Make debain package
 cd target
@@ -136,6 +146,16 @@ QT_WALLET_DIRECTORY=tmp/mwc-qt-wallet-$VERSION
 mkdir -p tmp/mwc-qt-wallet-$VERSION
 cp ../mwc-qt-wallet/mwc-qt-wallet $QT_WALLET_DIRECTORY/mwc-qt-wallet.bin
 cp ../webtunnel/webtunnelclient $QT_WALLET_DIRECTORY
+mkdir -p $QT_WALLET_DIRECTORY/lib
+mkdir -p $QT_WALLET_DIRECTORY/plugins
+cp $QT_LIB_DIR/libQt6*.so* $QT_WALLET_DIRECTORY/lib
+cp $QT_LIB_DIR/libicu*.so* $QT_WALLET_DIRECTORY/lib 2>/dev/null || true
+for plugin_dir in platforms imageformats iconengines styles; do
+    if [ -d "$QT_PLUGIN_DIR/$plugin_dir" ]; then
+        mkdir -p $QT_WALLET_DIRECTORY/plugins/$plugin_dir
+        cp $QT_PLUGIN_DIR/$plugin_dir/*.so $QT_WALLET_DIRECTORY/plugins/$plugin_dir
+    fi
+done
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
 cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 
