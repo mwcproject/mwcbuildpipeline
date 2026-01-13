@@ -14,8 +14,11 @@ sudo apt-get update -yqq
 sudo apt install clang-11 git curl make build-essential mesa-utils libgl1-mesa-dev openssl libssl-dev -y
 sudo apt-get install -yqq --no-install-recommends libncursesw5-dev libgl-dev
 sudo apt-get install -y expect
-sudo apt-get install -y golang
 sudo apt-get install -y python3 python3-pip python3-venv
+
+# apt install golang is v 13, it is too old, we need at least 18. So we better to downlaod the go version
+wget https://go.dev/dl/go1.25.5.linux-amd64.tar.gz
+tar -xzf go*linux-amd64.tar.gz
 
 # list what we have
 sudo apt list --installed
@@ -24,7 +27,7 @@ sudo apt list --installed
 curl https://sh.rustup.rs -sSf | bash -s -- -y
 # ~/.cargo/bin/rustup override set 1.37.0
 
-sudo ln -s ~/.cargo/bin/cargo /usr/bin/cargo
+sudo ln -sf ~/.cargo/bin/cargo /usr/bin/cargo
 
 # Install latest Qt 6.8.x using official packages (avoid git-cloned Qt)
 python3 -m pip install --user pipx

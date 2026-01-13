@@ -4,6 +4,6 @@ Section: base
 Priority: optional
 Architecture: amd64
 Depends:
-Maintainer: Christopher Gilliard (christopher.gilliard@gmail.com)
+Maintainer: Konstantin Bay (konstantin.bay@gmail.com)
 Description: MWC-QT-WALLET
  Graphical User Interface Wallet for the MWC Cryptocurrency.

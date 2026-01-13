@@ -20,6 +20,8 @@ QT_ROOT=${QT_INSTALL_PATH:-`pwd`/Qt}
 QT_LIB_DIR="$QT_ROOT/$QT_VERSION/gcc_64/lib"
 QT_PLUGIN_DIR="$QT_ROOT/$QT_VERSION/gcc_64/plugins"
 
+PATH=`pwd`/go/bin:$PATH
+
 # Clean everything.
 rm -rf mwc-wallet webtunnel mwc-qt-wallet target
 mkdir -p target
@@ -118,9 +120,9 @@ mkdir -p target/$DPKG_NAME/lib/x86_64-linux-gnu
 cp mwc-qt-wallet/mwc-qt-wallet target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 cp webtunnel/webtunnelclient target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 
-cp $QT_LIB_DIR/libQt6*.so* target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib
-cp $QT_LIB_DIR/libicu*.so* target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib 2>/dev/null || true
-for plugin_dir in platforms imageformats iconengines styles; do
+cp $QT_LIB_DIR/libQt6*.so.6 target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib
+cp $QT_LIB_DIR/libicu*.so.73 target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib 2>/dev/null || true
+for plugin_dir in platforms imageformats iconengines styles wayland-shell-integration wayland-decoration-client; do
     if [ -d "$QT_PLUGIN_DIR/$plugin_dir" ]; then
         mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins/$plugin_dir
         cp $QT_PLUGIN_DIR/$plugin_dir/*.so target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins/$plugin_dir
@@ -148,9 +150,9 @@ cp ../mwc-qt-wallet/mwc-qt-wallet $QT_WALLET_DIRECTORY/mwc-qt-wallet.bin
 cp ../webtunnel/webtunnelclient $QT_WALLET_DIRECTORY
 mkdir -p $QT_WALLET_DIRECTORY/lib
 mkdir -p $QT_WALLET_DIRECTORY/plugins
-cp $QT_LIB_DIR/libQt6*.so* $QT_WALLET_DIRECTORY/lib
-cp $QT_LIB_DIR/libicu*.so* $QT_WALLET_DIRECTORY/lib 2>/dev/null || true
-for plugin_dir in platforms imageformats iconengines styles; do
+cp $QT_LIB_DIR/libQt6*.so.6 $QT_WALLET_DIRECTORY/lib
+cp $QT_LIB_DIR/libicu*.so.73 $QT_WALLET_DIRECTORY/lib 2>/dev/null || true
+for plugin_dir in platforms imageformats iconengines styles wayland-shell-integration wayland-decoration-client; do
     if [ -d "$QT_PLUGIN_DIR/$plugin_dir" ]; then
         mkdir -p $QT_WALLET_DIRECTORY/plugins/$plugin_dir
         cp $QT_PLUGIN_DIR/$plugin_dir/*.so $QT_WALLET_DIRECTORY/plugins/$plugin_dir
@@ -166,8 +168,8 @@ cp ../mwc-qt-wallet-$VERSION.tar.gz ~
 cd ../..
 
 # build RPM
-cp rpmbuild.tar ~
-cd ~
+cp rpmbuild.tar target
+cd target
 rm -rf rpmbuild
 tar xvf rpmbuild.tar
 cp mwc-qt-wallet-$VERSION.tar.gz rpmbuild/SOURCES/mwc-qt-wallet-1.1.tar.gz
@@ -183,7 +185,7 @@ cp rpmbuild/SPECS/mwc-qt-wallet.spec.template rpmbuild/SPECS/mwc-qt-wallet.spec
 echo "relname=$RELEASE_NAME"
 export RELEASE_NAME VERSION_NAME
 perl -pi -e 's/RELEASE_NAME/$ENV{RELEASE_NAME}/g' rpmbuild/SPECS/mwc-qt-wallet.spec
-perl -pi -e 's/VERSION_NAME/$ENV{VERSION_NAME}/g' rpmbuild/SPECS/mwc-qt-wallet.spec
-rpmbuild -bb rpmbuild/SPECS/mwc-qt-wallet.spec
+
+rpmbuild -bb rpmbuild/SPECS/mwc-qt-wallet.spec --define "_topdir $(pwd)/rpmbuild"
 
 echo "Build Complete";
