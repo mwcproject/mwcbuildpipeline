@@ -12,11 +12,11 @@ DPKG_NAME=mwc-qt-wallet_1.1-$NUMBER_GLOBAL.beta.$1
 fi
 echo "sha256sum = `sha256sum target/*.deb`";
 echo "sha256sum = `sha256sum target/*.tar.gz`";
-echo "sha256sum = `sha256sum ~/rpmbuild/RPMS/x86_64/*.rpm`";
+echo "sha256sum = `sha256sum target/rpmbuild/RPMS/x86_64/*.rpm`";
 mkdir -p ~/.ssh
 cp target/*.deb "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.deb"
 cp target/*.tar.gz "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.tar.gz"
-cp ~/rpmbuild/RPMS/x86_64/*.rpm "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.rpm"
+cp target/rpmbuild/RPMS/x86_64/*.rpm "$DPKG_NAME-linux64-$CPU_PACKAGE_NAME.rpm"
 
 ls -al
 

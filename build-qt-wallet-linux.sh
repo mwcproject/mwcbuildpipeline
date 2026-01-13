@@ -20,8 +20,6 @@ QT_ROOT=${QT_INSTALL_PATH:-`pwd`/Qt}
 QT_LIB_DIR="$QT_ROOT/$QT_VERSION/gcc_64/lib"
 QT_PLUGIN_DIR="$QT_ROOT/$QT_VERSION/gcc_64/plugins"
 
-PATH=`pwd`/go/bin:$PATH
-
 # Clean everything.
 rm -rf mwc-wallet webtunnel mwc-qt-wallet target
 mkdir -p target
