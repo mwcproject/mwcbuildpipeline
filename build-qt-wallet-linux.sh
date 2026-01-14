@@ -120,7 +120,7 @@ cp webtunnel/webtunnelclient target/$DPKG_NAME/usr/local/mwc-qt-wallet/bin
 
 cp $QT_LIB_DIR/libQt6*.so.6 target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib
 cp $QT_LIB_DIR/libicu*.so.73 target/$DPKG_NAME/usr/local/mwc-qt-wallet/lib 2>/dev/null || true
-for plugin_dir in platforms imageformats iconengines styles wayland-shell-integration wayland-decoration-client; do
+for plugin_dir in platforms imageformats iconengines styles wayland-shell-integration wayland-decoration-client tls; do
     if [ -d "$QT_PLUGIN_DIR/$plugin_dir" ]; then
         mkdir -p target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins/$plugin_dir
         cp $QT_PLUGIN_DIR/$plugin_dir/*.so target/$DPKG_NAME/usr/local/mwc-qt-wallet/plugins/$plugin_dir
@@ -150,7 +150,7 @@ mkdir -p $QT_WALLET_DIRECTORY/lib
 mkdir -p $QT_WALLET_DIRECTORY/plugins
 cp $QT_LIB_DIR/libQt6*.so.6 $QT_WALLET_DIRECTORY/lib
 cp $QT_LIB_DIR/libicu*.so.73 $QT_WALLET_DIRECTORY/lib 2>/dev/null || true
-for plugin_dir in platforms imageformats iconengines styles wayland-shell-integration wayland-decoration-client; do
+for plugin_dir in platforms imageformats iconengines styles wayland-shell-integration wayland-decoration-client tls; do
     if [ -d "$QT_PLUGIN_DIR/$plugin_dir" ]; then
         mkdir -p $QT_WALLET_DIRECTORY/plugins/$plugin_dir
         cp $QT_PLUGIN_DIR/$plugin_dir/*.so $QT_WALLET_DIRECTORY/plugins/$plugin_dir
