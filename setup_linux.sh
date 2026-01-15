@@ -11,7 +11,7 @@ apt list --installed
 
 # Add deps
 sudo apt-get update -yqq
-sudo apt install clang-14 git curl make build-essential mesa-utils libgl1-mesa-dev -y
+sudo apt install clang-14 git curl make build-essential mesa-utils libgl1-mesa-dev rpm -y
 sudo apt-get install -yqq --no-install-recommends libncursesw5-dev libgl-dev
 sudo apt-get install -y expect
 sudo apt-get install -y golang
