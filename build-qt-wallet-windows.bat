@@ -33,11 +33,18 @@ move client.exe ..\..\webtunnelclient.exe
 cd ..\..\..
 
 REM  Setting up Rust build based on MinGw
-
 set CC_x86_64_pc_windows_gnu=gcc
 set CXX_x86_64_pc_windows_gnu=g++
 set AR_x86_64_pc_windows_gnu=ar
 set RANLIB_x86_64_pc_windows_gnu=ranlib
+
+REM Covering old rust crates that rely on CC
+set CC=gcc
+set CC_x86_64_pc_windows_gnu=gcc
+set CXX=g++
+set AR=ar
+set RANLIB=ranlib
+
 set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%PATH%"
 
 git clone https://github.com/mwcproject/mwc-wallet
