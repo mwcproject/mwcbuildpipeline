@@ -29,4 +29,6 @@ choco install -y golang
 
 REM Intsalling rust for minGw
 choco install -y rustup.install
+rustup toolchain install stable-x86_64-pc-windows-gnu
 rustup target add x86_64-pc-windows-gnu
+rustup default stable-x86_64-pc-windows-gnu
