@@ -25,7 +25,6 @@ py -3 -m aqt install-qt windows desktop  %QT_VERSION% win64_mingw -O Qt
 py -3 -m aqt install-tool windows desktop tools_mingw1310 -O Qt
 
 choco install -y llvm
-choco install -y openssl
 choco install -y golang
 
 REM Intsalling rust for minGw

@@ -6,7 +6,6 @@ set -e
 brew cleanup
 brew update
 brew uninstall llvm || true
-brew install libressl
 brew install coreutils
 brew install go
 brew install pipx
