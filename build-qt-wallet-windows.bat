@@ -32,6 +32,12 @@ move client.exe ..\..\webtunnelclient.exe
 
 cd ..\..\..
 
+
+set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%QT_ROOT%\%QT_VERSION%\mingw_64\bin;C:\Program Files (x86)\NSIS;%PATH%"
+
+REM lto Needed to fix bunch of warnings during link step
+set "RUSTFLAGS=%RUSTFLAGS% -Ctarget-cpu=%CPU_CORE%"
+
 REM  Setting up Rust build based on MinGw
 set CC_x86_64_pc_windows_gnu=gcc
 set CXX_x86_64_pc_windows_gnu=g++
@@ -44,8 +50,6 @@ set CC_x86_64_pc_windows_gnu=gcc
 set CXX=g++
 set AR=ar
 set RANLIB=ranlib
-
-set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%PATH%"
 
 git clone https://github.com/mwcproject/mwc-wallet
 cd mwc-wallet
@@ -61,7 +65,6 @@ cargo build --package mwc_wallet_lib --lib --release --target x86_64-pc-windows-
 
 cd ..
 
-set PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%QT_ROOT%\%QT_VERSION%\mingw_64\bin;C:\Program Files (x86)\NSIS;%PATH%
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
@@ -87,7 +90,7 @@ xcopy ..\nsis\resources\logo.ico .
 qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
 rem make -j 8
-mingw32-make.exe -j%NUMBER_OF_PROCESSORS%
+mingw32-make.exe -j%NUMBER_OF_PROCESSORS%  2>&1 | findstr /v /c:".drectve" /c:"corrupt .drectve"
 cd ..
 
 mkdir target\nsis
