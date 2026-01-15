@@ -6,8 +6,6 @@ choco install -y bzip2
 choco install -y gnuwin32-coreutils.install
 choco install -y nsis
 
-set PATH="C:\Program Files (x86)\GnuWin32\bin";%PATH%
-
 rem Install latest Qt 6.8.x using official packages (avoid git-cloned Qt)
 set PIPX_HOME=%cd%\pipx_home
 set PIPX_BIN_DIR=%cd%\pipx_bin
@@ -24,7 +22,6 @@ py -3 -m pip install --user --upgrade aqtinstall
 py -3 -m aqt install-qt windows desktop  %QT_VERSION% win64_mingw -O Qt
 py -3 -m aqt install-tool windows desktop tools_mingw1310 -O Qt
 
-choco install -y llvm
 choco install -y golang
 
 REM Intsalling rust for minGw
