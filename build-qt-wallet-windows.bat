@@ -32,6 +32,14 @@ move client.exe ..\..\webtunnelclient.exe
 
 cd ..\..\..
 
+REM  Setting up Rust build based on MinGw
+
+set CC_x86_64_pc_windows_gnu=gcc
+set CXX_x86_64_pc_windows_gnu=g++
+set AR_x86_64_pc_windows_gnu=ar
+set RANLIB_x86_64_pc_windows_gnu=ranlib
+set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%PATH%"
+
 git clone https://github.com/mwcproject/mwc-wallet
 cd mwc-wallet
 
@@ -42,7 +50,7 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 
-call build_static64.bat
+cargo build --package mwc_wallet_lib --lib --release --target x86_64-pc-windows-gnu
 
 cd ..
 
@@ -72,7 +80,7 @@ xcopy ..\nsis\resources\logo.ico .
 qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
 rem  For local build try to use:  mingw32-make.exe -j8
 rem make -j 8
-mingw32-make.exe -j8
+mingw32-make.exe -j%NUMBER_OF_PROCESSORS%
 cd ..
 
 mkdir target\nsis

@@ -68,7 +68,9 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
 
-./build_static_linux.sh
+export ROARING_ARCH=x86-64-v2
+
+cargo build --package mwc_wallet_lib --lib --release
 
 FILE=target/release/libmwc_wallet_lib.a
 if [ ! -f "$FILE" ]; then

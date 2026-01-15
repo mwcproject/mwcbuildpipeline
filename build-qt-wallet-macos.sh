@@ -47,7 +47,9 @@ export CFLAGS="-mmacosx-version-min=12.0"
 export CXXFLAGS="-mmacosx-version-min=12.0"
 export RUSTFLAGS="-C link-arg=-mmacosx-version-min=12.0"
 
-./build_static.sh
+export ROARING_ARCH=x86-64-v2
+
+cargo build --package mwc_wallet_lib --lib --release
 
 FILE=target/release/libmwc_wallet_lib.a
 if [ ! -f "$FILE" ]; then

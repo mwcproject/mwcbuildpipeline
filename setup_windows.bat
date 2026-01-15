@@ -19,10 +19,15 @@ if "%QT_VERSION%"=="" (
 )
 echo Using QT_VERSION=%QT_VERSION%
 echo ##vso[task.setvariable variable=QT_VERSION]%QT_VERSION%
-py -3 -m pipx run --spec aqtinstall aqt install-qt windows desktop %QT_VERSION% mingw_64 -O Qt
+
+py -3 -m pip install --user --upgrade aqtinstall
+py -3 -m aqt install-qt windows desktop  %QT_VERSION% win64_mingw -O Qt
 py -3 -m aqt install-tool windows desktop tools_mingw1310 -O Qt
 
 choco install -y llvm
 choco install -y openssl
-choco install -y rust-ms
 choco install -y golang
+
+REM Intsalling rust for minGw
+choco install -y rustup.install
+rustup target add x86_64-pc-windows-gnu
