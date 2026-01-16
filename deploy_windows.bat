@@ -21,8 +21,8 @@ echo "version = !VERSION!"
 set NAME=mwc-qt-wallet-!VERSION!-win64-setup.exe
 set NAME_UPLOAD=mwc-qt-wallet_!VERSION!-win64-setup-%CPU_PACKAGE_NAME%.exe
 ) ELSE (
-set NAME=mwc-qt-wallet-1.2.!NUMBER_GLOBAL!.beta.%1-win64-setup.exe
-set NAME_UPLOAD=mwc-qt-wallet_1.2.!NUMBER_GLOBAL!.beta.%1-win64-setup-%CPU_PACKAGE_NAME%.exe
+set NAME=mwc-qt-wallet-2.0.!NUMBER_GLOBAL!.beta.%1-win64-setup.exe
+set NAME_UPLOAD=mwc-qt-wallet_2.0.!NUMBER_GLOBAL!.beta.%1-win64-setup-%CPU_PACKAGE_NAME%.exe
 )
 echo "Using %NAME% and %NAME_UPLOAD%"
 
