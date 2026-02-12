@@ -2,7 +2,7 @@
 Version=1.1
 Name=MWC QT Wallet
 Comment=MWC QT Wallet is the Desktop wallet for the MWC Cryptocurrency.
-Exec=/usr/local/bin/mwc-qt-wallet_lr
+Exec=/usr/local/bin/mwc-qt-wallet
 Path=/usr/local/mwc-qt-wallet
 Icon=mwc-qt-wallet
 Terminal=false

@@ -134,7 +134,6 @@ cd target
 mkdir -p $DPKG_NAME/DEBIAN
 cp ../resources/control $DPKG_NAME/DEBIAN
 cp ../resources/mwc-qt-wallet.sh $DPKG_NAME/usr/local/bin/mwc-qt-wallet
-cp ../resources/mwc-qt-wallet_lr.sh $DPKG_NAME/usr/local/bin/mwc-qt-wallet_lr
 cp -rp ../resources/share $DPKG_NAME/usr
 
 # Update build number
@@ -159,7 +158,6 @@ for plugin_dir in platforms imageformats iconengines styles wayland-shell-integr
     fi
 done
 cp ../resources/mwc-qt-wallet.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet
-cp ../resources/mwc-qt-wallet_lr.tarver.sh $QT_WALLET_DIRECTORY/mwc-qt-wallet_lr
 
 cd tmp
 tar cvf ../mwc-qt-wallet-$VERSION.tar mwc-qt-wallet-$VERSION
