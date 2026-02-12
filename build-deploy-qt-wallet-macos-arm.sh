@@ -3,14 +3,10 @@
 set -e
 set -x
 
-# It is expected that this script will be run manually at the Mac with Apple Silicone CPU.
-
-# Note, expected that QT version 6.2.4 is used. Search for '6.2.4' below
-export QT_INSTALL_PATH="/Users/bay/Qt/"
-
-echo "Starting build-qt-wallet-macos-arm.sh with QT location: $QT_INSTALL_PATH"
-export MACOSX_DEPLOYMENT_TARGET=10.12
+export MACOSX_DEPLOYMENT_TARGET=10.9
 . ~/.cargo/env
+export QT_VERSION=${QT_VERSION:-6.8.3}
+export QT_INSTALL_PATH="/Users/bay/Qt/"
 
 # Clean everything. This is a release build so we can wait
 rm -rf mwc-wallet webtunnel mwc-qt-wallet target
@@ -35,25 +31,22 @@ mv client ../../webtunnelclient
 
 cd ../../..
 
-
-# Build mwc-wallet & node lib
-while true; do
-  git clone https://github.com/mwcproject/mwc-wallet.git && break
-done
+# Build mwc wallet & node static lib. Mwc-wallet lib build will cover both
+git clone https://github.com/mwcproject/mwc-wallet
 cd mwc-wallet
+
 TAG_FOR_BUILD_FILE=../mwc-core.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
     git fetch && git fetch --tags;
     git checkout `cat $TAG_FOR_BUILD_FILE`;
 fi
-
 # It is a target that match QT 6.8 macos version
 export MACOSX_DEPLOYMENT_TARGET=12.0
 export CFLAGS="-mmacosx-version-min=12.0"
 export CXXFLAGS="-mmacosx-version-min=12.0"
 export RUSTFLAGS="-C link-arg=-mmacosx-version-min=12.0"
 
-./build_static.sh
+cargo build --package mwc_wallet_lib --lib --release
 
 FILE=target/release/libmwc_wallet_lib.a
 if [ ! -f "$FILE" ]; then
@@ -64,9 +57,7 @@ fi
 cd ..
 
 # Second build mwc-qt-wallet
-while true; do
-  git clone https://github.com/mwcproject/mwc-qt-wallet.git && break
-done
+git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
 TAG_FOR_BUILD_FILE=../mwc-qt-wallet.version
 if [ -f "$TAG_FOR_BUILD_FILE" ]; then
@@ -78,16 +69,16 @@ fi
 echo "Here is what we have at build_version.h"
 cat build_version.h
 
-$QT_INSTALL_PATH/6.8.3/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=arm64
+$QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=arm64
 make -j10
 
 # Finally prep dmg
 cp ../webtunnel/webtunnelclient mwc-qt-wallet.app/Contents/MacOS/webtunnelclient
-$QT_INSTALL_PATH/6.8.3/macos/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
+$QT_INSTALL_PATH/$QT_VERSION/macos/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
-echo "not signing just building dmg"
-# We can't sign, just build dmg
+exit 1
+
 hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet;
 resulting_path=$(realpath "../target/mwc-qt-wallet.dmg")
 echo "Complete!  Resulting file: $resulting_path";
