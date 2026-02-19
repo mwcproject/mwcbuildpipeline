@@ -10,9 +10,9 @@ set "SANITISE_CC_FLAGS="
 set "SANITISE_LINK_FLAGS="
 set "SANITISE_RUSTFLAGS="
 if /I "%SANITISE_ENABLED%"=="true" (
-    set "SANITISE_CC_FLAGS=-fsanitize=address"
-    set "SANITISE_LINK_FLAGS=-fsanitize=address"
-    set "SANITISE_RUSTFLAGS=-Clink-arg=-fsanitize=address"
+    set "SANITISE_CC_FLAGS=/fsanitize=address"
+    set "SANITISE_LINK_FLAGS=/INFERASANLIBS"
+    set "SANITISE_RUSTFLAGS=-Ctarget-feature=-crt-static"
     echo Sanitizers are enabled for Windows release build
 ) else (
     echo Sanitizers are disabled for Windows release build
@@ -29,13 +29,43 @@ rmdir /s /q mwc-qt-wallet
 
 if "%QT_VERSION%"=="" set QT_VERSION=6.8.3
 set QT_ROOT=%cd%\Qt
+set "QT_BIN=%QT_ROOT%\%QT_VERSION%\msvc2022_64\bin"
 
-set "BASE_RUSTFLAGS=-Clinker=gcc -Ctarget-cpu=%CPU_CORE%"
+if not exist "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" (
+    echo ERROR: vswhere.exe not found
+    exit /b 1
+)
+for /f "usebackq delims=" %%I in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VSINSTALLDIR=%%I"
+if "%VSINSTALLDIR%"=="" (
+    echo ERROR: Visual Studio with C++ tools was not found
+    exit /b 1
+)
+call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat" || exit /b 1
+
+set "PATH=%QT_BIN%;C:\Program Files (x86)\NSIS;%PATH%"
+
+set "CFLAGS="
+set "CXXFLAGS="
+set "CFLAGS_x86_64_pc_windows_msvc="
+set "CXXFLAGS_x86_64_pc_windows_msvc="
+
+set "BASE_RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%"
 set "RUSTFLAGS=%BASE_RUSTFLAGS% %SANITISE_RUSTFLAGS%"
 
-REM Current MS compiler has SSL2 as minimum setting and it is default, not much what we can lower
-REM set CPPFLAGS=/arch:%MS_ARCH%
-rem set CFLAGS=/arch:%MS_ARCH%
+if /I "%SANITISE_ENABLED%"=="true" (
+    set "CFLAGS=%SANITISE_CC_FLAGS%"
+    set "CXXFLAGS=%SANITISE_CC_FLAGS%"
+    set "CFLAGS_x86_64_pc_windows_msvc=%SANITISE_CC_FLAGS%"
+    set "CXXFLAGS_x86_64_pc_windows_msvc=%SANITISE_CC_FLAGS%"
+)
+
+set CC_x86_64_pc_windows_msvc=cl
+set CXX_x86_64_pc_windows_msvc=cl
+set CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER=link
+echo Pinned compiler chain: CC=%CC_x86_64_pc_windows_msvc% CXX=%CXX_x86_64_pc_windows_msvc% RustLinker=%CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER% QtSpec=win32-msvc
+where cl
+where link
+where nmake
 
 echo Building for CPU (rust level only): %CPU_CORE%
 
@@ -49,44 +79,6 @@ move client.exe ..\..\webtunnelclient.exe
 
 cd ..\..\..
 
-
-set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%QT_ROOT%\%QT_VERSION%\mingw_64\bin;C:\Program Files (x86)\NSIS;%PATH%"
-
-if /I "%SANITISE_ENABLED%"=="true" (
-    set "MINGW_LIBASAN="
-    for /f "delims=" %%F in ('dir /b /s "%QT_ROOT%\Tools\mingw1310_64\lib\gcc\x86_64-w64-mingw32\*\libasan.dll.a" 2^>nul') do set "MINGW_LIBASAN=%%F"
-    if "!MINGW_LIBASAN!"=="" (
-        echo ERROR: libasan.dll.a not found in Qt MinGW toolchain while SANITISE_BUILD=true
-        echo ERROR: Ensure setup_windows.bat installs ASan runtime for mingw1310_64
-        exit /b 1
-    ) else (
-        echo Using libasan: !MINGW_LIBASAN!
-    )
-)
-
-set "RUSTFLAGS=%BASE_RUSTFLAGS% %SANITISE_RUSTFLAGS%"
-
-if /I "%SANITISE_ENABLED%"=="true" (
-    set "CFLAGS=%SANITISE_CC_FLAGS%"
-    set "CXXFLAGS=%SANITISE_CC_FLAGS%"
-)
-
-REM  Setting up Rust build based on MinGw
-set CC_x86_64_pc_windows_gnu=gcc
-set CXX_x86_64_pc_windows_gnu=g++
-set AR_x86_64_pc_windows_gnu=ar
-set RANLIB_x86_64_pc_windows_gnu=ranlib
-
-REM Covering old rust crates that rely on CC
-set CC=gcc
-set CC_x86_64_pc_windows_gnu=gcc
-set CXX=g++
-set AR=ar
-set RANLIB=ranlib
-set CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=gcc
-echo Pinned compiler chain: CC=%CC% CXX=%CXX% RustLinker=%CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER% QtSpec=win32-g++
-gcc --version
-
 git clone https://github.com/mwcproject/mwc-wallet
 cd mwc-wallet
 
@@ -97,15 +89,14 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 
-cargo build --package mwc_wallet_lib --lib --release --target x86_64-pc-windows-gnu || exit /b 1
+cargo build --package mwc_wallet_lib --lib --release --target x86_64-pc-windows-msvc || exit /b 1
 
-if not exist "target\x86_64-pc-windows-gnu\release\libmwc_wallet_lib.a" (
-    echo ERROR: target\x86_64-pc-windows-gnu\release\libmwc_wallet_lib.a does not exist
+if not exist "target\x86_64-pc-windows-msvc\release\mwc_wallet_lib.lib" (
+    echo ERROR: target\x86_64-pc-windows-msvc\release\mwc_wallet_lib.lib does not exist
     exit /b 1
 )
 
 cd ..
-
 
 git clone https://github.com/mwcproject/mwc-qt-wallet
 cd mwc-qt-wallet
@@ -129,11 +120,11 @@ echo "Using patch number = %PATCH_NUMBER%"
 
 xcopy ..\nsis\resources\logo.ico .
 if /I "%SANITISE_ENABLED%"=="true" (
-    qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico "QMAKE_CFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_CXXFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_LFLAGS_RELEASE+=%SANITISE_LINK_FLAGS%"
+    "%QT_BIN%\qmake.exe" -spec win32-msvc mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico "QMAKE_CFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_CXXFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_LFLAGS_RELEASE+=%SANITISE_LINK_FLAGS%"
 ) else (
-    qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
+    "%QT_BIN%\qmake.exe" -spec win32-msvc mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
 )
-mingw32-make.exe -j%NUMBER_OF_PROCESSORS%  2>&1 | findstr /v /c:".drectve" /c:"corrupt .drectve"
+nmake /NOLOGO || exit /b 1
 cd ..
 
 mkdir target\nsis
@@ -151,7 +142,7 @@ xcopy mwc-qt-wallet\release\mwc-qt-wallet.exe target\nsis\payload\x64
 
 powershell -Command "(gc target\nsis\include\config.nsh) -replace 'REPLACE_VERSION_PATCH', '%PATCH_NUMBER%' | Out-File -encoding ASCII target\nsis\include\config.nsh"
 
-windeployqt6 target\nsis\payload\x64\mwc-qt-wallet.exe
+"%QT_BIN%\windeployqt6.exe" target\nsis\payload\x64\mwc-qt-wallet.exe
 
 cd target/nsis
 makensis x64.nsi
