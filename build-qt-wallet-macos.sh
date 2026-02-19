@@ -59,9 +59,15 @@ SANITISE_CFLAGS=""
 SANITISE_LFLAGS=""
 SANITISE_RUSTFLAGS=""
 if [ "$SANITISE_ENABLED" = "true" ]; then
+    CLANG_LIB_PATH="$(clang --print-resource-dir)/lib/darwin"
+    if [ ! -d "$CLANG_LIB_PATH" ]; then
+        echo "ERROR: Clang runtime path not found: $CLANG_LIB_PATH"
+        exit 1
+    fi
     SANITISE_CFLAGS="-fsanitize=address"
     SANITISE_LFLAGS="-fsanitize=address"
-    SANITISE_RUSTFLAGS="-C link-arg=-fsanitize=address"
+    SANITISE_RUSTFLAGS="-C link-arg=-fsanitize=address -C link-arg=-L$CLANG_LIB_PATH -C link-arg=-lclang_rt.asan_osx_dynamic -C link-arg=-Wl,-rpath,$CLANG_LIB_PATH"
+    echo "Using Clang ASan runtime from $CLANG_LIB_PATH"
     echo "Sanitizers are enabled for macOS release build"
 else
     echo "Sanitizers are disabled for macOS release build"
