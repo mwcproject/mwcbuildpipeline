@@ -6,6 +6,7 @@ choco install -y putty
 choco install -y bzip2
 choco install -y gnuwin32-coreutils.install
 choco install -y nsis
+choco install -y llvm
 
 rem Install latest Qt 6.8.x using official packages (avoid git-cloned Qt)
 set PIPX_HOME=%cd%\pipx_home

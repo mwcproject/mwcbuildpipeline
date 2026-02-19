@@ -12,7 +12,7 @@ set "SANITISE_RUSTFLAGS="
 if /I "%SANITISE_ENABLED%"=="true" (
     set "SANITISE_CC_FLAGS=/fsanitize=address"
     set "SANITISE_LINK_FLAGS=/INFERASANLIBS"
-    set "SANITISE_RUSTFLAGS=-Ctarget-feature=-crt-static"
+    set "SANITISE_RUSTFLAGS=-Ctarget-feature=-crt-static -Clink-arg=/INFERASANLIBS"
     echo Sanitizers are enabled for Windows release build
 ) else (
     echo Sanitizers are disabled for Windows release build
@@ -58,10 +58,18 @@ if not exist "%MSVC_BIN%\cl.exe" (
     exit /b 1
 )
 
-set "PATH=%MSVC_BIN%;%QT_BIN%;C:\Program Files (x86)\NSIS;%PATH%"
+set "LLVM_BIN=C:\Program Files\LLVM\bin"
+if exist "%LLVM_BIN%\clang-cl.exe" (
+    set "PATH=%LLVM_BIN%;%MSVC_BIN%;%QT_BIN%;C:\Program Files (x86)\NSIS;%PATH%"
+) else (
+    set "PATH=%MSVC_BIN%;%QT_BIN%;C:\Program Files (x86)\NSIS;%PATH%"
+)
 echo VSINSTALLDIR=%VSINSTALLDIR%
 echo VCToolsInstallDir=%VCToolsInstallDir%
 echo MSVC_BIN=%MSVC_BIN%
+if exist "%LLVM_BIN%\clang-cl.exe" (
+    echo LLVM_BIN=%LLVM_BIN%
+)
 
 set "CFLAGS="
 set "CXXFLAGS="
@@ -78,13 +86,13 @@ if /I "%SANITISE_ENABLED%"=="true" (
     set "CXXFLAGS_x86_64_pc_windows_msvc=%SANITISE_CC_FLAGS%"
 )
 
-set CC_x86_64_pc_windows_msvc=cl
-set CXX_x86_64_pc_windows_msvc=cl
-set CC=cl
-set CXX=cl
+set CC_x86_64_pc_windows_msvc=clang-cl
+set CXX_x86_64_pc_windows_msvc=clang-cl
+set CC=clang-cl
+set CXX=clang-cl
 set CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER=link
 echo Pinned compiler chain: CC=%CC_x86_64_pc_windows_msvc% CXX=%CXX_x86_64_pc_windows_msvc% RustLinker=%CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER% QtSpec=win32-msvc
-where cl || exit /b 1
+where clang-cl || exit /b 1
 where link || exit /b 1
 where nmake || exit /b 1
 
@@ -141,9 +149,9 @@ echo "Using patch number = %PATCH_NUMBER%"
 
 xcopy ..\nsis\resources\logo.ico .
 if /I "%SANITISE_ENABLED%"=="true" (
-    "%QT_BIN%\qmake.exe" -spec win32-msvc mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico "QMAKE_CFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_CXXFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_LFLAGS_RELEASE+=%SANITISE_LINK_FLAGS%"
+    "%QT_BIN%\qmake.exe" -spec win32-msvc mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico "QMAKE_CC=clang-cl" "QMAKE_CXX=clang-cl" "QMAKE_CFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_CXXFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_LFLAGS_RELEASE+=%SANITISE_LINK_FLAGS%"
 ) else (
-    "%QT_BIN%\qmake.exe" -spec win32-msvc mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
+    "%QT_BIN%\qmake.exe" -spec win32-msvc mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico "QMAKE_CC=clang-cl" "QMAKE_CXX=clang-cl"
 )
 nmake /NOLOGO || exit /b 1
 cd ..
