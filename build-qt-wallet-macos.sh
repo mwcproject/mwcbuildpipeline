@@ -60,9 +60,9 @@ SANITISE_LFLAGS=""
 SANITISE_RUSTFLAGS=""
 if [ "$SANITISE_ENABLED" = "true" ]; then
     SANITISE_CFLAGS="-fsanitize=address -fsanitize=undefined"
-    SANITISE_LFLAGS="-fsanitize=address -fsanitize=undefined"
-    SANITISE_RUSTFLAGS="-C link-arg=-fsanitize=address -C link-arg=-fsanitize=undefined"
-    echo "Sanitizers are enabled for macOS release build"
+    SANITISE_LFLAGS="-Wl,-ld_classic -fsanitize=address -fsanitize=undefined"
+    SANITISE_RUSTFLAGS="-C link-arg=-Wl,-ld_classic -C link-arg=-fsanitize=address -C link-arg=-fsanitize=undefined"
+    echo "Sanitizers are enabled for macOS release build (using -ld_classic on x64)"
 else
     echo "Sanitizers are disabled for macOS release build"
 fi

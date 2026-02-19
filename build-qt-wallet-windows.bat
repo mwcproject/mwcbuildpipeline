@@ -30,7 +30,8 @@ rmdir /s /q mwc-qt-wallet
 if "%QT_VERSION%"=="" set QT_VERSION=6.8.3
 set QT_ROOT=%cd%\Qt
 
-set "RUSTFLAGS=-Clinker=gcc -Ctarget-cpu=%CPU_CORE% %SANITISE_RUSTFLAGS%"
+set "BASE_RUSTFLAGS=-Clinker=gcc -Ctarget-cpu=%CPU_CORE%"
+set "RUSTFLAGS=%BASE_RUSTFLAGS% %SANITISE_RUSTFLAGS%"
 
 REM Current MS compiler has SSL2 as minimum setting and it is default, not much what we can lower
 REM set CPPFLAGS=/arch:%MS_ARCH%
@@ -50,6 +51,20 @@ cd ..\..\..
 
 
 set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%QT_ROOT%\%QT_VERSION%\mingw_64\bin;C:\Program Files (x86)\NSIS;%PATH%"
+
+if /I "%SANITISE_ENABLED%"=="true" (
+    set "MINGW_LIBASAN="
+    for /f "delims=" %%F in ('dir /b /s "%QT_ROOT%\Tools\mingw1310_64\lib\gcc\x86_64-w64-mingw32\*\libasan.dll.a" 2^>nul') do set "MINGW_LIBASAN=%%F"
+    if "!MINGW_LIBASAN!"=="" (
+        echo ERROR: libasan.dll.a not found in Qt MinGW toolchain while SANITISE_BUILD=true
+        echo ERROR: Ensure setup_windows.bat installs ASan runtime for mingw1310_64
+        exit /b 1
+    ) else (
+        echo Using libasan: !MINGW_LIBASAN!
+    )
+)
+
+set "RUSTFLAGS=%BASE_RUSTFLAGS% %SANITISE_RUSTFLAGS%"
 
 if /I "%SANITISE_ENABLED%"=="true" (
     set "CFLAGS=%SANITISE_CC_FLAGS%"
@@ -82,7 +97,12 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
     git checkout !VERSION!
 )
 
-cargo build --package mwc_wallet_lib --lib --release --target x86_64-pc-windows-gnu
+cargo build --package mwc_wallet_lib --lib --release --target x86_64-pc-windows-gnu || exit /b 1
+
+if not exist "target\x86_64-pc-windows-gnu\release\libmwc_wallet_lib.a" (
+    echo ERROR: target\x86_64-pc-windows-gnu\release\libmwc_wallet_lib.a does not exist
+    exit /b 1
+)
 
 cd ..
 
