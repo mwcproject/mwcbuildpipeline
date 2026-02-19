@@ -58,16 +58,23 @@ clang++ --version | head -n 1
 SANITISE_CFLAGS=""
 SANITISE_LFLAGS=""
 SANITISE_RUSTFLAGS=""
+SANITISE_DYLD_INSERT=""
 if [ "$SANITISE_ENABLED" = "true" ]; then
     CLANG_LIB_PATH="$(clang --print-resource-dir)/lib/darwin"
     if [ ! -d "$CLANG_LIB_PATH" ]; then
         echo "ERROR: Clang runtime path not found: $CLANG_LIB_PATH"
         exit 1
     fi
+    SANITISE_DYLD_INSERT="$CLANG_LIB_PATH/libclang_rt.asan_osx_dynamic.dylib"
+    if [ ! -f "$SANITISE_DYLD_INSERT" ]; then
+        echo "ERROR: ASan runtime not found: $SANITISE_DYLD_INSERT"
+        exit 1
+    fi
     SANITISE_CFLAGS="-fsanitize=address"
     SANITISE_LFLAGS="-fsanitize=address"
     SANITISE_RUSTFLAGS="-C link-arg=-fsanitize=address -C link-arg=-L$CLANG_LIB_PATH -C link-arg=-lclang_rt.asan_osx_dynamic -C link-arg=-Wl,-rpath,$CLANG_LIB_PATH"
     echo "Using Clang ASan runtime from $CLANG_LIB_PATH"
+    echo "Using DYLD_INSERT_LIBRARIES=$SANITISE_DYLD_INSERT for cargo build"
     echo "Sanitizers are enabled for macOS release build"
 else
     echo "Sanitizers are disabled for macOS release build"
@@ -79,7 +86,11 @@ export RUSTFLAGS="-C linker=clang -C link-arg=-mmacosx-version-min=12.0 $SANITIS
 
 export ROARING_ARCH=x86-64-v2
 
-cargo build --package mwc_wallet_lib --lib --release
+if [ "$SANITISE_ENABLED" = "true" ]; then
+    DYLD_INSERT_LIBRARIES="$SANITISE_DYLD_INSERT" cargo build --package mwc_wallet_lib --lib --release
+else
+    cargo build --package mwc_wallet_lib --lib --release
+fi
 
 FILE=target/release/libmwc_wallet_lib.a
 if [ ! -f "$FILE" ]; then
