@@ -121,9 +121,9 @@ else
 fi
 
 if [ "$SANITISE_ENABLED" = "true" ]; then
-    $QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CXXFLAGS+=-include QMAKE_CXXFLAGS+=features.h QMAKE_CFLAGS_RELEASE+="$SANITISE_CFLAGS" QMAKE_CXXFLAGS_RELEASE+="$SANITISE_CFLAGS" QMAKE_LFLAGS_RELEASE+="$SANITISE_LFLAGS" -config release -spec linux-g++ CONFIG+=x86_64
+    $QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CFLAGS_RELEASE+="$SANITISE_CFLAGS" QMAKE_CXXFLAGS_RELEASE+="$SANITISE_CFLAGS" QMAKE_LFLAGS_RELEASE+="$SANITISE_LFLAGS" -config release -spec linux-g++ CONFIG+=x86_64
 else
-    $QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CXXFLAGS+=-include QMAKE_CXXFLAGS+=features.h -config release -spec linux-g++ CONFIG+=x86_64
+    $QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro -config release -spec linux-g++ CONFIG+=x86_64
 fi
 
 FILE=Makefile
