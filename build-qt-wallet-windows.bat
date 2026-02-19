@@ -35,14 +35,33 @@ if not exist "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
     echo ERROR: vswhere.exe not found
     exit /b 1
 )
-for /f "usebackq delims=" %%I in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VSINSTALLDIR=%%I"
-if "%VSINSTALLDIR%"=="" (
+for /f "usebackq delims=" %%I in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VSWHERE_INSTALLDIR=%%I"
+if "%VSWHERE_INSTALLDIR%"=="" (
     echo ERROR: Visual Studio with C++ tools was not found
     exit /b 1
 )
-call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat" || exit /b 1
+set "VSINSTALLDIR="
+set "VS_DEVCMD=%VSWHERE_INSTALLDIR%\Common7\Tools\VsDevCmd.bat"
+if exist "%VS_DEVCMD%" (
+    call "%VS_DEVCMD%" -arch=amd64 -host_arch=amd64 || exit /b 1
+) else (
+    call "%VSWHERE_INSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat" || exit /b 1
+)
 
-set "PATH=%QT_BIN%;C:\Program Files (x86)\NSIS;%PATH%"
+if "%VCToolsInstallDir%"=="" (
+    echo ERROR: VCToolsInstallDir is not set after VS environment initialization
+    exit /b 1
+)
+set "MSVC_BIN=%VCToolsInstallDir%bin\Hostx64\x64"
+if not exist "%MSVC_BIN%\cl.exe" (
+    echo ERROR: cl.exe was not found at %MSVC_BIN%
+    exit /b 1
+)
+
+set "PATH=%MSVC_BIN%;%QT_BIN%;C:\Program Files (x86)\NSIS;%PATH%"
+echo VSINSTALLDIR=%VSINSTALLDIR%
+echo VCToolsInstallDir=%VCToolsInstallDir%
+echo MSVC_BIN=%MSVC_BIN%
 
 set "CFLAGS="
 set "CXXFLAGS="
@@ -61,11 +80,13 @@ if /I "%SANITISE_ENABLED%"=="true" (
 
 set CC_x86_64_pc_windows_msvc=cl
 set CXX_x86_64_pc_windows_msvc=cl
+set CC=cl
+set CXX=cl
 set CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER=link
 echo Pinned compiler chain: CC=%CC_x86_64_pc_windows_msvc% CXX=%CXX_x86_64_pc_windows_msvc% RustLinker=%CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER% QtSpec=win32-msvc
-where cl
-where link
-where nmake
+where cl || exit /b 1
+where link || exit /b 1
+where nmake || exit /b 1
 
 echo Building for CPU (rust level only): %CPU_CORE%
 
