@@ -3,6 +3,12 @@
 set -x
 set -e
 
+SANITISE_ENABLED=false
+if [ "$SANITISE_BUILD" = "true" ]; then
+    SANITISE_ENABLED=true
+fi
+echo "SANITISE_BUILD=$SANITISE_BUILD (enabled=$SANITISE_ENABLED)"
+
 echo "Starting build-qt-wallet-macos.sh"
 NUMBER_GLOBAL=`cat ./version.txt`
 export MACOSX_DEPLOYMENT_TARGET=10.9
@@ -43,9 +49,27 @@ if [ -f "$TAG_FOR_BUILD_FILE" ]; then
 fi
 # It is a target that match QT 6.8 macos version
 export MACOSX_DEPLOYMENT_TARGET=12.0
-export CFLAGS="-mmacosx-version-min=12.0"
-export CXXFLAGS="-mmacosx-version-min=12.0"
-export RUSTFLAGS="-C link-arg=-mmacosx-version-min=12.0"
+export CC=clang
+export CXX=clang++
+export CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER=clang
+echo "Pinned compiler chain: CC=$CC CXX=$CXX RustLinker=$CARGO_TARGET_X86_64_APPLE_DARWIN_LINKER QtSpec=macx-clang target=x86_64"
+clang --version | head -n 1
+clang++ --version | head -n 1
+SANITISE_CFLAGS=""
+SANITISE_LFLAGS=""
+SANITISE_RUSTFLAGS=""
+if [ "$SANITISE_ENABLED" = "true" ]; then
+    SANITISE_CFLAGS="-fsanitize=address -fsanitize=undefined"
+    SANITISE_LFLAGS="-fsanitize=address -fsanitize=undefined"
+    SANITISE_RUSTFLAGS="-C link-arg=-fsanitize=address -C link-arg=-fsanitize=undefined"
+    echo "Sanitizers are enabled for macOS release build"
+else
+    echo "Sanitizers are disabled for macOS release build"
+fi
+
+export CFLAGS="-mmacosx-version-min=12.0 $SANITISE_CFLAGS"
+export CXXFLAGS="-mmacosx-version-min=12.0 $SANITISE_CFLAGS"
+export RUSTFLAGS="-C linker=clang -C link-arg=-mmacosx-version-min=12.0 $SANITISE_RUSTFLAGS"
 
 export ROARING_ARCH=x86-64-v2
 
@@ -82,7 +106,11 @@ fi
 echo "Here is what we have at build_version.h"
 cat build_version.h
 
-$QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64 "INCLUDEPATH+=$XZ_PREFIX/include" "LIBS+=-L$XZ_PREFIX/lib -llzma"
+if [ "$SANITISE_ENABLED" = "true" ]; then
+    $QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64 "INCLUDEPATH+=$XZ_PREFIX/include" "LIBS+=-L$XZ_PREFIX/lib -llzma" "QMAKE_CFLAGS_RELEASE+=$SANITISE_CFLAGS" "QMAKE_CXXFLAGS_RELEASE+=$SANITISE_CFLAGS" "QMAKE_LFLAGS_RELEASE+=$SANITISE_LFLAGS"
+else
+    $QT_INSTALL_PATH/$QT_VERSION/macos/bin/qmake mwc-wallet-desktop.pro -spec macx-clang CONFIG+=x86_64 "INCLUDEPATH+=$XZ_PREFIX/include" "LIBS+=-L$XZ_PREFIX/lib -llzma"
+fi
 # ./fix_macos_makefile.sh
 make -j8
 

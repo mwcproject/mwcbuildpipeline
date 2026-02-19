@@ -3,6 +3,12 @@
 set -x
 set -e
 
+SANITISE_ENABLED=false
+if [ "$SANITISE_BUILD" = "true" ]; then
+    SANITISE_ENABLED=true
+fi
+echo "SANITISE_BUILD=$SANITISE_BUILD (enabled=$SANITISE_ENABLED)"
+
 NUMBER_GLOBAL=`cat ./version.txt`
 VERSION=2.0-$NUMBER_GLOBAL.beta.$1
 echo $VERSION
@@ -54,9 +60,31 @@ cd ../../..
 # cc compiler accept CFLAGS.
 # > man cc    - for details
 echo "Building for CPU: $CPU_CORE"
-export RUSTFLAGS="-C target-cpu=$CPU_CORE"
+export CC=gcc
+export CXX=g++
+export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=gcc
+echo "Pinned compiler chain: CC=$CC CXX=$CXX RustLinker=$CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER QtSpec=linux-g++"
+gcc --version | head -n 1
+g++ --version | head -n 1
+export RUSTFLAGS="-C linker=gcc -C target-cpu=$CPU_CORE"
 export CPPFLAGS="-march=$CPU_CORE -mcpu=$CPU_CORE"
 export CFLAGS="-march=$CPU_CORE -mcpu=$CPU_CORE"
+
+SANITISE_CFLAGS=""
+SANITISE_LFLAGS=""
+SANITISE_RUSTFLAGS=""
+if [ "$SANITISE_ENABLED" = "true" ]; then
+    SANITISE_CFLAGS="-fsanitize=address -fsanitize=undefined"
+    SANITISE_LFLAGS="-fsanitize=address -fsanitize=undefined"
+    SANITISE_RUSTFLAGS="-C link-arg=-fsanitize=address -C link-arg=-fsanitize=undefined"
+    echo "Sanitizers are enabled for Linux release build"
+else
+    echo "Sanitizers are disabled for Linux release build"
+fi
+
+export RUSTFLAGS="$RUSTFLAGS $SANITISE_RUSTFLAGS"
+export CPPFLAGS="$CPPFLAGS $SANITISE_CFLAGS"
+export CFLAGS="$CFLAGS $SANITISE_CFLAGS"
 
 # Build mwc wallet & node static lib. Mwc-wallet lib build will cover both
 git clone https://github.com/mwcproject/mwc-wallet
@@ -92,7 +120,11 @@ else
     echo "#define BUILD_VERSION  \"$VERSION\"" > build_version.h
 fi
 
-$QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CXXFLAGS="-include /usr/include/features.h -fno-sized-deallocation -pipe -L/usr/lib/x86_64-linux-gnu" -config release -spec linux-g++ CONFIG+=x86_64
+if [ "$SANITISE_ENABLED" = "true" ]; then
+    $QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro QMAKE_CFLAGS_RELEASE+="$SANITISE_CFLAGS" QMAKE_CXXFLAGS_RELEASE+="$SANITISE_CFLAGS" QMAKE_LFLAGS_RELEASE+="$SANITISE_LFLAGS" -config release -spec linux-g++ CONFIG+=x86_64
+else
+    $QT_ROOT/$QT_VERSION/gcc_64/bin/qmake mwc-wallet-desktop.pro -config release -spec linux-g++ CONFIG+=x86_64
+fi
 
 FILE=Makefile
 if [ ! -f "$FILE" ]; then

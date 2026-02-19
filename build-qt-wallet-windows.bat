@@ -2,6 +2,22 @@ setlocal enableextensions enabledelayedexpansion
 @echo on
 set /p NUMBER_GLOBAL=<version.txt
 
+set SANITISE_ENABLED=false
+if "%SANITISE_BUILD%"=="true" set SANITISE_ENABLED=true
+echo SANITISE_BUILD=%SANITISE_BUILD% (enabled=%SANITISE_ENABLED%)
+
+set "SANITISE_CC_FLAGS="
+set "SANITISE_LINK_FLAGS="
+set "SANITISE_RUSTFLAGS="
+if /I "%SANITISE_ENABLED%"=="true" (
+    set "SANITISE_CC_FLAGS=-fsanitize=address"
+    set "SANITISE_LINK_FLAGS=-fsanitize=address"
+    set "SANITISE_RUSTFLAGS=-Clink-arg=-fsanitize=address"
+    echo Sanitizers are enabled for Windows release build
+) else (
+    echo Sanitizers are disabled for Windows release build
+)
+
 del /s /q target
 rmdir /s /q target
 del /s /q mwc-wallet
@@ -14,13 +30,13 @@ rmdir /s /q mwc-qt-wallet
 if "%QT_VERSION%"=="" set QT_VERSION=6.8.3
 set QT_ROOT=%cd%\Qt
 
-set RUSTFLAGS=-Ctarget-cpu=%CPU_CORE%
+set "RUSTFLAGS=-Clinker=gcc -Ctarget-cpu=%CPU_CORE% %SANITISE_RUSTFLAGS%"
 
 REM Current MS compiler has SSL2 as minimum setting and it is default, not much what we can lower
 REM set CPPFLAGS=/arch:%MS_ARCH%
 rem set CFLAGS=/arch:%MS_ARCH%
 
-echo "Building for CPU (rust level only): %CPU_CORE%
+echo Building for CPU (rust level only): %CPU_CORE%
 
 mkdir target
 
@@ -35,8 +51,10 @@ cd ..\..\..
 
 set "PATH=%QT_ROOT%\Tools\mingw1310_64\bin;%QT_ROOT%\%QT_VERSION%\mingw_64\bin;C:\Program Files (x86)\NSIS;%PATH%"
 
-REM lto Needed to fix bunch of warnings during link step
-set "RUSTFLAGS=%RUSTFLAGS% -Ctarget-cpu=%CPU_CORE%"
+if /I "%SANITISE_ENABLED%"=="true" (
+    set "CFLAGS=%SANITISE_CC_FLAGS%"
+    set "CXXFLAGS=%SANITISE_CC_FLAGS%"
+)
 
 REM  Setting up Rust build based on MinGw
 set CC_x86_64_pc_windows_gnu=gcc
@@ -50,6 +68,9 @@ set CC_x86_64_pc_windows_gnu=gcc
 set CXX=g++
 set AR=ar
 set RANLIB=ranlib
+set CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=gcc
+echo Pinned compiler chain: CC=%CC% CXX=%CXX% RustLinker=%CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER% QtSpec=win32-g++
+gcc --version
 
 git clone https://github.com/mwcproject/mwc-wallet
 cd mwc-wallet
@@ -87,7 +108,11 @@ IF EXIST "%TAG_FOR_BUILD_FILE%" (
 echo "Using patch number = %PATCH_NUMBER%"
 
 xcopy ..\nsis\resources\logo.ico .
-qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
+if /I "%SANITISE_ENABLED%"=="true" (
+    qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico "QMAKE_CFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_CXXFLAGS_RELEASE+=%SANITISE_CC_FLAGS%" "QMAKE_LFLAGS_RELEASE+=%SANITISE_LINK_FLAGS%"
+) else (
+    qmake -spec win32-g++ mwc-wallet-desktop.pro win32:RC_ICONS+=logo.ico
+)
 mingw32-make.exe -j%NUMBER_OF_PROCESSORS%  2>&1 | findstr /v /c:".drectve" /c:"corrupt .drectve"
 cd ..
 
