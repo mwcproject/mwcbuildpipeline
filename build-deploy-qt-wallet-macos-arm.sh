@@ -105,8 +105,6 @@ cp ../webtunnel/webtunnelclient mwc-qt-wallet.app/Contents/MacOS/webtunnelclient
 $QT_INSTALL_PATH/$QT_VERSION/macos/bin/macdeployqt mwc-qt-wallet.app -appstore-compliant -verbose=2
 echo "deployqt complete"
 
-exit 1
-
 hdiutil create ../target/mwc-qt-wallet.dmg -fs HFS+ -srcfolder mwc-qt-wallet.app -format UDZO -volname mwc-qt-wallet;
 resulting_path=$(realpath "../target/mwc-qt-wallet.dmg")
 echo "Complete!  Resulting file: $resulting_path";
